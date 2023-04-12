@@ -2,6 +2,27 @@ Projet : memo -RPG
 Plateau : 25 cartes
 4 joueurs
 1 tour : 
-1.choix d'1 arme
+1.choix d'1 arme  
 2. avancer sur une case
 1 case/tuile définie par: sa position (x,y);son état (retournée?); sa fonct° 
+condit° de victoire pour 1 joueur:
+Vainqueur si : coffre découvert>=1 + arme antique trouvée
+Sinon si vivant : continue à jouer
+sinon : réinitialisat° des cartes découvertes, retour au départ + joueur suivant
+
+menu prncipal:
+-scores précédents 
+-nouvelle partie 
+-reprendre partie précédente (espaces de sauvegarde ?)
+
+
+
+ fonct° nécessaires: 
+    -gestion de tour 
+    -verifictaion état du j (vivant, bloqué, mort)
+    -gestion des cases
+    -compteur (temps d'1 partie)
+    -score -> gardés le nb de cases découvertes, le type de case, nb de trésors
+  
+
+  
