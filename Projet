@@ -1,0 +1,7 @@
+Projet : memo -RPG
+Plateau : 25 cartes
+4 joueurs
+1 tour : 
+1.choix d'1 arme
+2. avancer sur une case
+1 case/tuile définie par: sa position (x,y);son état (retournée?); sa fonct° 
