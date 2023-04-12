@@ -10,11 +10,14 @@ Vainqueur si : coffre découvert>=1 + arme antique trouvée
 Sinon si vivant : continue à jouer
 sinon : réinitialisat° des cartes découvertes, retour au départ + joueur suivant
 
-menu prncipal:
+menu principal:
 -scores précédents 
 -nouvelle partie 
 -reprendre partie précédente (espaces de sauvegarde ?)
+-profils (déja créés + nouveau )
+-nb de joueurs 
 
+Noms des joueurs
 
 
  fonct° nécessaires: 
