@@ -57,15 +57,15 @@ void generateMap(Case map[][ARRAY]){
 				compteur[0]++; 
 				if (compteur[0]>16){
 					map[i][k].type=rand()%7+5;
-          compteur[0]--;
+        				compteur[0]--;
 				}
 			}
 			if (map[i][k].type==TOTEM){
 				compteur[1]++;
 				if (compteur[1]>2){
 					map[i][k].type=rand()%4+1;
-          compteur[1]--;
-          compteur[0]++;
+         				compteur[1]--;
+          				compteur[0]++;
 				}
 				if (compteur[1]==2 && j==5){
 					j--;
@@ -75,8 +75,8 @@ void generateMap(Case map[][ARRAY]){
 				compteur[2]++; 
 				if (compteur[2]>2){
 					map[i][k].type=rand()%4+1;
-          compteur[2]--;
-          compteur[0]++;
+          				compteur[2]--;
+          				compteur[0]++;
 				}
 				if (compteur[2]==2 && j==6){
 					j--;
@@ -86,8 +86,8 @@ void generateMap(Case map[][ARRAY]){
 				compteur[3]++; 
 				if (compteur[3]>1){
 					map[i][k].type=rand()%4+1;
-          compteur[3]--;
-          compteur[0]++;
+          				compteur[3]--;
+          				compteur[0]++;
 				}
 				if (compteur[3]==1 && j==7){
 					j--;
@@ -97,8 +97,8 @@ void generateMap(Case map[][ARRAY]){
 				compteur[4]++; 
 				if (compteur[4]>1){
 					map[i][k].type=rand()%4+1;
-          compteur[4]--;
-          compteur[0]++;
+          				compteur[4]--;
+          				compteur[0]++;
 				}
 				if (compteur[4]==1 && j==8){
 					j--;
@@ -108,8 +108,8 @@ void generateMap(Case map[][ARRAY]){
 				compteur[5]++;
 				if (compteur[5]>1){
 					map[i][k].type=rand()%4+1;
-          compteur[5]--;
-          compteur[0]++;
+          				compteur[5]--;
+          				compteur[0]++;
 				}
 				if (compteur[5]==1 && j==9){
 					j--;
@@ -119,8 +119,8 @@ void generateMap(Case map[][ARRAY]){
 				compteur[6]++;
 				if (compteur[6]>1){
 					map[i][k].type=rand()%4+1;
-          compteur[6]--;
-          compteur[0]++;
+          				compteur[6]--;
+          				compteur[0]++;
 				}
 				if (compteur[6]==1 && j==10){
 					j--;
