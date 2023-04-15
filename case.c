@@ -131,9 +131,9 @@ void generateMap(Case map[][ARRAY]){
 				j--;
 
 			}
-      if (map[i][k].type==VIDE){
-        printf("\nVide=%d %d\n",i,k);
-      }
+      			if (map[i][k].type==VIDE){
+       		 		printf("\nVide=%d %d\n",i,k);
+      			}
 		}
 	}
   for(i=0;i<8;i++){
