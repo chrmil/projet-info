@@ -162,3 +162,163 @@ int main (){
   return 0;
 }
 
+/*int numbers(int* compteur){
+	if (compteur[0]>16){
+		return 1;
+	}
+	if (compteur[1]>2){
+		return 1;
+	}
+	if (compteur[2]>2){
+		return 1;
+	}
+	int i;
+	for (i=3; i<8; i++){
+		if (compteur[i]>1){
+			return 1;
+		}
+	}
+	return 0;
+}
+	
+	
+
+		
+void generateCase(Case map[][ARRAY], int* compteur){
+	int i,k;
+	for (i=1; i<6; i++){
+		for(k=1;k<6;k++){
+			map[i][k].statut=0;//cases face cachée
+			map[i][k].type=rand()%11+1; //type de la case
+			//compte le nb de cases d'un type sur le plateau; vérifie qu'il y en ait le bon nb ;
+			switch(map[i][k].type){
+				case 1: //monstres
+				case 2:
+				case 3:
+				case 4:
+				if (compteur[0]<16) {
+					compteur[0]++; 
+				}
+				else{
+					map[i][k].type=rand()%7+5;
+				}
+				break;
+				case 5:
+				if (compteur[1]<2){
+					compteur[1]++;
+				}
+				else{
+					if (compteur[0]<16){
+						map[i][k].type=rand()%4+1;
+						compteur[0]++;
+					}
+				}
+				case 6:
+				if (compteur[2]<2){
+					compteur[2]++;
+				}
+				else{
+					if (compteur[0]<16){
+						map[i][k].type=rand()%4+1;
+						compteur[0]++;
+					}
+				}
+				break;
+				case 7:
+				if (compteur[3]==0){
+					compteur[3]++;
+				}
+				else{
+					if (compteur[0]<16){
+						map[i][k].type=rand()%4+1;
+						compteur[0]++;
+					}
+				}
+				break;
+				case 8:
+				if (compteur[4]==0){
+					compteur[4]++;
+				}
+				else{
+					if (compteur[0]<16){
+						map[i][k].type=rand()%4+1;
+						compteur[0]++;
+					}
+				}
+				break;
+				case 9:
+				if (compteur[5]==0){
+					compteur[5]++;
+				}
+				else{
+					if (compteur[0]<16){
+						map[i][k].type=rand()%4+1;
+						compteur[0]++;
+					}
+				}
+				break;
+				case 10:
+				if (compteur[6]==0){
+					compteur[6]++;
+				}
+				else{
+					if (compteur[0]<16){
+						map[i][k].type=rand()%4+1;
+						compteur[0]++;
+					}
+				}
+				break;
+				case 11:
+				if (compteur[7]==0){
+					compteur[7]++;
+				}
+				else{
+					if (compteur[0]<16){
+						map[i][k].type=rand()%4+1;
+						compteur[0]++;
+					}
+					else{
+				
+					}	
+				}
+				break;
+			}
+		}
+	}
+}
+void generateMap(Case map[][ARRAY]){
+	srand( time( NULL ) );
+	if (map==NULL){
+		exit(1);
+	}
+	int i,k,j;
+	int* compteur=NULL;
+	compteur=malloc(8*sizeof(int)); //compte le nombre de : 0=monstres, 1=totems, 2=coffres, 3=épée, 4=baton, 5=grimoire, 6=dague, 7=portail
+	if(compteur==NULL){
+			exit(1);
+	} 
+	for (i=0; i<7; i++){
+			map[0][i].statut=1; //contour du plateau, cases vides=cases révélées
+			map[0][i].type=VIDE;
+	}
+	for (i=0; i<7; i++){
+			map[6][i].statut=1;
+			map[6][i].type=VIDE;
+	}
+	for (i=0; i<7; i++){
+			map[i][0].statut=1;
+			map[i][0].type=VIDE;
+	}
+	for (i=0; i<7; i++){
+			map[i][6].statut=1;
+			map[i][6].type=VIDE;
+	}
+	while (numbers(compteur)){
+	 	generateCase(map,compteur);
+	}
+  for(i=0;i<8;i++){
+    printf("\nCompteur n°%d est à %d.",i,compteur[i]);
+  }
+  printf("\n");
+}
+*/
