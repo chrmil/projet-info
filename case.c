@@ -19,6 +19,73 @@ typedef struct {
 	int statut; //0 si case cachée, 1 sinon
 }Case;
 
+int count(int a, int* compteur){
+  switch(a){
+	      case 1: //monstres
+				case 2:
+				case 3:
+				case 4:
+          if(compteur[0]>=16){
+              return 0;
+          }
+		      compteur[0]++;
+          return 1;
+				break;
+				case 5:
+				  if (compteur[1]<2){
+				  	compteur[1]++;
+            return 1;
+				  }
+			   	return 0;
+        break;
+				case 6:
+				  if (compteur[2]<2){
+					  compteur[2]++;
+            return 1;
+				  }
+  			  return 0;
+				break;
+				case 7:
+				  if (compteur[3]==0){
+					   compteur[3]++;
+             return 1;
+				  }
+  				return 0;
+				break;
+				case 8:
+				  if (compteur[4]==0){
+  					compteur[4]++;
+            return 1;
+				  }
+				  return 0;
+				break;
+				case 9:
+				  if (compteur[5]==0){
+					  compteur[5]++;
+            return 1;
+				  }
+				  return 0;
+				break;
+				case 10:
+				  if (compteur[6]==0){
+					  compteur[6]++;
+            return 1;
+				  }
+				  return 0;
+				break;
+				case 11:
+				  if (compteur[7]==0){
+					  compteur[7]++;
+            return 1;
+				  }
+				  return 0;
+          break;
+          default: return 0;
+		}
+}
+
+
+
 void generateMap(Case map[][ARRAY]){
 	srand( time( NULL ) );
 	if (map==NULL){
@@ -46,100 +113,23 @@ void generateMap(Case map[][ARRAY]){
 			map[i][6].statut=1;
 			map[i][6].type=VIDE;
 	}
-
-	j=11;
+	int a;
 	for (i=1; i<6; i++){
 		for(k=1;k<6;k++){
 			map[i][k].statut=0;//cases face cachée
-			map[i][k].type=rand()%j+1; //type de la case
+      a=rand()%11+1;
+			map[i][k].type=a; //type de la case
 			//compte le nb de cases d'un type sur le plateau; vérifie qu'il y en ait le bon nb ;
-			if (map[i][k].type<5 && map[i][k].type>0){ //monstres
-				compteur[0]++; 
-				if (compteur[0]>16){
-					map[i][k].type=rand()%7+5;
-        				compteur[0]--;
-				}
-			}
-			if (map[i][k].type==TOTEM){
-				compteur[1]++;
-				if (compteur[1]>2){
-					map[i][k].type=rand()%4+1;
-         				compteur[1]--;
-          				compteur[0]++;
-				}
-				if (compteur[1]==2 && j==5){
-					j--;
-				}
-			}
-			if (map[i][k].type==COFFRE){
-				compteur[2]++; 
-				if (compteur[2]>2){
-					map[i][k].type=rand()%4+1;
-          				compteur[2]--;
-          				compteur[0]++;
-				}
-				if (compteur[2]==2 && j==6){
-					j--;
-				}
-			}
-			if (map[i][k].type==EPEE){
-				compteur[3]++; 
-				if (compteur[3]>1){
-					map[i][k].type=rand()%4+1;
-          				compteur[3]--;
-          				compteur[0]++;
-				}
-				if (compteur[3]==1 && j==7){
-					j--;
-				}
-			}
-			if (map[i][k].type==BATON){
-				compteur[4]++; 
-				if (compteur[4]>1){
-					map[i][k].type=rand()%4+1;
-          				compteur[4]--;
-          				compteur[0]++;
-				}
-				if (compteur[4]==1 && j==8){
-					j--;
-				}
-			}
-			if (map[i][k].type==GRIMOIRE){
-				compteur[5]++;
-				if (compteur[5]>1){
-					map[i][k].type=rand()%4+1;
-          				compteur[5]--;
-          				compteur[0]++;
-				}
-				if (compteur[5]==1 && j==9){
-					j--;
-				}
-			}
-			if (map[i][k].type==DAGUE){
-				compteur[6]++;
-				if (compteur[6]>1){
-					map[i][k].type=rand()%4+1;
-          				compteur[6]--;
-          				compteur[0]++;
-				}
-				if (compteur[6]==1 && j==10){
-					j--;
-				}
-			}
-			if (map[i][k].type==PORTAIL){
-				compteur[7]++;
-				j--;
-
-			}
-      			if (map[i][k].type==VIDE){
-       		 		printf("\nVide=%d %d\n",i,k);
-      			}
-		}
-	}
-  for(i=0;i<8;i++){
-    printf("\nCompteur n°%d est à %d.",i,compteur[i]);
+	      while(count(a,compteur)==0) {
+              a=rand()%11+1;
+              map[i][k].type=a;
+        }
+    }
   }
-  printf("\n");
+ for(i=0;i<8;i++){
+     printf("\nCompteur n°%d est à %d.",i,compteur[i]);
+ }
+printf("\n");
 }
 
 void viewMap(Case map[][ARRAY]){
@@ -161,4 +151,3 @@ int main (){
   viewMap(map);
   return 0;
 }
-
