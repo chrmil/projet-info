@@ -6,9 +6,9 @@
 #include <string.h>
 #include <errno.h>
 #define SIZE 12						// 10 characters + \n + EOF or \0
-#define ARRAY 7						// 7x7 cells
-#define SIZEX 62					// 9 width cell
-#define SIZEY 34					// 5 height cell
+#define ARRAY 7						// 7x7 cells map
+#define SIZEX 62					// 9 width cells (63 between 0 and 62)
+#define SIZEY 34					// 5 height cells (35 between 0 and 34)
 
 typedef struct Player{					// Structure player stats
 	char name[SIZE];
@@ -55,18 +55,10 @@ void printMapRec(int a, int b, char tab[][ARRAY]){	// map drawing function
 }
 
 void printMap(char tab[][ARRAY]){			// calls map drawing function
-	//printf("\033[1;30m");				// print in black
 	printf("\n");
 	printMapRec(SIZEX, SIZEY, tab);
 }
-/*
-int main(int argc, char** argv){
-	srand(time(NULL));
-	char map[ARRAY][ARRAY] ={0};
-	printMap(map);
-	return 0;
-}
-*/
+
 /*
 Couleurs
 printf("\033[x;yzm");
@@ -75,68 +67,88 @@ y (3 txt, 4bg)
 z (0 black, 1 red, 2 green, 3 yellow, 4 blue, 5 purple, 6 cyan, 7 white)
 */
 
-int main(int argc, char **argv) {
-	srand(time(NULL));
+void play(){								// function shows map and asks for user and score
+	char back;
 	pl s;
-	char map[ARRAY][ARRAY], tab[SIZE], menu;
-/*
-	for (int j = 0; j < SIZE; j++){
-		s.name[j] = ' ';
-	}
-*/
-	int i = 0;
 	s.pts = 0;
-	char* t;
-	FILE *f;
+	FILE *f = NULL;
+	char map[ARRAY][ARRAY];
+	printMap(map);
+	printf("Input an username: ");
+	scanf("\n%[^\n]s", s.name);					// \n ignores newline from last input
+	printf("Input a score: ");
+	scanf("%d", &s.pts);
+	if (s.pts <= -1){						// if the score is too high
+		s.pts = -1;
+	}
+	f = fopen("test.txt", "a+");					// open file
+	if (f == NULL) {						// open failed
+		printf("Failed to open the file\n");
+		printf("Error code = %d \n", errno);
+		printf("Error message = %s \n", strerror(errno));
+		exit(1);
+	}
+	fprintf(f, "%10d\n%10.10s\n", s.pts, s.name);
+	fclose(f);
+	printf("Game ended, input anything to go back to the menu\n");
+	scanf("\n%[^\n]s", &back);
+	menu();
+}
+
+void rank(){								// function shows the rankings
+	FILE* f = NULL;
+	char* t = NULL;
+	char tab[SIZE], back;
+	int i = 0;
+	f = fopen("test.txt", "a+");					// open file
+	if (f == NULL) {						// open failed
+		printf("Failed to open the file\n");
+		printf("Error code = %d \n", errno);
+		printf("Error message = %s \n", strerror(errno));
+		exit(1);
+	}
+	t = fgets(tab, SIZE, f);
+	if (t == NULL){							// read failed
+		printf("Failed to show the rankings\n");
+	}
+	while(i <= 20 && t != NULL){
+		printf("   Score : %s", tab);
+		i++;
+		t = fgets(tab, SIZE, f);				// read file
+		printf("Username : %s\n", tab);
+		i++;
+		t = fgets(tab, SIZE, f);				// read file
+	}
+	fclose(f);
+	printf("Input anything to go back to the menu\n");
+	scanf("\n%[^\n]s", &back);
+	menu();
+
+}
+
+void menu(){											// function shows the menu
+	char choice;
 	printf("Input 'p' to play, 'r' to check the rankings, 'c' to close the game\n");
-	scanf("%s", &menu);								// [^\n] doesn't stop at spaces
-	switch(menu){
+	scanf("\n%[^\n]s", &choice);								// [^\n] doesn't stop at spaces
+	switch(choice){
 		case 'p':
-			printMap(map);
-			printf("Input an username: ");
-			scanf("\n%[^\n]s", s.name);					// \n ignores newline from last input
-			printf("Input a score: ");
-			scanf("%d", &s.pts);
-			if (s.pts <= -1){						// if the score is too high
-				s.pts = -1;
-			}
-			f = fopen("test.txt", "a+");					// open file
-			if (f == NULL) {						// open failed
-				printf("Failed to open the file\n");
-				printf("Error code = %d \n", errno);
-				printf("Error message = %s \n", strerror(errno));
-				exit(1);
-			}
-			fprintf(f, "%10d\n%10.10s\n", s.pts, s.name);
-			fclose(f);
+			play();
 		break;
 		case 'r':
-			f = fopen("test.txt", "a+");					// open file
-			if (f == NULL) {						// open failed
-				printf("Failed to open the file\n");
-				printf("Error code = %d \n", errno);
-				printf("Error message = %s \n", strerror(errno));
-				exit(1);
-			}
-			t = fgets(tab, SIZE, f);
-			if (t == NULL){							// read failed
-				printf("Failed to show the rankings\n");
-			}
-			while(i <= 20 && t != NULL){
-				printf("   Score : %s", tab);
-				i++;
-				t = fgets(tab, SIZE, f);				// read file
-				printf("Username : %s\n", tab);
-				i++;
-				t = fgets(tab, SIZE, f);				// read file
-			}
-			fclose(f);
+			rank();
 		break;
-		default:
-			printf("Incorrect input\n");
 		case 'c':
 			printf("Game closed\n");
 		break;
+		default:
+			printf("Incorrect input\n");
+			menu();
+		break;
 	}
+}
+
+int main(int argc, char **argv) {
+	srand(time(NULL));
+	menu();
 	return 0;
 }
