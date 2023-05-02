@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#define SIZE 13
+#define SIZE 12						// 10 characters + \n + EOF or \0
 #define ARRAY 7						// 7x7 cells
 #define SIZEX 62					// 9 width cell
 #define SIZEY 34					// 5 height cell
@@ -115,17 +115,17 @@ int main(int argc, char **argv) {
 				printf("Error message = %s \n", strerror(errno));
 				exit(1);
 			}
-			t = fgets(tab, SIZE-1, f);
+			t = fgets(tab, SIZE, f);
 			if (t == NULL){							// read failed
 				printf("Failed to show the rankings\n");
 			}
 			while(i <= 20 && t != NULL){
 				printf("   Score : %s", tab);
 				i++;
-				t = fgets(tab, SIZE-1, f);				// read file
+				t = fgets(tab, SIZE, f);				// read file
 				printf("Username : %s\n", tab);
 				i++;
-				t = fgets(tab, SIZE-1, f);				// read file
+				t = fgets(tab, SIZE, f);				// read file
 			}
 			fclose(f);
 		break;
