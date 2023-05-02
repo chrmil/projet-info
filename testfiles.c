@@ -97,6 +97,9 @@ int main(int argc, char **argv) {
 			scanf("\n%[^\n]s", s.name);					// \n ignores newline from last input
 			printf("Input a score: ");
 			scanf("%d", &s.pts);
+			if (s.pts <= -1){						// if the score is too high
+				s.pts = -1;
+			}
 			f = fopen("test.txt", "a+");					// open file
 			if (f == NULL) {						// open failed
 				printf("Failed to open the file\n");
