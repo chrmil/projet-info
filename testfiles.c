@@ -3,58 +3,59 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <string.h>
 #include <errno.h>
-#define SIZE 15
-#define ARRAY 7						// 7x7 cases
-#define SIZEX 62					// 9 longueur case
-#define SIZEY 34					// 5 hauteur case
+#define SIZE 13
+#define ARRAY 7						// 7x7 cells
+#define SIZEX 62					// 9 width cell
+#define SIZEY 34					// 5 height cell
 
-typedef struct Score{
-	char nom[50];
+typedef struct Player{					// Structure player stats
+	char name[SIZE];
 	int pts;
-}score;
+}pl;
 
-void printMapRec(int a, int b, char tab[][ARRAY]){	// fonction dessine map
-	if (a>53 || a<9 || b>29 || b<5){		// si cases du bord
+void printMapRec(int a, int b, char tab[][ARRAY]){	// map drawing function
+	if (a>53 || a<9 || b>29 || b<5){		// edges of map
 		if(a>53 && b<25 && b>19){
-			printf("\033[0;41m");		// fond rouge (start haut gauche)
+			printf("\033[0;41m");		// red spawner
 		}
 		else if(a<45 && a>35 && b<5){
-			printf("\033[0;42m");		// fond vert (start bas gauche)
+			printf("\033[0;42m");		// green spawner
 		}
 		else if(a<9 && b<15 && b>9){
-			printf("\033[0;43m");		// fond jaune (start bas droit)
+			printf("\033[0;43m");		// yellow spawner
 		}
 		else if(a<27 && a>17 && b>29){
-			printf("\033[0;44m");		// fond bleu (start haut droit)
+			printf("\033[0;44m");		// blue spawner
 		}
 		else{
-			printf("\033[0m");		// pas de fond
+			printf("\033[0m");		// nothing
 		}
 	}
 	else if (((a/9)-(b/5))%2 == 0){
-		printf("\033[0;40m");			// fond noir
+		printf("\033[0;40m");			// black cells
 	}
 	else{
-		printf("\033[0;47m");			// fond blanc
+		printf("\033[0;47m");			// white cells
 	}
 	if (a>=0){
 		printf(" ");
-		printMapRec(a-1, b, tab);		// print une ligne
+		printMapRec(a-1, b, tab);		// print line
 	}
 	else if (b>0){
-		printf("\033[0m");			// fin
+		printf("\033[0m");			// end of line
 		printf("\n");
-		printMapRec(SIZEX, b-1, tab);		// changement de ligne
+		printMapRec(SIZEX, b-1, tab);		// newline
 	}
 	else{
 		printf("\n");
-		printf("\033[0m");			// fin
+		printf("\033[0m");			// end of function
 	}
 }
 
-void printMap(char tab[][ARRAY]){			// appel fonction dessine map
-	//printf("\033[1;30m");				// écriture en noir
+void printMap(char tab[][ARRAY]){			// calls map drawing function
+	//printf("\033[1;30m");				// print in black
 	printf("\n");
 	printMapRec(SIZEX, SIZEY, tab);
 }
@@ -74,68 +75,64 @@ y (3 txt, 4bg)
 z (0 black, 1 red, 2 green, 3 yellow, 4 blue, 5 purple, 6 cyan, 7 white)
 */
 
-void comp(){
-  
-}
-
 int main(int argc, char **argv) {
 	srand(time(NULL));
-	score a;
-	a.pts = 0;
-	a.nom[50] = {'_'};
-	char map[ARRAY][ARRAY], tab[SIZE], menu, nom[50] = {'_'};
+	pl s;
+	char map[ARRAY][ARRAY], tab[SIZE], menu;
+/*
+	for (int j = 0; j < SIZE; j++){
+		s.name[j] = ' ';
+	}
+*/
 	int i = 0;
+	s.pts = 0;
 	char* t;
 	FILE *f;
-	printf("Entrez 'j' pour jouer, 'c' pour voir le classement, 'f' pour fermer l'exécutable\n");
-	scanf("%c", &menu);
+	printf("Input 'p' to play, 'r' to check the rankings, 'c' to close the game\n");
+	scanf("%s", &menu);								// [^\n] doesn't stop at spaces
 	switch(menu){
-		case 'j':
+		case 'p':
 			printMap(map);
-			printf("Entrez un pseudo: ");
-			scanf("%s", a.nom);
-			printf("Entrez un score: ");
-			scanf("%d", &a.pts);
-			f = fopen("test.txt", "a+");					// ouverture fichier
-			if (f == NULL) {						// si pas ouvert
-				printf("Ouverture du fichier impossible\n");
-				printf("code d'erreur = %d \n", errno);
-				printf("Message d'erreur = %s \n", strerror(errno));
+			printf("Input an username: ");
+			scanf("\n%[^\n]s", s.name);					// \n ignores newline from last input
+			printf("Input a score: ");
+			scanf("%d", &s.pts);
+			f = fopen("test.txt", "a+");					// open file
+			if (f == NULL) {						// open failed
+				printf("Failed to open the file\n");
+				printf("Error code = %d \n", errno);
+				printf("Error message = %s \n", strerror(errno));
 				exit(1);
 			}
-			t = fgets(tab, SIZE-1, f);					// lecture fichier
-			if (t == NULL){							// si échec lecture
-				printf("Echec lecture du classement\n");
-			}
-			fprintf(f, "\n%10d\n%10.10s", a.pts, a.nom);
+			fprintf(f, "%10d\n%10.10s\n", s.pts, s.name);
 			fclose(f);
 		break;
-		case 'c':
-			f = fopen("test.txt", "a+");					// ouverture fichier
-			if (f == NULL) {						// si pas ouvert
-				printf("Ouverture du fichier impossible\n");
-				printf("code d'erreur = %d \n", errno);
-				printf("Message d'erreur = %s \n", strerror(errno));
+		case 'r':
+			f = fopen("test.txt", "a+");					// open file
+			if (f == NULL) {						// open failed
+				printf("Failed to open the file\n");
+				printf("Error code = %d \n", errno);
+				printf("Error message = %s \n", strerror(errno));
 				exit(1);
 			}
 			t = fgets(tab, SIZE-1, f);
-			if (t == NULL){							// si échec lecture
-				printf("Echec lecture du classement\n");
+			if (t == NULL){							// read failed
+				printf("Failed to show the rankings\n");
 			}
 			while(i <= 20 && t != NULL){
-				t = fgets(tab, SIZE-1, f);					// lecture fichier
-				if (t == NULL){							// si échec lecture
-					printf("Echec lecture du classement\n");
-				}
-				printf("%s\n", tab);
+				printf("   Score : %s", tab);
 				i++;
+				t = fgets(tab, SIZE-1, f);				// read file
+				printf("Username : %s\n", tab);
+				i++;
+				t = fgets(tab, SIZE-1, f);				// read file
 			}
 			fclose(f);
 		break;
 		default:
-			printf("Entrée incorrecte\n");
-		case 'f':
-			printf("Fin de l'exécution\n");
+			printf("Incorrect input\n");
+		case 'c':
+			printf("Game closed\n");
 		break;
 	}
 	return 0;
