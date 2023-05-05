@@ -6,7 +6,7 @@
 #include <string.h>
 #include <errno.h>
 #define SIZE 12						// 10 characters + \n or EOF + \0
-#define ARRAY 7						// 7x7 cells map
+#define ARRAY 7						// 7x7 cells map (including spawns)
 #define SIZEX 62					// 9 width cells (63 between 0 and 62)
 #define SIZEY 34					// 5 height cells (35 between 0 and 34)
 
@@ -15,30 +15,99 @@ typedef struct Player{					// structure player stats
 	int pts;
 }pl;
 
-void finish(char plrnb, pl* s){						// end of game
+char sortTab(pl tab[], char size){					// verif tab trié Christelle
+	char i;
+	for (i=0;i<size-1;i++){
+		if (tab[i].pts<tab[i+1].pts){
+			return 0;
+		}
+	}
+	return 1;
+}
+
+void merge(pl tab[], char begin, char middle, char end, char size){	// tri fusion Christelle
+	char i,k,j;
+	pl* tab2 = NULL;
+	tab2 = malloc(size * sizeof(pl));
+	if (tab2 == NULL){
+		printf("Failed to allocate for pl* tab2 (func merge)");
+		exit(61);
+	}
+	k=begin;
+	j=end;
+	for (i=begin; i<middle+1;i++){
+		tab2[i]=tab[i];
+	}
+	for (i=middle+1; i<end+1;i++){
+		tab2[i]=tab[end-i+middle+1];
+	}
+	for (i=begin; i<end+1; i++){
+		if(tab2[k].pts>=tab2[j].pts){
+			tab[i]=tab2[k];
+			k++;
+		}
+		else{
+			tab[i]=tab2[j];
+			j--;
+		}
+	}
+		
+}
+void mergeSortRec(pl tab[], char begin, char end, char size){		// fonction récursive : tri par fusion
+	char middle;
+	if (begin<end){
+		middle=(begin+end)/2;					// divise le tab en sous-tabs
+		mergeSortRec(tab, begin, middle, size);
+		mergeSortRec(tab, middle+1, end, size);
+		merge(tab, begin, middle, end, size);			// fusionne tous les sous-tabs dans l'ordre croissant
+	}
+}
+
+void mergeSort(pl tab[], char size){					// tri à fusion, met les variables de la fct° récursive à la bonne valeur
+	if (sortTab(tab, size)){
+		return;
+	}
+	mergeSortRec(tab, 0, size-1, size);
+}
+
+void sortRanks(FILE* f, char k){					// function sorts the rankings from highest to lowest scores
+	char i;
+	pl* sort = NULL;
+	sort = malloc(k * sizeof(pl));
+	if (sort == NULL){
+		printf("Failed to allocate for pl* sort (func sortRanks)");
+		exit(51);
+	}
+	rewind(f);
+	for (i = 0; i < k; i++){					// group the rankings in a tab
+		fscanf(f, " %d", &sort[i].pts);
+		fscanf(f, "\n%[^\n]s", sort[i].name);
+	}
+	mergeSort(sort, k);						// sort the tab
+	rewind(f);
+	for (i = 0; i < k; i++){					// print the sorted tab
+		fprintf(f, "%10d %10.10s\n", sort[i].pts, sort[i].name);
+	}
+	free(sort);
+}
+
+char addScores(FILE* f, pl* s, char plrnb){				// function checks if name was already registered and prints scores accordingly
 	short t = 0;							// return of fscanf
-	char i, j, ls, lrank, back, tab[SIZE], *a = NULL, *b = NULL;
+	char i, j, k = 0, ls, lrank, *a = NULL, *b = NULL;
 	pl rank;
-	FILE* f = NULL;
 	a = malloc(plrnb * sizeof(char));
 	if (a == NULL){
-		printf("Failed to allocate for char *a (func finish)");
-		exit(2);
+		printf("Failed to allocate for char* a (func addScores)");
+		exit(42);
 	}
 	b = calloc(plrnb, sizeof(char));
 	if (b == NULL){
-		printf("Failed to allocate for char *b (func finish)");
-		exit(3);
-	}
-	f = fopen("test.txt", "r+");					// open file
-	if (f == NULL) {						// open failed
-		printf("Failed to open the file\n");
-		printf("Error code = %d \n", errno);
-		printf("Error message = %s \n", strerror(errno));
-		exit(1);
+		printf("Failed to allocate for char* b (func addScores)");
+		exit(42);
 	}
 	t = fscanf(f, " %d", &rank.pts);				// read file
 	while(t != EOF){						// compares the names
+		k++;
 		t = fscanf(f, "\n%[^\n]s", rank.name);
 		for (i = 0; i < plrnb; i++){
 			a[i] = 0;
@@ -66,13 +135,38 @@ void finish(char plrnb, pl* s){						// end of game
 	}
 	for (i = 0; i < plrnb; i++){					// print scores in file if player name doesn't exist yet
 		if (b[i] == 0){
-			fprintf(f, "%10d\n%10.10s\n", s[i].pts, s[i].name);
+			k++;
+			fprintf(f, "%10d %10.10s\n", s[i].pts, s[i].name);
 		}
 	}
+	free(a);
+	free(b);
+	return k;
+}
+
+void finish(char plrnb, char botnb, pl* s, char level[]){		// end of game
+	char back, k;
+	FILE* f = NULL;
+	f = fopen("test.txt", "r+");					// open file
+	if (f == NULL) {						// open failed
+		printf("Failed to open the file\n");
+		printf("Error code = %d \n", errno);
+		printf("Error message = %s \n", strerror(errno));
+		exit(30);
+	}
+	k = addScores(f, s, plrnb);
+	sortRanks(f, k);
 	fclose(f);
-	printf("Game ended, input anything to go back to the menu\n");
-	scanf("\n%[^\n]c", &back);
-	menu();
+	printf("Game ended\nInput 'r' to replay with the same players\nInput anything else to go back to the menu\n");
+	scanf("\n%[^\n]c", &back);					// asks to replay with the same players and bot levels
+	switch(back){
+		case 'r':
+			game(plrnb, botnb, s, level);
+		break;
+		default:
+			menu();
+		break;
+	}
 }
 
 void printMapRec(int a, int b, char tab[][ARRAY]){	// map drawing function
@@ -132,18 +226,18 @@ void game(char plrnb, char botnb, pl* s, char level[]){		// game function
 	char i;
 	printMap();
 	for (i = 0; i < plrnb; i++){
-		printf("Input P%d's score: ", i+1);
+		printf("Input %s's score: ", s[i].name);
 		scanf(" %d", &s[i].pts);
 		if (s[i].pts <= -1){				// if the score is too high
 			s[i].pts = -1;
 		}
 	}
-	finish(plrnb, s);
+	finish(plrnb, botnb, s, level);
 }
 
 void start(){																// function asks for the initial player infos
-	char back, total, totalnb, plr, plrnb, botnb, i, level[4];
-	pl* s;
+	char back, total, totalnb, plr, plrnb, botnb, i, j, ls, level[4];
+	pl* s = NULL;
 	printf("Input the total number of players in the game (between 2 and 4, humans and bots included)\n");				// total number of players (humans and bots)
 	scanf("\n%[^\n]c", &total);
 	while(total > '4' || total < '2'){
@@ -163,11 +257,17 @@ void start(){																// function asks for the initial player infos
 		s = malloc(plrnb * sizeof(pl));
 		if (s == NULL){
 			printf("Failed to allocate for pl* s (func start)");
-			exit(1);
+			exit(21);
 		}
 		for (i = 0; i < plrnb; i++){
 			printf("Input P%d's username: ", i+1);
 			scanf("\n%[^\n]s", s[i].name);
+			ls = strlen(s[i].name);
+			for (j = 0; j < ls; j++){
+				if (s[i].name[j] <= 'z' && s[i].name[j] >= 'a'){
+					s[i].name[j] -= 32;
+				}
+			}
 		}
 	}
 	if (botnb){															// bot level inputs
@@ -222,21 +322,21 @@ void rank(){								// function shows the rankings
 	char* t = NULL;
 	char tab[SIZE], back;
 	char i = 0;
-	f = fopen("test.txt", "a+");					// open file
+	f = fopen("test.txt", "r");					// open file
 	if (f == NULL) {						// open failed
 		printf("Failed to open the file\n");
 		printf("Error code = %d \n", errno);
 		printf("Error message = %s \n", strerror(errno));
-		exit(1);
+		exit(10);
 	}
 	t = fgets(tab, SIZE, f);					// read file
 	if (t == NULL){							// read failed
 		printf("Failed to show the rankings\n");
 	}
 	while(i <= 18 && t != NULL){					// reads the first 10 players
-		printf("   Score : %s", tab);
+		printf("Score : %s", tab);
 		t = fgets(tab, SIZE, f);
-		printf("Username : %s\n", tab);
+		printf("Username : %s", tab);
 		i += 2;
 		t = fgets(tab, SIZE, f);
 	}
@@ -247,10 +347,10 @@ void rank(){								// function shows the rankings
 
 }
 
-void menu(){									// function shows the menu
+void menu(){											// function shows the menu
 	char choice;
 	printf("Input 'p' to play\nInput 'r' to check the rankings\nInput 'c' to close the game\n");
-	scanf("\n%[^\n]c", &choice);						// \n ignores newline from last input, [^\n] doesn't stop at spaces
+	scanf("\n%[^\n]c", &choice);								// \n ignores newline from last input, [^\n] doesn't stop at spaces
 	switch(choice){
 		case 'p':
 			play();
