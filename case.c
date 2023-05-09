@@ -1,4 +1,4 @@
-///generation des tuiles
+//generation des tuiles
  
 #include <stdio.h>
 #include <math.h>
@@ -30,6 +30,12 @@ typedef struct {
 	int y;
 	Color color; //couleur du perso + spawn
 }Character;
+
+int scan(char* input){ //fonct° scan pour limiter les bugs juste pour les %c 
+	int a=scanf("%c", input);
+	while(getchar() != '\n'){}
+	return a;
+}
 
 int countTiles(int a, int* compteur){//gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
   switch(a){
@@ -166,7 +172,7 @@ int chooseWeapon(){  //choix d'une arme à chaque tour
 		char weapon;
 		do{
 			printf("Choose a weapon for this turn :\n[1]Torch\n[2]Shield\n[3]Axe\n[4]Bow\n"); //demande tant que réponse incorrecte
-			scanf("%c", weapon);
+			scan(&weapon);
 		}while(weapon!=1 && weapon!=2 && weapon!=3 && weapon!=4);
 		switch(weapon){
 			case '1':
@@ -303,16 +309,16 @@ int totemFunction(Tile totem, Tile map[][ARRAY]){
 	if (totem.state==1 || totem.type==0 || totem.type!=TOTEM){
 		exit(4); //si tuile déjà explorée ou vide ou pas un totem
 	}
-	char x[5];
-	char y[5];
+	char x;
+	char y;
 	int line, column;
 	printf("\nYou find a magical totem glowing ominously. As you feel yourself dying, you are presented with a choice:\n");
 	do{
 	printf("Choose a tile to exchange the totem with (Line and column numbers):\n");
-	scanf("%s",&x);
-	scanf("%s",&y);
-	line=atoi(x);
-	column=atoi(y);
+	scan(&x);
+	scan(&y);
+	line=atoi(&x);
+	column=atoi(&y);
 	}while(map[line][column].state==1 || map[line][column].type==VOID ||  map[line-1][column].type==SPAWN || map[line][column-1].type==SPAWN||  map[line+1][column].type==SPAWN || map[line][column+1].type==SPAWN);
 
 	Tile tile;
@@ -326,16 +332,16 @@ int portalFunction(Tile portal, Tile map[][ARRAY], Character p){
 	if (portal.state==1 || portal.type==0 || portal.type!=PORTAL){
 		exit(4); //si tuile déjà explorée ou vide ou pas un portail
 	}
-	char x[5];
-	char y[5];
+	char x;
+	char y;
 	int line, column;
 	printf("\nYou find a magical portal. As you feel yourself pulled in, you are presented with a choice:\n");
 	do{
 	printf("Choose a tile to be teleported to (Line and column numbers):\n");
-	scanf("%s",&x);
-	scanf("%s",&y);
-	line=atoi(x);
-	column=atoi(y);
+	scan(&x);
+	scan(&y);
+	line=atoi(&x);
+	column=atoi(&y);
 	}while(map[line][column].state==1);
 	p.x=line;
 	p.y=column;
@@ -395,14 +401,15 @@ Character* createCharacters(){ //création des 4 persos
 	}
 	int error=0;
 	int k;
+	int a=0;
 	for(i=0; i<4; i++){
 		printf("Choose a class for your character:\n[1]Warrior\n[2]Ranger\n[3]Mage\n[4]Thief\n");
 		do{	
+			a=0;
 			error=0;
 			printf("\nPlayer n°%d:\n",i+1);
-			int a=scanf("%c", &class[i]);
 			while (a==0){
-				a=scanf("%c", &class[i]);
+				a=scan( &class[i]);
 			}
 			if(a!=0){
 				if (class[i]!='1' && class[i]!='2' && class[i]!='3' && class[i]!='4'){
@@ -444,7 +451,7 @@ Character* createCharacters(){ //création des 4 persos
 		do{
 			error=0;
 			printf("\nPlayer n°%d:\n",i+1);
-			scanf("%c", color[i]);
+			scan (&color[i]);
 			if (color[i]!='1' && color[i]!='2' && color[i]!='3' && color[i]!='4'){
 				error=1;
 			}
@@ -483,19 +490,23 @@ void viewCharacters(Character* players){
 	for (i=0;i<4;i++){
 		switch(players[i].color){
 			case 0: 
-			printf("\033[0;1m");
+		/*	printf("\033[0;1m"); en gras  */ 
+			printf("\033[01;31m");
 			break;
 			case 1: 
-			printf("\033[0;4m");
+		/* 	printf("\033[0;4m"); en surligné */
+			printf("\033[01;34m");
 			break;
 			case 2: 
-			printf("\033[0;2m");
+		/*	printf("\033[0;2m"); en plus sombre (gris?) */
+			printf("\033[01;32m");
 			break;
 			case 3: 
-			printf("\033[0;3m");
+		/*	printf("\033[0;3m"); en italiques */
+			printf("\033[01;33m"); 
 			break;
 		}
-		printf("\nPlayer n°%d:\n",i);
+		printf("\nPlayer n°%d:\n",i+1);
 		printf("Class: ");
 		switch(players[i].class){
 			case 0: 
@@ -519,10 +530,11 @@ void viewCharacters(Character* players){
 		else{
 			printf("\nArtifact not found.");
 		}
-		printf("\nNumber of chests found : %d",players[i]); 
+		printf("\nNumber of chests found : %d.",players[i].chest); 
 		printf("\033[00m");
 	
 	}
+	printf("\n");
 
 }	
 
