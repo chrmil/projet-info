@@ -10,12 +10,23 @@
 #define SIZEX 62					// 9 width cells (63 between 0 and 62)
 #define SIZEY 34					// 5 height cells (35 between 0 and 34)
 
+typedef enum {WARRIOR,RANGER,WIZARD,THIEF}Role;		// role player
+
 typedef struct Player{					// structure player stats
 	char name[10];					// 10 characters name
+	Role role; 
 	int pts;
 }pl;
 
-char sortTab(pl tab[], char size){					// verif tab trié Christelle
+void menu();
+void game(char plrnb, char botnb, pl* s, char level[]);
+
+void scan(char* input){
+	scanf("%c", input);
+	while(getchar() != '\n'){}
+}
+
+char sortTab(pl tab[], char size){					// sorted tab verification
 	char i;
 	for (i=0;i<size-1;i++){
 		if (tab[i].pts<tab[i+1].pts){
@@ -25,7 +36,7 @@ char sortTab(pl tab[], char size){					// verif tab trié Christelle
 	return 1;
 }
 
-void merge(pl tab[], char begin, char middle, char end, char size){	// tri fusion Christelle
+void merge(pl tab[], char begin, char middle, char end, char size){	// mergesort Christelle
 	char i,k,j;
 	pl* tab2 = NULL;
 	tab2 = malloc(size * sizeof(pl));
@@ -53,17 +64,17 @@ void merge(pl tab[], char begin, char middle, char end, char size){	// tri fusio
 	}
 		
 }
-void mergeSortRec(pl tab[], char begin, char end, char size){		// fonction récursive : tri par fusion
+void mergeSortRec(pl tab[], char begin, char end, char size){		// mergesort function
 	char middle;
 	if (begin<end){
-		middle=(begin+end)/2;					// divise le tab en sous-tabs
+		middle=(begin+end)/2;					// cuts the tab in half
 		mergeSortRec(tab, begin, middle, size);
 		mergeSortRec(tab, middle+1, end, size);
-		merge(tab, begin, middle, end, size);			// fusionne tous les sous-tabs dans l'ordre croissant
+		merge(tab, begin, middle, end, size);			// merges the tabs
 	}
 }
 
-void mergeSort(pl tab[], char size){					// tri à fusion, met les variables de la fct° récursive à la bonne valeur
+void mergeSort(pl tab[], char size){					// mergesort function call
 	if (sortTab(tab, size)){
 		return;
 	}
@@ -147,7 +158,7 @@ char addScores(FILE* f, pl* s, char plrnb){				// function checks if name was al
 void finish(char plrnb, char botnb, pl* s, char level[]){		// end of game
 	char back, k;
 	FILE* f = NULL;
-	f = fopen("test.txt", "r+");					// open file
+	f = fopen("test.txt", "w+");					// open file
 	if (f == NULL) {						// open failed
 		printf("Failed to open the file\n");
 		printf("Error code = %d \n", errno);
@@ -158,9 +169,10 @@ void finish(char plrnb, char botnb, pl* s, char level[]){		// end of game
 	sortRanks(f, k);
 	fclose(f);
 	printf("Game ended\nInput 'r' to replay with the same players\nInput anything else to go back to the menu\n");
-	scanf("\n%[^\n]c", &back);					// asks to replay with the same players and bot levels
+	scan(&back);					// asks to replay with the same players and bot levels
 	switch(back){
 		case 'r':
+			printf("\nRestarting game...\n");
 			game(plrnb, botnb, s, level);
 		break;
 		default:
@@ -215,7 +227,7 @@ void printMap(){			// calls map drawing function
 }
 
 /*
-Couleurs
+Colours
 printf("\033[x;yzm");
 x (0 normal, 1 bold, 2 darker, 3 italic, 4 underligned,  5 boop beep)
 y (3 txt, 4bg)
@@ -227,7 +239,7 @@ void game(char plrnb, char botnb, pl* s, char level[]){		// game function
 	printMap();
 	for (i = 0; i < plrnb; i++){
 		printf("Input %s's score: ", s[i].name);
-		scanf(" %d", &s[i].pts);
+		scanf("%d", &s[i].pts);
 		if (s[i].pts <= -1){				// if the score is too high
 			s[i].pts = -1;
 		}
@@ -236,22 +248,22 @@ void game(char plrnb, char botnb, pl* s, char level[]){		// game function
 }
 
 void start(){																// function asks for the initial player infos
-	char back, total, totalnb, plr, plrnb, botnb, i, j, ls, level[4];
+	char back, total, totalnb, plr, plrnb, role, botnb, i, j, k, ls, lk, a, level[4];
 	pl* s = NULL;
 	printf("Input the total number of players in the game (between 2 and 4, humans and bots included)\n");				// total number of players (humans and bots)
-	scanf("\n%[^\n]c", &total);
+	scan(&total);
 	while(total > '4' || total < '2'){
 		printf("Incorrect input\nInput the total number of players in the game (between 2 and 4, humans and bots included)\n");
-		scanf("\n%[^\n]c", &total);
+		scan(&total);
 	}
 	printf("\nInput the number of human players in the game (between 0 and %c, the other players will be bots)\n", total);		// number of human players
-	scanf("\n%[^\n]c", &plr);
+	scan(&plr);
 	while(plr > total || plr < '0'){
 		printf("Incorrect input\nInput the number of human players in the game (between 0 and %c, the other players will be bots)\n", total);
-		scanf("\n%[^\n]c", &plr);
+		scan(&plr);
 	}
-	totalnb = atoi(&total);
-	plrnb = atoi(&plr);
+	totalnb = total - 48;
+	plrnb = plr - 48;
 	botnb = total - plr;
 	if (plrnb){															// username inputs (human only)
 		s = malloc(plrnb * sizeof(pl));
@@ -268,12 +280,28 @@ void start(){																// function asks for the initial player infos
 					s[i].name[j] -= 32;
 				}
 			}
+			for (k = 0; k < i; k++){				// checks if two players have the same username
+				lk = strlen(s[k].name);
+				if (ls != lk){					// compares name length
+					a = 1;
+				}
+				else{
+					for (j = 0; j < ls; j++){		// compares each character
+						if (s[i].name[j] != s[k].name[j]){
+							a = 1;
+						}
+					}
+				}
+			}
+			if (a == 0){
+				i--;
+			}
 		}
 	}
-	if (botnb){															// bot level inputs
+	if (botnb){								// bot level inputs
 		for (i = 0; i < botnb; i++){
 			printf("Input Bot%d's level: ", i+1);
-			scanf("\n%[^\n]c", &level[i]);
+			scan(&level[i]);
 		}
 	}
 	game(plrnb, botnb, s, level);
@@ -283,7 +311,7 @@ void play(){
 	char choice;
 	if (NULL){							// if there is a saved file
 		printf("Saved data was found, input 's', to continue the game\nInput 'n' to start a new game (saved data will be erased)\nInput 'm' to go back to the menu\n");
-		scanf("\n%[^\n]s", &choice);
+		scan(&choice);
 		switch(choice){
 			case 's':					// will be added later
 			break;
@@ -301,7 +329,7 @@ void play(){
 	}
 	else{								// if there is no saved file
 		printf("Input 'n' to start a new game\nInput 'm' to go back to the menu\n");
-		scanf("\n%[^\n]s", &choice);
+		scan(&choice);
 		switch(choice){
 			case 'n':
 				start();
@@ -342,15 +370,15 @@ void rank(){								// function shows the rankings
 	}
 	fclose(f);
 	printf("Input anything to go back to the menu\n");
-	scanf("\n%[^\n]c", &back);
+	scan(&back);
 	menu();
 
 }
 
-void menu(){											// function shows the menu
+void menu(){								// function shows the menu
 	char choice;
 	printf("Input 'p' to play\nInput 'r' to check the rankings\nInput 'c' to close the game\n");
-	scanf("\n%[^\n]c", &choice);								// \n ignores newline from last input, [^\n] doesn't stop at spaces
+	scan(&choice);
 	switch(choice){
 		case 'p':
 			play();
