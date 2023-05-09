@@ -21,7 +21,7 @@ typedef struct Player{					// structure player stats
 void menu();
 void game(char plrnb, char botnb, pl* s, char level[]);
 
-void scan(char* input){
+void scan(char* input){							// scanf function but deletes the end
 	scanf("%c", input);
 	while(getchar() != '\n'){}
 }
@@ -138,7 +138,7 @@ char addScores(FILE* f, pl* s, char plrnb){				// function checks if name was al
 				rank.pts += s[i].pts;
 				fseek(f, -21, SEEK_CUR);
 				fprintf(f, "%10d", rank.pts);
-				fseek(f, 21, SEEK_CUR);
+				fseek(f, 11, SEEK_CUR);
 				b[i] = 1;
 			}
 		}
@@ -158,7 +158,7 @@ char addScores(FILE* f, pl* s, char plrnb){				// function checks if name was al
 void finish(char plrnb, char botnb, pl* s, char level[]){		// end of game
 	char back, k;
 	FILE* f = NULL;
-	f = fopen("test.txt", "w+");					// open file
+	f = fopen("test.txt", "r+");					// open file
 	if (f == NULL) {						// open failed
 		printf("Failed to open the file\n");
 		printf("Error code = %d \n", errno);
@@ -248,7 +248,7 @@ void game(char plrnb, char botnb, pl* s, char level[]){		// game function
 }
 
 void start(){																// function asks for the initial player infos
-	char back, total, totalnb, plr, plrnb, role, botnb, i, j, k, ls, lk, a, level[4];
+	char back, total, totalnb, plr, plrnb, role, botnb, i, j, k, ls, lk, a, b, level[4];
 	pl* s = NULL;
 	printf("Input the total number of players in the game (between 2 and 4, humans and bots included)\n");				// total number of players (humans and bots)
 	scan(&total);
@@ -281,6 +281,7 @@ void start(){																// function asks for the initial player infos
 				}
 			}
 			for (k = 0; k < i; k++){				// checks if two players have the same username
+				a = 0;
 				lk = strlen(s[k].name);
 				if (ls != lk){					// compares name length
 					a = 1;
@@ -292,9 +293,13 @@ void start(){																// function asks for the initial player infos
 						}
 					}
 				}
+				if (a == 0){
+					b = 1;
+				}
 			}
-			if (a == 0){
+			if (b = 1){							// redoes if the username is the same as another player's
 				i--;
+				printf("Username is already taken\n");
 			}
 		}
 	}
