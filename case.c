@@ -11,13 +11,14 @@
 
 
 //nature de la case 
-typedef enum {VOID/*0*/ , BASILIC/*1*/, TROLL/*2*/, ZOMBIE/*3*/, HARPY/*4*/, TOTEM/*5*/, CHEST/*6*/, SWORD/*7*/, STAFF/*8*/, SPELLBOOK/*9*/, DAGGER/*10*/, PORTAL /*11*/}Type;
+typedef enum {VOID/*0*/ , BASILIC/*1*/, TROLL/*2*/, ZOMBIE/*3*/, HARPY/*4*/, TOTEM/*5*/, CHEST/*6*/, SWORD/*7*/, STAFF/*8*/, SPELLBOOK/*9*/, DAGGER/*10*/, PORTAL /*11*/, SPAWN/*12*/}Type;
 typedef enum {TORCH,SHIELD,AXE,BOW}Weapon; //armes équipables
 typedef enum {WARRIOR,RANGER,MAGE,THIEF}Class; //classe choisie par le personnage
-
+typedef enum {RED, BLUE, GREEN, YELLOW}Color;
 typedef struct {
 	Type type; //nature de la case
 	int state; //0 si case cachée, 1 sinon
+	int player; //0 si personne 1 , 2 , 3 , 4 en fonct° du joueur
 }Tile;
 
 typedef struct {
@@ -25,9 +26,12 @@ typedef struct {
 	Class class; //classe du personnage
 	int artifact;//0 si arme antique pas trouvée, 1 sinon
 	int chest;//nombre de coffres récupérés: 0, 1 ou 2
+	int x;//position du personnage
+	int y;
+	Color color; //couleur du perso + spawn
 }Character;
 
-int countTiles(int a, int* compteur){//gère le compteur et renvoie 0 si le nombre max de cases d'un ceratin type est déjà atteint et 1 sinon
+int countTiles(int a, int* compteur){//gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
   switch(a){
 	  case 1: //monstres
 		case 2:
@@ -95,7 +99,7 @@ int countTiles(int a, int* compteur){//gère le compteur et renvoie 0 si le nomb
 
 
 
-void generateTiles(Case map[][ARRAY]){
+void generateTiles(Tile map[][ARRAY]){
 	srand( time( NULL ) );
 	if (map==NULL){
 		exit(1);
@@ -108,20 +112,24 @@ void generateTiles(Case map[][ARRAY]){
 	} 
 	for (i=0; i<7; i++){
 			map[0][i].state=1; //contour du plateau, cases vides=cases révélées
-			map[0][i].type=VIDE;
+			map[0][i].type=VOID;
 	}
 	for (i=0; i<7; i++){
 			map[6][i].state=1;
-			map[6][i].type=VIDE;
+			map[6][i].type=VOID;
 	}
 	for (i=0; i<7; i++){
 			map[i][0].state=1;
-			map[i][0].type=VIDE;
+			map[i][0].type=VOID;
 	}
 	for (i=0; i<7; i++){
 			map[i][6].state=1;
-			map[i][6].type=VIDE;
+			map[i][6].type=VOID;
 	}
+	map[0][4].type=SPAWN;
+	map[2][0].type=SPAWN;
+	map[4][6].type=SPAWN;
+	map[6][2].type=SPAWN;
 	int a;
 	for (i=1; i<6; i++){
 		for(k=1;k<6;k++){
@@ -162,19 +170,19 @@ int chooseWeapon(){  //choix d'une arme à chaque tour
 		}while(weapon!=1 && weapon!=2 && weapon!=3 && weapon!=4);
 		switch(weapon){
 			case '1':
-				printf("\nYou choose a torch to light the way.\n") //renvoie la valeur correspondant à l'arme dans l'enumération Weapon
+				printf("\nYou choose a torch to light the way.\n"); //renvoie la valeur correspondant à l'arme dans l'enumération Weapon
 				return 0;
 			break;
 			case '2':
-				printf("\nYou choose a shield to defend yourself.\n")
+				printf("\nYou choose a shield to defend yourself.\n");
 				return 1;
 			break;
 			case '3':
-				printf("\nYou choose an axe to cut down monsters.\n")
+				printf("\nYou choose an axe to cut down monsters.\n");
 				return 2;
 			break;
 			case '4':
-				printf("\nYou choose a bow to kill monsters from afar.\n")
+				printf("\nYou choose a bow to kill monsters from afar.\n");
 				return 3;
 			break;
 			default:
@@ -239,12 +247,12 @@ int fightMonster(Weapon weapon, Tile monster){
 }
 
 int legendaryWeapon(Character p, Tile treasure){
-	if (tile.state==1 || tile.type<7 || tile.type==11){
+	if (treasure.state==1 || treasure.type<7 || treasure.type==11){
 		exit(6); //si tuile déjà explorée ou vide ou pas une arme antique
 	}
 	switch(treasure.type){
 		case 7: //épée découverte
-			printf("\nYou find the legendary sword of fire.")
+			printf("\nYou find the legendary sword of fire.");
 			if(p.class==WARRIOR){
 				printf("\nAs a warrior, you were looking for this artifact. You take it with you.");
 				p.artifact++;
@@ -254,7 +262,7 @@ int legendaryWeapon(Character p, Tile treasure){
 			}
 		break;
 		case 8: //baton découvert
-			printf("\nYou find the legendary familiars' command staff.")
+			printf("\nYou find the legendary familiars' command staff.");
 			if(p.class==RANGER){
 				printf("\nAs a ranger, you were looking for this artifact. You take it with you.");
 				p.artifact++;
@@ -264,7 +272,7 @@ int legendaryWeapon(Character p, Tile treasure){
 			}
 		break;
 		case 9://grimoire découvert
-			printf("\nYou find the legendary spellbok.")
+			printf("\nYou find the legendary spellbook.");
 			if(p.class==MAGE){
 				printf("\nAs a mage, you were looking for this artifact. You take it with you.");
 				p.artifact++;
@@ -274,7 +282,7 @@ int legendaryWeapon(Character p, Tile treasure){
 			}
 		break;
 		case 10: //dague découverte
-			printf("\nYou find the legendary dagger of sleep.")
+			printf("\nYou find the legendary dagger of sleep.");
 			if(p.class==THIEF){
 				printf("\nAs a thief, you were looking for this artifact. You take it with you.");
 				p.artifact++;
@@ -291,30 +299,72 @@ int legendaryWeapon(Character p, Tile treasure){
 	return 1;
 }
 
+int totemFunction(Tile totem, Tile map[][ARRAY]){
+	if (totem.state==1 || totem.type==0 || totem.type!=TOTEM){
+		exit(4); //si tuile déjà explorée ou vide ou pas un totem
+	}
+	char x[5];
+	char y[5];
+	int line, column;
+	printf("\nYou find a magical totem glowing ominously. As you feel yourself dying, you are presented with a choice:\n");
+	do{
+	printf("Choose a tile to exchange the totem with (Line and column numbers):\n");
+	scanf("%s",&x);
+	scanf("%s",&y);
+	line=atoi(x);
+	column=atoi(y);
+	}while(map[line][column].state==1 || map[line][column].type==VOID ||  map[line-1][column].type==SPAWN || map[line][column-1].type==SPAWN||  map[line+1][column].type==SPAWN || map[line][column+1].type==SPAWN);
 
-int revealTile(Tile tile, Character p){ //renvoie 0 si fin du tour, 1 sinon
-	if (tile.state==1 || tile.type==0){
+	Tile tile;
+	tile=map[line][column];
+	map[line][column].type=TOTEM;
+	totem=tile;
+	return 0;
+}
+
+int portalFunction(Tile portal, Tile map[][ARRAY], Character p){
+	if (portal.state==1 || portal.type==0 || portal.type!=PORTAL){
+		exit(4); //si tuile déjà explorée ou vide ou pas un portail
+	}
+	char x[5];
+	char y[5];
+	int line, column;
+	printf("\nYou find a magical portal. As you feel yourself pulled in, you are presented with a choice:\n");
+	do{
+	printf("Choose a tile to be teleported to (Line and column numbers):\n");
+	scanf("%s",&x);
+	scanf("%s",&y);
+	line=atoi(x);
+	column=atoi(y);
+	}while(map[line][column].state==1);
+	p.x=line;
+	p.y=column;
+	return 1;
+}
+
+int revealTile(Tile tile, Character p, Tile map[][ARRAY]){ //renvoie 0 si fin du tour, 1 sinon
+	if (tile.state==1 || tile.type==0 || tile.type==12){
 		exit(4); //si tuile déjà explorée ou vide
 	}
 	printf("\nYou enter a new room.");
 	if (tile.type>0 && tile.type<5){
 		printf("\nA foe attacks you.");
-		return fightMonster(p.weapon, tile); //si tuile=monstre ->apelle fonction fightMonster, renvoie 0 ou 1 si défaite ou victoire
+		return fightMonster(p.weapon, tile); //si tuile=monstre ->appelle fonction fightMonster, renvoie 0 ou 1 si défaite ou victoire
 	}
 	else if(tile.type>6 && tile.type<11){
-		printf("\nYou discover an artifact."); //si tuile=arme antique->apelle fonction legendaryWeapon, renvoie toujours 1, met à jour le profil du joueur
+		printf("\nYou discover an artifact."); //si tuile=arme antique->appelle fonction legendaryWeapon, renvoie toujours 1, met à jour le profil du personnage du joueur
 		return legendaryWeapon(p, tile);  
 	}
 	switch(tile.type){
 		case 5: //totem découvert
-			return totemFunction(); //à finir
+			return totemFunction(tile, map); //à finir
 		break;
 		case 6://coffre découvert
 			p.chest++;
 			return 1;
 		break;
 		case 11: //portail découvert
-			return portalFunction();
+			return portalFunction(tile, map , p);
 		break;
 		default:
 			exit(5);
@@ -322,10 +372,170 @@ int revealTile(Tile tile, Character p){ //renvoie 0 si fin du tour, 1 sinon
 	}
 }
 
+Character* createCharacters(){ //création des 4 persos
+	Character* players;
+	players=malloc(4*sizeof(Character));
+	if(players==NULL){
+		exit(10);
+	}
+	int i;
+	for(i=0; i<4; i++){	
+		players[i].artifact=0;
+		players[i].chest=0;
+	}
+	char* class;
+	char* color;
+	class=malloc(4*sizeof(char));
+	color=malloc(4*sizeof(char));
+	if(class==NULL){
+		exit(10);
+	}
+	if(color==NULL){
+		exit(10);
+	}
+	int error=0;
+	int k;
+	for(i=0; i<4; i++){
+		printf("Choose a class for your character:\n[1]Warrior\n[2]Ranger\n[3]Mage\n[4]Thief\n");
+		do{	
+			error=0;
+			printf("\nPlayer n°%d:\n",i+1);
+			int a=scanf("%c", &class[i]);
+			while (a==0){
+				a=scanf("%c", &class[i]);
+			}
+			if(a!=0){
+				if (class[i]!='1' && class[i]!='2' && class[i]!='3' && class[i]!='4'){
+					error=1;
+				}
+				if (k!=i){
+					for (k=0;k<i;k++){
+						if(class[k]==class[i]){
+							error=1;
+						}
+					}
+				}
+			}
+		}while(error);//demande tant que réponse incorrecte ou égale aux joueurs précédents
+		switch(class[i]){
+			case '1':
+				printf("\nYou choose to play as a warrior.\n"); 
+				players[i].class=0;
+			break;
+			case '2':
+				printf("\nYou choose to play as a ranger.\n");
+				players[i].class=1;
+			break;
+			case '3':
+				printf("\nYou choose to play as a mage.\n");
+				players[i].class=2;
+			break;
+			case '4':
+				printf("\nYou choose to play as a thief.\n");
+				players[i].class=3;
+			break;
+			default:
+				exit(2);
+			break;
+		}
+	}
+	for(i=0; i<4; i++){
+		printf("Choose a color for your character:\n[1]Red\n[2]Blue\n[3]Green\n[4]Yellow\n"); //demande tant que réponse incorrecte
+		do{
+			error=0;
+			printf("\nPlayer n°%d:\n",i+1);
+			scanf("%c", color[i]);
+			if (color[i]!='1' && color[i]!='2' && color[i]!='3' && color[i]!='4'){
+				error=1;
+			}
+			for (k=0;k<i;k++){
+				if(color[k]==color[i]){
+					error=1;
+				}
+			}
+		}while(error);
+		switch(color[i]){
+			case '1': 
+				players[i].color=0;
+			break;
+			case '2':
+				players[i].color=1;
+			break;
+			case '3':
+				players[i].color=2;
+			break;
+			case '4':
+				players[i].color=3;
+			break;
+			default:
+				exit(2);
+			break;
+		}
+	}	
+	return players;
+}
+
+void viewCharacters(Character* players){
+	if (players==NULL){
+		exit(15);
+	}
+	int i=0;
+	for (i=0;i<4;i++){
+		switch(players[i].color){
+			case 0: 
+			printf("\033[0;1m");
+			break;
+			case 1: 
+			printf("\033[0;4m");
+			break;
+			case 2: 
+			printf("\033[0;2m");
+			break;
+			case 3: 
+			printf("\033[0;3m");
+			break;
+		}
+		printf("\nPlayer n°%d:\n",i);
+		printf("Class: ");
+		switch(players[i].class){
+			case 0: 
+			printf("Warrior.");
+			break;
+			case 1: 
+			printf("Ranger.");
+			break;
+			case 2: 
+			printf("Mage.");
+			break;
+			case 3: 
+			printf("Thief.");
+			break;
+		}
+	
+		
+		if (players[i].artifact){
+			printf("\nArtifact found.");
+		}
+		else{
+			printf("\nArtifact not found.");
+		}
+		printf("\nNumber of chests found : %d",players[i]); 
+		printf("\033[00m");
+	
+	}
+
+}	
 
 int main (){
  	Tile map[ARRAY][ARRAY];
  	generateTiles(map);//tab de 7*7 cases
  	viewTiles(map);
+ 	Character* players;
+ 	players=malloc(4*sizeof(Character));
+	if(players==NULL){
+		exit(10);
+	}
+	players=createCharacters();
+	viewCharacters(players);
  	return 0;
 }
