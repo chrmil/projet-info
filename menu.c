@@ -250,23 +250,23 @@ void game(char plrnb, char botnb, pl* s, char level[]){		// game function
 }
 
 void start(){																// function asks for the initial player infos
-	char back, total, totalnb, plr, plrnb, role, botnb, i, j, k, ls, lk, a, b, level[4];
+	char back, totalnb, plrnb, role, botnb, i, j, k, ls, lk, a, b, level[4];
 	pl* s = NULL;
 	printf("Input the total number of players in the game (between 2 and 4, humans and bots included)\n");				// total number of players (humans and bots)
-	scan(&total);
-	while(total > '4' || total < '2'){
+	scan(&totalnb);
+	while(totalnb > '4' || totalnb < '2'){
 		printf("Incorrect input\nInput the total number of players in the game (between 2 and 4, humans and bots included)\n");
-		scan(&total);
+		scan(&totalnb);
 	}
-	printf("\nInput the number of human players in the game (between 0 and %c, the other players will be bots)\n", total);		// number of human players
-	scan(&plr);
-	while(plr > total || plr < '0'){
-		printf("Incorrect input\nInput the number of human players in the game (between 0 and %c, the other players will be bots)\n", total);
-		scan(&plr);
+	printf("\nInput the number of human players in the game (between 0 and %c, the other players will be bots)\n", totalnb);	// number of human players
+	scan(&plrnb);
+	while(plrnb > totalnb || plrnb < '0'){
+		printf("Incorrect input\nInput the number of human players in the game (between 0 and %c, the other players will be bots)\n", totalnb);
+		scan(&plrnb);
 	}
-	totalnb = total - 48;
-	plrnb = plr - 48;
-	botnb = total - plr;
+	totalnb -= 48;
+	plrnb -= 48;
+	botnb = totalnb - plrnb;
 	if (plrnb){															// username inputs (human only)
 		s = malloc(plrnb * sizeof(pl));
 		if (s == NULL){
