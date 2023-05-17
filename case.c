@@ -9,28 +9,34 @@
 #include <string.h>
 #define ARRAY 7
 
+typedef struct{
+	int x;
+	int y;
+}Coordinates;
 
 //nature de la case 
 typedef enum {VOID/*0*/ , BASILIC/*1*/, TROLL/*2*/, ZOMBIE/*3*/, HARPY/*4*/, TOTEM/*5*/, CHEST/*6*/, SWORD/*7*/, STAFF/*8*/, SPELLBOOK/*9*/, DAGGER/*10*/, PORTAL /*11*/, SPAWN/*12*/}Type;
-typedef enum {TORCH,SHIELD,AXE,BOW}Weapon; //armes équipables
+typedef enum {NOTHING,TORCH,SHIELD,AXE,BOW}Weapon; //armes équipables
 typedef enum {WARRIOR,RANGER,MAGE,THIEF}Class; //classe choisie par le personnage
 typedef enum {RED, BLUE, GREEN, YELLOW}Color;
 typedef struct {
 	Type type; //nature de la case
 	int state; //0 si case cachée, 1 sinon
 	int player; //0 si personne 1 , 2 , 3 , 4 en fonct° du joueur
+	Coordinates position; //coordonnées de la tuile
 }Tile;
+
+
 
 typedef struct {
 	Weapon weapon; //arme choisie
 	Class class; //classe du personnage
 	int artifact;//0 si arme antique pas trouvée, 1 sinon
 	int chest;//nombre de coffres récupérés: 0, 1 ou 2
-	int x;//position du personnage
-	int y;
-	int spawnX;
-	int spawnY;
+	Coordinates position;//position du personnage
+	Coordinates spawn; //coordonées du spawn
 	Color color; //couleur du perso + spawn
+	Coordinates* tiles; //tableau des coordonnées de toutes les tuiles retournées par le joueur en un tour
 }Character;
 
 int scan(char* input){ //fonct° scan pour limiter les bugs juste pour les %c 
@@ -121,18 +127,26 @@ void generateTiles(Tile map[][ARRAY]){
 	for (i=0; i<7; i++){
 			map[0][i].state=1; //contour du plateau, cases vides=cases révélées
 			map[0][i].type=VOID;
+			map[0][i].position.x=0;
+			map[0][i].position.y=i;
 	}
 	for (i=0; i<7; i++){
 			map[6][i].state=1;
 			map[6][i].type=VOID;
+			map[6][i].position.x=6;
+			map[6][i].position.y=i;
 	}
 	for (i=0; i<7; i++){
 			map[i][0].state=1;
 			map[i][0].type=VOID;
+			map[i][0].position.x=i;
+			map[i][0].position.y=0;
 	}
 	for (i=0; i<7; i++){
 			map[i][6].state=1;
 			map[i][6].type=VOID;
+			map[i][6].position.x=i;
+			map[i][6].position.y=6;
 	}
 	map[0][4].type=SPAWN;
 	map[2][0].type=SPAWN;
@@ -144,6 +158,8 @@ void generateTiles(Tile map[][ARRAY]){
 			map[i][k].state=0;//cases face cachée
       			a=rand()%11+1;
 			map[i][k].type=a; //type de la case
+			map[i][k].position.x=i;
+			map[i][k].position.y=k;
 			//compte le nb de cases d'un type sur le plateau; vérifie qu'il y en ait le bon nb ;
 	      		while(countTiles(a,compteur)==0) {
               			a=rand()%11+1;
@@ -170,39 +186,49 @@ void viewTiles(Tile map[][ARRAY]){
 	printf("\n");
 }
 
-void chooseWeapon(Character p){  //choix d'une arme à chaque tour
+Character chooseWeapon(Character p){  //choix d'une arme à chaque tuile
+		int check=0;
 		char weapon;
 		do{
-			printf("Choose a weapon for this turn :\n[1]Torch\n[2]Shield\n[3]Axe\n[4]Bow\n"); //demande tant que réponse incorrecte
-			scan(&weapon);
-		}while(weapon!='1' && weapon!='2' && weapon!='3' && weapon!='4');
+			printf("Choose a weapon to defend yourself in the next room:\n[1]Torch\n[2]Shield\n[3]Axe\n[4]Bow\n"); //demande tant que réponse incorrecte
+			check=scan(&weapon);
+		}while(weapon!='1' && weapon!='2' && weapon!='3' && weapon!='4' || check==0);
 		switch(weapon){
 			case '1':
 				printf("\nYou chose a torch to light the way.\n"); //renvoie la valeur correspondant à l'arme dans l'enumération Weapon
-				p.weapon=0;
+				p.weapon=TORCH;
 			break;
 			case '2':
 				printf("\nYou chose a shield to defend yourself.\n");
-				p.weapon=1;
+				p.weapon=SHIELD;
 			break;
 			case '3':
 				printf("\nYou chose an axe to cut down monsters.\n");
-				p.weapon=2;
+				p.weapon=AXE;
 			break;
 			case '4':
 				printf("\nYou chose a bow to kill monsters from afar.\n");
-				p.weapon=3;
+				p.weapon=BOW;
 			break;
 			default:
+				printf("\nErreur 2\n");
 				exit(2);
-			break;
+			break;	
 		}
+		return p;
 }
 
 int fightMonster(Character p, Tile monster){
 		if (monster.state==1 || monster.type==0 || monster.type>4){
+				printf("\nErreur 3\n");
 				exit(3); //si tuile déjà explorée ou pas un monstre
 		}
+		monster.state=1;
+		if (p.weapon==NOTHING){
+			printf("You don't have a weapon ready.\n");
+			p=chooseWeapon(p);
+		}
+		printf("\nA foe attacks you.");
 		switch (monster.type){
 			case 1:  //en fonction du monstre rencontré, vérifie si le joueur a choisi l'arme appropriée : si oui, renvoie 1, continue; sinon, renvoie 0, respawn.
 				printf("\nYou encounter a basilic."); 
@@ -248,7 +274,8 @@ int fightMonster(Character p, Tile monster){
 					return 0;
 				}
 			default:
-				exit(2);
+				printf("\nErreur 20\n");
+				exit(20);
 			break;
 
 		}
@@ -256,8 +283,11 @@ int fightMonster(Character p, Tile monster){
 
 int legendaryWeapon(Character p, Tile treasure){
 	if (treasure.state==1 || treasure.type<7 || treasure.type==11){
+		printf("\nErreur 6\n");
 		exit(6); //si tuile déjà explorée ou vide ou pas une arme antique
 	}
+	treasure.state=1;//On retourne la tuile
+	printf("\nYou discover an artifact.");
 	switch(treasure.type){
 		case 7: //épée découverte
 			printf("\nYou find the legendary sword of fire.");
@@ -267,6 +297,7 @@ int legendaryWeapon(Character p, Tile treasure){
 			}
 			else{
 				printf("\nYou aren't a warrior. Not interested, you leave it there.");
+				treasure.state=0;
 			}
 		break;
 		case 8: //baton découvert
@@ -277,6 +308,7 @@ int legendaryWeapon(Character p, Tile treasure){
 			}
 			else{
 				printf("\nYou aren't a ranger. Not interested, you leave it there.");
+				treasure.state=0;
 			}
 		break;
 		case 9://grimoire découvert
@@ -287,6 +319,7 @@ int legendaryWeapon(Character p, Tile treasure){
 			}
 			else{
 				printf("\nYou aren't a mage. Not interested, you leave it there.");
+				treasure.state=0;
 			}
 		break;
 		case 10: //dague découverte
@@ -297,9 +330,11 @@ int legendaryWeapon(Character p, Tile treasure){
 			}
 			else{
 				printf("\nYou aren't a thief. Not interested, you leave it there.");
+				treasure.state=0;
 			}
 		break;
 		default:
+			printf("\nErreur 7\n");
 			exit(7);
 		break;
 	}
@@ -309,20 +344,36 @@ int legendaryWeapon(Character p, Tile treasure){
 
 int totemFunction(Tile totem, Tile map[][ARRAY]){
 	if (totem.state==1 || totem.type==0 || totem.type!=TOTEM){
+		printf("\nErreur 4\n");
 		exit(4); //si tuile déjà explorée ou vide ou pas un totem
 	}
 	char x;
 	char y;
+	int a=0;
+	int b=0;
 	int line, column;
 	printf("\nYou find a magical totem glowing ominously. As you feel yourself dying, you are presented with a choice:\n");
 	int error=0;
 	do{
-		printf("Choose a tile to exchange the totem with (Line and column numbers):\n");
+		do{
+			error=0;
+			a=0;
+			b=0;
+			printf("Choose a tile to exchange the totem with (Line and column numbers):\n");
+			a=scan(&x);
+			b=scan(&y);
+			if (a==0 ||b==0){
+				error=1;
+				printf("\nWrong input!\n");
+			}
+			if (x>'5' || x<='0' || y>'5' ||y<='0'){
+				error=1;
+				printf("\nTiles outside the map can not be chosen.\n");
+			}	
+		}while(error);
 		error=0;
-		scan(&x);
-		scan(&y);
-		line=atoi(&x);
-		column=atoi(&y);
+		line=x-'0';
+		column=y-'0';
 		if(map[line][column].state==1){
 			error=1;
 			printf("\nOnly hidden tiles can be chosen!\n");
@@ -336,41 +387,73 @@ int totemFunction(Tile totem, Tile map[][ARRAY]){
 	Tile tile;
 	tile=map[line][column];
 	map[line][column].type=TOTEM;
-	totem=tile;
+	totem.type=tile.type;
 	return 0;
 }
 
 int portalFunction(Tile portal, Tile map[][ARRAY], Character p){
 	if (portal.state==1 || portal.type==0 || portal.type!=PORTAL){
-		exit(4); //si tuile déjà explorée ou vide ou pas un portail
+		printf("\nErreur 14\n");
+		exit(14); //si tuile déjà explorée ou vide ou pas un portail
 	}
+	portal.state=1;//On retourne la tuile
 	char x;
 	char y;
 	int line, column;
+	int error=0;
+	int a=0;
+	int b=0;
 	printf("\nYou find a magical portal. As you feel yourself pulled in, you are presented with a choice:\n");
 	do{
-	printf("Choose a tile to be teleported to (Line and column numbers):\n");
-	scan(&x);
-	scan(&y);
-	line=atoi(&x);
-	column=atoi(&y);
-	}while(map[line][column].state==1);
-	p.x=line;
-	p.y=column;
+		do{	
+			error=0;
+			a=0;
+			b=0;
+			printf("Choose a tile to be teleported to (Line and column numbers):\n");
+			a=scan(&x);
+			b=scan(&y);
+			printf("\nx=%c y=%c\n",x,y);
+			if (a==0 || b==0){
+				error=1;
+				printf("\nWrong input!\n");
+			}
+			if (x>'5' || x<='0' || y>'5' ||y<='0'){
+				error=1;
+				printf("\nTiles outside the map can not be chosen.\n");
+			}	
+		}while(error);
+			error=0;
+			line=x-'0';
+			column=y-'0';
+			printf("\nx=%d y=%d\n",line,column);
+			if(map[line][column].state==1){
+				error=1;
+				printf("\nOnly hidden tiles can be chosen!\n");
+			}
+			if(map[line][column].position.x==portal.position.x && map[line][column].position.y==portal.position.y){
+				error=1;
+				printf("\nYou cannot choose your current position!\n");
+			}
+	}while(error);	
+
+	p.position.x=line;
+	p.position.y=column;
 	return 1;
 }
-
-int revealTile(Tile tile, Character p, Tile map[][ARRAY]){ //renvoie 0 si fin du tour, 1 sinon
+             //tuile retournée, joueur actif, plateau, nombre d'actions du tour (de tuiles retournées)
+int revealTile(Tile tile, Character p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
 	if (tile.state==1 || tile.type==0 || tile.type==12){
-		exit(4); //si tuile déjà explorée ou vide
+		printf("\nErreur 24\n");
+		exit(24); //si tuile déjà explorée ou vide
 	}
+	p=chooseWeapon(p); //On choisit une arme
 	printf("\nYou enter a new room.");
+	p.tiles[i]=tile.position;
 	if (tile.type>0 && tile.type<5){
-		printf("\nA foe attacks you.");
 		return fightMonster(p, tile); //si tuile=monstre ->appelle fonction fightMonster, renvoie 0 ou 1 si défaite ou victoire
 	}
 	else if(tile.type>6 && tile.type<11){
-		printf("\nYou discover an artifact."); //si tuile=arme antique->appelle fonction legendaryWeapon, renvoie toujours 1, met à jour le profil du personnage du joueur
+		//si tuile=arme antique->appelle fonction legendaryWeapon, renvoie toujours 1, met à jour le profil du personnage du joueur
 		return legendaryWeapon(p, tile);  
 	}
 	switch(tile.type){
@@ -378,6 +461,7 @@ int revealTile(Tile tile, Character p, Tile map[][ARRAY]){ //renvoie 0 si fin du
 			return totemFunction(tile, map); //à finir
 		break;
 		case 6://coffre découvert
+			printf("\nYou discover a treasure chest. You loot it and move on.\n");
 			p.chest++;
 			return 1;
 		break;
@@ -385,7 +469,9 @@ int revealTile(Tile tile, Character p, Tile map[][ARRAY]){ //renvoie 0 si fin du
 			return portalFunction(tile, map , p);
 		break;
 		default:
+			printf("\nErreur 5!\n");
 			exit(5);
+			
 		break;
 	}
 }
@@ -397,12 +483,24 @@ Character* createCharacters(){ //création des 4 persos
 		exit(10);
 	}
 	int i;
+	int error=0;
+	int k=0;
+	int a=0;
+	char* class;
+	char* color;
 	for(i=0; i<4; i++){	
 		players[i].artifact=0;
 		players[i].chest=0;
+		players[i].weapon=NOTHING;
+		players[i].tiles=malloc(25*sizeof(Coordinates));
+		if(players[i].tiles==NULL){
+			exit(10);
+		}
+		for (k=0; k<25; k++){
+			players[i].tiles[k].x=0;
+			players[i].tiles[k].y=0;
+		}
 	}
-	char* class;
-	char* color;
 	class=malloc(4*sizeof(char));
 	color=malloc(4*sizeof(char));
 	if(class==NULL){
@@ -411,9 +509,7 @@ Character* createCharacters(){ //création des 4 persos
 	if(color==NULL){
 		exit(10);
 	}
-	int error=0;
-	int k=0;
-	int a=0;
+	
 	for(i=0; i<4; i++){
 		
 		do{	 
@@ -485,32 +581,32 @@ Character* createCharacters(){ //création des 4 persos
 		switch(color[i]){		
 			case '1': //rouge
 				players[i].color=0;
-				players[i].x=2;
-				players[i].spawnX=2;
-				players[i].y=0;
-				players[i].spawnY=0;
+				players[i].position.x=2;
+				players[i].spawn.x=2;
+				players[i].position.y=0;
+				players[i].spawn.y=0;
 				
 			break;
 			case '2': //bleu
 				players[i].color=1;
-				players[i].x=0;
-				players[i].spawnX=0;
-				players[i].y=4;
-				players[i].spawnY=4;
+				players[i].position.x=0;
+				players[i].spawn.x=0;
+				players[i].position.y=4;
+				players[i].spawn.y=4;
 			break;
 			case '3': //vert
 				players[i].color=2;
-				players[i].x=6;
-				players[i].spawnX=6;
-				players[i].y=2;
-				players[i].spawnY=2;
+				players[i].position.x=6;
+				players[i].spawn.x=6;
+				players[i].position.y=2;
+				players[i].spawn.y=2;
 			break;
 			case '4': //jaune
 				players[i].color=3;
-				players[i].x=4;
-				players[i].spawnX=4;
-				players[i].y=6;
-				players[i].spawnY=6;
+				players[i].position.x=4;
+				players[i].spawn.x=4;
+				players[i].position.y=6;
+				players[i].spawn.y=6;
 			break;
 			default: 
 				exit(2);
@@ -589,16 +685,12 @@ int main (){
 		exit(10);
 	}
 	players=createCharacters();
-	/*viewCharacters(players);*/
+	viewCharacters(players);	
 	viewTiles(map);
-	chooseWeapon(players[0]);
-	int a=revealTile(map[3][3],players[0],map);
-	chooseWeapon(players[1]);
-	int b=revealTile(map[2][2],players[1],map);
-	chooseWeapon(players[2]);
-	int c=revealTile(map[4][4],players[2],map);
-	chooseWeapon(players[3]);
-	int d=revealTile(map[4][2],players[3],map);
+	int a=revealTile(map[3][3],players[0],map,0);
+	int b=revealTile(map[2][2],players[1],map,0);
+	int c=revealTile(map[4][4],players[2],map,0);
+	int d=revealTile(map[4][2],players[3],map,0);
 	printf("\na=%d\nb=%d\nc=%d\nd=%d\n",a,b,c,d);
 	viewTiles(map);
  	return 0;	
