@@ -679,6 +679,8 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 	x=p->position.x;
 	y=p->position.y;
 	if (stuck(p,map)){
+		p->position.y = p->spawn.y;
+		p->position.x = p->spawn.x;
 	}
 	else{
 		
