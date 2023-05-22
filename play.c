@@ -670,7 +670,7 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 	char m;
 	x=p.position.x;
 	y=p.position.y;
-	if(x=p.spawn.x && y=p.spawn.y){//si joueur au spawn
+	if(x==p.spawn.x && y==p.spawn.y){//si joueur au spawn
 		switch(p.color){
 			case RED:
 				switch (revealTile(map[x][y+1],p,map,i)){
