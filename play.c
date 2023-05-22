@@ -186,7 +186,7 @@ void viewTiles(Tile map[][ARRAY]){
 	printf("\n");
 }
 
-Character chooseWeapon(Character p){  //choix d'une arme à chaque tuile
+void chooseWeapon(Character* p){  //choix d'une arme à chaque tuile
 		int check=0;
 		char weapon;
 		do{
@@ -196,43 +196,42 @@ Character chooseWeapon(Character p){  //choix d'une arme à chaque tuile
 		switch(weapon){
 			case '1':
 				printf("\nYou chose a torch to light the way.\n"); //renvoie la valeur correspondant à l'arme dans l'enumération Weapon
-				p.weapon=TORCH;
+				p->weapon=TORCH;
 			break;
 			case '2':
 				printf("\nYou chose a shield to defend yourself.\n");
-				p.weapon=SHIELD;
+				p->weapon=SHIELD;
 			break;
 			case '3':
 				printf("\nYou chose an axe to cut down monsters.\n");
-				p.weapon=AXE;
+				p->weapon=AXE;
 			break;
 			case '4':
 				printf("\nYou chose a bow to kill monsters from afar.\n");
-				p.weapon=BOW;
+				p->weapon=BOW;
 			break;
 			default:
 				printf("\nErreur 2\n");
 				exit(2);
 			break;	
 		}
-		return p;
 }
 
-int fightMonster(Character p, Tile monster){
-		if (monster.state==1 || monster.type==0 || monster.type>4){
+int fightMonster(Character* p, Tile* monster){
+		if (monster->state==1 || monster->type==0 || monster->type>4){
 				printf("\nErreur 3\n");
 				exit(3); //si tuile déjà explorée ou pas un monstre
 		}
-		monster.state=1;//on retourne la tuile
-		if (p.weapon==NOTHING){
+		monster->state=1;//on retourne la tuile
+		if (p->weapon==NOTHING){
 			printf("You don't have a weapon ready.\n");//on vérifie que le joueur a sélectioné une arme
-			p=chooseWeapon(p);
+			chooseWeapon(p);
 		}
 		printf("\nA foe attacks you.");
-		switch (monster.type){
+		switch (monster->type){
 			case 1:  //en fonction du monstre rencontré, vérifie si le joueur a choisi l'arme appropriée : si oui, renvoie 1, continue; sinon, renvoie 0, respawn.
 				printf("\nYou encounter a basilic."); 
-				if (p.weapon==SHIELD){
+				if (p->weapon==SHIELD){
 					printf("\nYou reflect the basilic's deadly glare with your shield and successfully defat your foe. Victorious, you move onwards.\n");
 					return 1;
 				}
@@ -243,7 +242,7 @@ int fightMonster(Character p, Tile monster){
 			break;
 			case 2:
 				printf("\nYou encounter a troll."); 
-				if (p.weapon==AXE){
+				if (p->weapon==AXE){
 					printf("\nYou cut down the troll with your axe and successfully defat your foe. Victorious, you move onwards.\n");
 					return 1;
 				}
@@ -254,7 +253,7 @@ int fightMonster(Character p, Tile monster){
 			break;
 			case 3:
 				printf("\nYou encounter a zombie.");
-				if (p.weapon==TORCH){
+				if (p->weapon==TORCH){
 					printf("\nYou set the zombie on fire with your torch and successfully defat your foe. Victorious, you move onwards.\n");
 					return 1;
 				}
@@ -265,7 +264,7 @@ int fightMonster(Character p, Tile monster){
 			break;
 			case 4:
 				printf("\nYou encounter a harpy.");
-				if (p.weapon==BOW){
+				if (p->weapon==BOW){
 					printf("\nYou fire an arrow at the harpy from afar with your bow and successfully defat your foe. Victorious, you move onwards.\n");
 					return 1;
 				}
@@ -281,56 +280,56 @@ int fightMonster(Character p, Tile monster){
 		}
 }
 
-int legendaryWeapon(Character p, Tile treasure){
-	if (treasure.state==1 || treasure.type<7 || treasure.type==11){
+int legendaryWeapon(Character* p, Tile* treasure){
+	if (treasure->state==1 || treasure->type<7 || treasure->type>=11){
 		printf("\nErreur 6\n");
 		exit(6); //si tuile déjà explorée ou vide ou pas une arme antique
 	}
-	treasure.state=1;//On retourne la tuile
+	treasure->state=1;//On retourne la tuile
 	printf("\nYou discover an artifact.");
-	switch(treasure.type){
+	switch(treasure->type){
 		case 7: //épée découverte
 			printf("\nYou find the legendary sword of fire.");
-			if(p.class==WARRIOR){
+			if(p->class==WARRIOR){
 				printf("\nAs a warrior, you were looking for this artifact. You take it with you.");
-				p.artifact++;
+				p->artifact++;
 			}
 			else{
 				printf("\nYou aren't a warrior. Not interested, you leave it there.");
-				treasure.state=0;
+				treasure->state=0;
 			}
 		break;
 		case 8: //baton découvert
 			printf("\nYou find the legendary familiars' command staff.");
-			if(p.class==RANGER){
+			if(p->class==RANGER){
 				printf("\nAs a ranger, you were looking for this artifact. You take it with you.");
-				p.artifact++;
+				p->artifact++;
 			}
 			else{
 				printf("\nYou aren't a ranger. Not interested, you leave it there.");
-				treasure.state=0;
+				treasure->state=0;
 			}
 		break;
 		case 9://grimoire découvert
 			printf("\nYou find the legendary spellbook.");
-			if(p.class==MAGE){
+			if(p->class==MAGE){
 				printf("\nAs a mage, you were looking for this artifact. You take it with you.");
-				p.artifact++;
+				p->artifact++;
 			}
 			else{
 				printf("\nYou aren't a mage. Not interested, you leave it there.");
-				treasure.state=0;
+				treasure->state=0;
 			}
 		break;
 		case 10: //dague découverte
 			printf("\nYou find the legendary dagger of sleep.");
-			if(p.class==THIEF){
+			if(p->class==THIEF){
 				printf("\nAs a thief, you were looking for this artifact. You take it with you.");
-				p.artifact++;
+				p->artifact++;
 			}
 			else{
 				printf("\nYou aren't a thief. Not interested, you leave it there.");
-				treasure.state=0;
+				treasure->state=0;
 			}
 		break;
 		default:
@@ -342,8 +341,8 @@ int legendaryWeapon(Character p, Tile treasure){
 	return 1;
 }
 
-int totemFunction(Tile totem, Tile map[][ARRAY]){
-	if (totem.state==1 || totem.type==0 || totem.type!=TOTEM){
+int totemFunction(Tile* totem, Tile map[][ARRAY]){
+	if (totem->state==1 || totem->type==0 || totem->type!=TOTEM){
 		printf("\nErreur 4\n");
 		exit(4); //si tuile déjà explorée ou vide ou pas un totem
 	}
@@ -387,16 +386,16 @@ int totemFunction(Tile totem, Tile map[][ARRAY]){
 	Tile tile;
 	tile=map[line][column];
 	map[line][column].type=TOTEM;
-	totem.type=tile.type;
+	totem->type=tile.type;
 	return 0;
 }
 
-int portalFunction(Tile portal, Tile map[][ARRAY], Character p){
-	if (portal.state==1 || portal.type==0 || portal.type!=PORTAL){
+int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p){
+	if (portal->state==1 || portal->type==0 || portal->type!=PORTAL){
 		printf("\nErreur 14\n");
 		exit(14); //si tuile déjà explorée ou vide ou pas un portail
 	}
-	portal.state=1;//On retourne la tuile
+	portal->state=1;//On retourne la tuile
 	char x;
 	char y;
 	int line, column;
@@ -430,40 +429,40 @@ int portalFunction(Tile portal, Tile map[][ARRAY], Character p){
 				error=1;
 				printf("\nOnly hidden tiles can be chosen!\n");
 			}
-			if(map[line][column].position.x==portal.position.x && map[line][column].position.y==portal.position.y){
+			if(map[line][column].position.x==portal->position.x && map[line][column].position.y==portal->position.y){
 				error=1;
 				printf("\nYou cannot choose your current position!\n");
 			}
 	}while(error);	
 
-	p.position.x=line;
-	p.position.y=column;
+	p->position.x=line;
+	p->position.y=column;
 	return 1;
 }
              //tuile retournée, joueur actif, plateau, nombre d'actions du tour (de tuiles retournées)
-int revealTile(Tile tile, Character p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
-	if (tile.state==1 || tile.type==0 || tile.type==12){
+int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
+	if (tile->state==1 || tile->type==0 || tile->type==12){
 		printf("\nErreur 24\n");
 		exit(24); //si tuile déjà explorée ou vide
 	}
-	p=chooseWeapon(p); //On choisit une arme
+	chooseWeapon(p); //On choisit une arme
 	printf("\nYou enter a new room.");
-	p.tiles[i]=tile.position;
-	if (tile.type>0 && tile.type<5){
+	p->tiles[i]=tile->position;
+	if (tile->type>0 && tile->type<5){
 		return fightMonster(p, tile); //si tuile=monstre ->appelle fonction fightMonster, renvoie 0 ou 1 si défaite ou victoire
 	}
-	else if(tile.type>6 && tile.type<11){
+	else if(tile->type>6 && tile->type<11){
 		//si tuile=arme antique->appelle fonction legendaryWeapon, renvoie toujours 1, met à jour le profil du personnage du joueur
 		return legendaryWeapon(p, tile);  
 	}
-	switch(tile.type){
+	switch(tile->type){
 		case 5: //totem découvert
 			return totemFunction(tile, map); //à finir
 		break;
 		case 6://coffre découvert
-			tile.state=1;//On retourne la tuile.
+			tile->state=1;//On retourne la tuile.
 			printf("\nYou discover a treasure chest. You loot it and move on.\n");
-			p.chest++;
+			p->chest++;
 			return 1;
 		break;
 		case 11: //portail découvert
@@ -665,96 +664,12 @@ void viewCharacter(Character player,int i){
 }
 
 
-void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplacements d'un joueur
+void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplacements d'un joueur
 	int x, y, check = 0;
 	char m;
-	x=p.position.x;
-	y=p.position.y;
-	if(x==p.spawn.x && y==p.spawn.y){//si joueur au spawn
-		switch(p.color){
-			case RED:
-				switch (revealTile(map[x][y+1],p,map,i)){
-					case '1' : 
-						p.position.y = (p.position.y) + 1;
-						map[x][y+1].state = 1;
-						
-					break ;
-					
-					case '0' : 
-						p.position.y = p.spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
-						p.position.x = p.spawn.x;
-						
-					break ; 
-
-					default :
-						printf("\nErreur rencontrée\n");
-					break ;
-				}
-			break;
-			case BLUE:
-				switch (revealTile(map[x+1][y],p,map,i)){
-					case '1' : 
-						p.position.x = (p.position.x) + 1;
-						map[x+1][y].state = 1;
-						
-					break ;
-					
-					case '0' : 
-						p.position.y = p.spawn.y;
-						p.position.x = p.spawn.x;
-						
-					break ; 
-					default :
-						printf("\nErreur rencontrée\n");
-					break ;
-				}
-				
-				
-			break;
-			case GREEN:
-				switch (revealTile(map[x-1][y],p,map,i)){
-					case '1' : 
-						p.position.x = (p.position.x) - 1;
-						map[x-1][y].state = 1;
-					break ;
-					
-					case '0' : 
-						p.position.y = p.spawn.y;
-						p.position.x = p.spawn.x;
-						
-					break ; 
-
-					default :
-						printf("\nErreur rencontrée\n");
-					break ;
-				}
-			
-			break;
-			case YELLOW:
-				switch (revealTile(map[x][y-1],p,map,i)){
-					case '1' : 
-						p.position.y = (p.position.y) - 1;
-						map[x][y-1].state = 1;
-					break ;
-						
-					case '0' : 
-						p.position.y = p.spawn.y;
-						p.position.x = p.spawn.x;
-					
-					break ; 
-
-					default :
-						printf("\nErreur rencontrée\n");
-					break;
-				}
-				
-			break;
-			default:
-				exit(21);
-			break;
-		}
-	}
-	else{//sinon
+	x=p->position.x;
+	y=p->position.y;
+	
 		
 		do{
 			printf("Now choose your way\n\t  Up\n\t  [z]\nLeft [q]        [d] Right\n\t  [s]\n\t Down\n"); //demande tant que réponse incorrecte
@@ -763,15 +678,15 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 		switch(m){ // Action à faire selon la direction
 			case 'z': // up		
 				if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){
-					switch (revealTile(map[x-1][y],p,map,i)){
-						case '1' : 
-							p.position.x = (p.position.x) - 1;
+					switch (revealTile(&map[x-1][y],p,map,i)){
+						case 1 : 
+							p->position.x = (p->position.x) - 1;
 							map[x-1][y].state = 1;
 						break ;
 					
-						case '0' : 
-							p.position.y = p.spawn.y;
-							p.position.x = p.spawn.x;
+						case 0 : 
+							p->position.y = p->spawn.y;
+							p->position.x = p->spawn.x;
 						
 						break ; 
 
@@ -789,15 +704,15 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 			break;
 			case 'q': //left
 				if(y-1 > 0 && x < 6 && x > 0 && map[x][y-1].state == 0){
-					switch (revealTile(map[x][y-1],p,map,i)){
-						case '1' : 
-							p.position.y = (p.position.y) - 1;
+					switch (revealTile(&map[x][y-1],p,map,i)){
+						case 1 : 
+							p->position.y = (p->position.y) - 1;
 							map[x][y-1].state = 1;
 						break ;
 						
-						case '0' : 
-							p.position.y = p.spawn.y;
-							p.position.x = p.spawn.x;
+						case 0 : 
+							p->position.y = p->spawn.y;
+							p->position.x = p->spawn.x;
 					
 						break ; 
 
@@ -813,16 +728,16 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 			break;
 			case 'd': //right
 				if((y+1)< 6 && x > 0 && x < 6 && map[x][y+1].state == 0){ // vérifier si la case où on veut aller n'est pas déjà revélée et qu'on se sort pas de la map
-					switch (revealTile(map[x][y+1],p,map,i)){
-						case '1' : 
-							p.position.y = (p.position.y) + 1;
+					switch (revealTile(&map[x][y+1],p,map,i)){
+						case 1 : 
+							p->position.y = (p->position.y) + 1;
 							map[x][y+1].state = 1;
 						
 						break ;
 					
-						case '0' : 
-							p.position.y = p.spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
-							p.position.x = p.spawn.x;
+						case 0 : 
+							p->position.y = p->spawn.y;
+							p->position.x = p->spawn.x;
 						
 						break ; 
 
@@ -838,16 +753,16 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 			break;
 			case 's': //down
 				if(x+1 < 6 && y < 6 && y > 0 && map[x+1][y].state == 0){
-					switch (revealTile(map[x+1][y],p,map,i)){
-						case '1' : 
-							p.position.x = (p.position.x) + 1;
+					switch (revealTile(&map[x+1][y],p,map,i)){
+						case 1 : 
+							p->position.x = (p->position.x) + 1;
 							map[x+1][y].state = 1;
 						
 						break ;
 					
-						case '0' : 
-							p.position.y = p.spawn.y;
-							p.position.x = p.spawn.x;
+						case 0 : 
+							p->position.y = p->spawn.y;
+							p->position.x = p->spawn.x;
 						
 						break ; 
 
@@ -866,9 +781,100 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 				exit(2);
 			break;
 		}
-	}
+		
 }
 
+void firstMove(Character* p, Tile map[][ARRAY],int i){
+	int x, y, check = 0;
+	char m;
+	x=p->position.x;
+	y=p->position.y;
+	
+	if(x==p->spawn.x && y==p->spawn.y){//si joueur au spawn
+		switch(p->color){
+			case RED:
+				switch (revealTile(&map[x][y+1],p,map,i)){
+					case 1 : 
+						p->position.y = (p->position.y) + 1;
+						map[x][y+1].state = 1;
+						
+					break ;
+					
+					case 0 : 
+						p->position.y = p->spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
+						p->position.x = p->spawn.x;
+						
+					break ; 
+
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			break;
+			case BLUE:
+				switch (revealTile(&map[x+1][y],p,map,i)){
+					case 1 : 
+						p->position.x = (p->position.x) + 1;
+						map[x+1][y].state = 1;
+						
+					break ;
+					
+					case 0 : 
+						p->position.y = p->spawn.y;
+						p->position.x = p->spawn.x;
+						
+					break ; 
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+				
+				
+			break;
+			case GREEN:
+				switch (revealTile(&map[x-1][y],p,map,i)){
+					case 1 : 
+						p->position.x = (p->position.x) - 1;
+						map[x-1][y].state = 1;
+					break ;
+					
+					case 0 : 
+						p->position.y = p->spawn.y;
+						p->position.x = p->spawn.x;
+						
+					break ; 
+
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			
+			break;
+			case YELLOW:
+				switch (revealTile(&map[x][y-1],p,map,i)){
+					case 1 : 
+						p->position.y = (p->position.y) - 1;
+						map[x][y-1].state = 1;
+					break ;
+						
+					case 0 : 
+						p->position.y = p->spawn.y;
+						p->position.x = p->spawn.x;
+					
+					break ; 
+
+					default :
+						printf("\nErreur rencontrée\n");
+					break;
+				}
+				
+			break;
+			default:
+				exit(21);
+			break;
+		}
+	}
+}
 int victory(Character p,int i){
 	viewCharacter(p,i);
 	if (p.chest>0 && p.artifact==1){
@@ -876,7 +882,6 @@ int victory(Character p,int i){
 		return 1;
 	}
 	else{
-		printf("\nYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\n");
 		return 0;
 	}
 }
@@ -888,12 +893,22 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	int k=0;
 	int win=0;
 	printf("\nYou start a new expedition inside the dungeon.\n");
-	
-	do{
-		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
+	firstMove(&p,map,k);
+	win=victory(p,i);
+	k++;
+	printf("\nx=%d y=%d\n",p.position.x,p.position.y);
+	while(p.position.x!=p.spawn.x && p.position.y!=p.spawn.y ){
+		move(&p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(p,i);//vérifie si conditions de victoire résolues
 		k++;
-	}while(p.position.x!=p.spawn.x && p.position.y!=p.spawn.y || win==0);//fin de boucle = fin du tour
+		if(win){
+			break;
+		}
+		printf("\nx=%d y=%d\n",p.position.x,p.position.y);
+	}//fin de boucle = fin du tour
+	if(win==0){
+		printf("\nYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\n");
+	}
 	//réinitialisation de la map
 	for (k=0;k<25;k++){
 		if(p.tiles[k].x==0 && p.tiles[k].y==0){
