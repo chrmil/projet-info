@@ -662,14 +662,25 @@ void viewCharacter(Character player,int i){
 	printf("\n");
 	
 }
-
+int stuck(Character* p, Tile map[][ARRAY]){
+	int a=0, x, y;
+	x=p->position.x;
+	y=p->position.y;
+		if(map[x+1][y].state == 1 && map[x-1][y].state == 1 && map[x][y+1].state == 1 && map[x][y-1].state == 1){
+			printf("\nYou're stuck. Restart at the beginning and end your turn here.\n");
+			a = 1;
+		}
+		return a;
+}
 
 void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplacements d'un joueur
 	int x, y, check = 0;
 	char m;
 	x=p->position.x;
 	y=p->position.y;
-	
+	if (stuck(p,map)){
+	}
+	else{
 		
 		do{
 			printf("Now choose your way\n\t  Up\n\t  [z]\nLeft [q]        [d] Right\n\t  [s]\n\t Down\n"); //demande tant que réponse incorrecte
@@ -781,7 +792,7 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 				exit(2);
 			break;
 		}
-		
+	}
 }
 
 void firstMove(Character* p, Tile map[][ARRAY],int i){
