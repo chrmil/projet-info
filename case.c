@@ -1,4 +1,4 @@
-//generation des tuiles
+//generation des tuiles et persos + gestion d'une partie 
  
 #include <stdio.h>
 #include <math.h>
@@ -223,9 +223,9 @@ int fightMonster(Character p, Tile monster){
 				printf("\nErreur 3\n");
 				exit(3); //si tuile déjà explorée ou pas un monstre
 		}
-		monster.state=1;
+		monster.state=1;//on retourne la tuile
 		if (p.weapon==NOTHING){
-			printf("You don't have a weapon ready.\n");
+			printf("You don't have a weapon ready.\n");//on vérifie que le joueur a sélectioné une arme
 			p=chooseWeapon(p);
 		}
 		printf("\nA foe attacks you.");
@@ -412,7 +412,7 @@ int portalFunction(Tile portal, Tile map[][ARRAY], Character p){
 			printf("Choose a tile to be teleported to (Line and column numbers):\n");
 			a=scan(&x);
 			b=scan(&y);
-			printf("\nx=%c y=%c\n",x,y);
+		
 			if (a==0 || b==0){
 				error=1;
 				printf("\nWrong input!\n");
@@ -425,7 +425,7 @@ int portalFunction(Tile portal, Tile map[][ARRAY], Character p){
 			error=0;
 			line=x-'0';
 			column=y-'0';
-			printf("\nx=%d y=%d\n",line,column);
+		
 			if(map[line][column].state==1){
 				error=1;
 				printf("\nOnly hidden tiles can be chosen!\n");
@@ -461,6 +461,7 @@ int revealTile(Tile tile, Character p, Tile map[][ARRAY], int i){ //renvoie 0 si
 			return totemFunction(tile, map); //à finir
 		break;
 		case 6://coffre découvert
+			tile.state=1;//On retourne la tuile.
 			printf("\nYou discover a treasure chest. You loot it and move on.\n");
 			p.chest++;
 			return 1;
@@ -616,83 +617,242 @@ Character* createCharacters(){ //création des 4 persos
 	return players;
 }
 
-void viewCharacters(Character* players){
-	if (players==NULL){
-		exit(15);
-	}
-	int i=0;
-	for (i=0;i<4;i++){
-		switch(players[i].color){
-			case 0: 
+void viewCharacter(Character player,int i){
+	switch(player.color){
+		case 0: 
 		/*	printf("\033[0;1m"); en gras  */ 
 			printf("\033[01;31m");
-			break;
-			case 1: 
+		break;
+		case 1: 
 		/* 	printf("\033[0;4m"); en surligné */
 			printf("\033[01;34m");
-			break;
-			case 2: 
+		break;
+		case 2: 
 		/*	printf("\033[0;2m"); en plus sombre (gris?) */
 			printf("\033[01;32m");
-			break;
-			case 3: 
+		break;
+		case 3: 
 		/*	printf("\033[0;3m"); en italiques */
 			printf("\033[01;33m"); 
-			break;
+		break;
 		}
-		printf("\nPlayer n°%d:\n",i+1);
-		printf("Class: ");
-		switch(players[i].class){
-			case 0: 
+	printf("\nPlayer n°%d:\n",i+1);
+	printf("Class: ");
+	switch(player.class){
+		case 0: 
 			printf("Warrior.");
-			break;
-			case 1: 
+		break;
+		case 1: 
 			printf("Ranger.");
-			break;
-			case 2: 
+		break;
+		case 2: 
 			printf("Mage.");
-			break;
-			case 3: 
+		break;
+		case 3: 
 			printf("Thief.");
-			break;
-		}
-	
-		
-		if (players[i].artifact){
-			printf("\nArtifact found.");
-		}
-		else{
-			printf("\nArtifact not found.");
-		}
-		printf("\nNumber of chests found : %d.",players[i].chest); 
-		printf("\033[00m");
-	
+		break;
 	}
+	if (player.artifact){
+		printf("\nArtifact found.");
+	}
+	else{
+		printf("\nArtifact not found.");
+	}
+	printf("\nNumber of chests found : %d.",player.chest); 
+	printf("\033[00m");
 	printf("\n");
-
+	
 }
 
 
+void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplacements d'un joueur
+	int x, y, check = 0;
+	char m;
+	x=p.position.x;
+	y=p.position.y;
+	do{
+		printf("Now choose your way\n\t  Up\n\t  [z]\nLeft [q]        [d] Right\n\t  [s]\n\t Down\n"); //demande tant que réponse incorrecte
+		check = scan(&m);
+	}while(m != 122  && m != 113 && m != 115 && m != 100 && check != 1);
+	switch(m){ // Action à faire selon la direction
+		case 'z': // up		
+			if((y+1)< 6 && x > 0 && x < 6 && map[x][y+1].state == 0){ // vérifier si la case où on veut aller n'est pas déjà revélée et qu'on se sort pas de la map
+				switch (revealTile(map[x][y+1],p,map,i)){
+					case '1' : 
+						p.position.y = (p.position.y) + 1;
+						map[x][y+1].state = 1;
+					
+					break ;
+				
+					case '0' : 
+						p.position.y = p.spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
+						p.position.x = p.spawn.x;
+					
+					break ; 
 
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			}	
+			else{
+				printf("\nYou can't go outside the map \n Please try again \n --------------------------- \n"); // Relance la procédure de déplacement si le joueur tente un déplacement impossible
+				move(p,map,i); 
+			}	
+		break;
+		case 'd': //right
+			if(x+1 < 6 && y < 6 && y > 0 && map[x+1][y].state == 0){
+				switch (revealTile(map[x+1][y],p,map,i)){
+					case '1' : 
+						p.position.x = (p.position.x) + 1;
+						map[x+1][y].state = 1;
+					
+					break ;
+				
+					case '0' : 
+						p.position.y = p.spawn.y;
+						p.position.x = p.spawn.x;
+					
+					break ; 
 
-int main (){
- 	Tile map[ARRAY][ARRAY];
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			}
+			else{
+				printf("\nYou can't go on this way Please try again \n --------------------------- \n");
+				move(p, map,i);
+			}
+		break;
+		case 'q': //left
+			if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){
+				switch (revealTile(map[x-1][y],p,map,i)){
+					case '1' : 
+						p.position.x = (p.position.x) - 1;
+						map[x-1][y].state = 1;
+					break ;
+				
+					case '0' : 
+						p.position.y = p.spawn.y;
+						p.position.x = p.spawn.x;
+					
+					break ; 
+
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			
+			}
+			else{
+				printf("\nYou can't go on this way Please try again \n --------------------------- \n");
+				move(p, map,i);
+			}
+			break;
+		case 's': //down
+			if(y-1 > 0 && x < 6 && x > 0 && map[x][y-1].state == 0){
+				switch (revealTile(map[x][y-1],p,map,i)){
+					case '1' : 
+						p.position.y = (p.position.y) - 1;
+						map[x][y-1].state = 1;
+					break ;
+					
+					case '0' : 
+						p.position.y = p.spawn.y;
+						p.position.x = p.spawn.x;
+				
+					break ; 
+
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			}
+			else{
+				printf("\nYou can't go on this way Please try again \n --------------------------- \n");
+				move(p, map,i);
+			}
+		break;
+		default :	
+			exit(2);
+		break;
+	}
+}
+
+int victory(Character p,int i){
+	viewCharacter(p,i);
+	if (p.chest>0 && p.artifact==1){
+		printf("\nYou have successfully found the artifact you were looking for and some loot.\n You have completed your task and leave the dungeon victorious.\n Congratulations ! You have won!\n");
+		return 1;
+	}
+	else{
+		printf("\nYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\n");
+		return 0;
+	}
+}
+int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
+	if(map==NULL){
+		exit(30);
+	}
+	printf("\nPlayer n°%d is currently playing:\n",i+1);
+	int k=0;
+	int win=0;
+	printf("\nYou start a new expedition inside the dungeon.\n");
+	do{
+		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
+		win=victory(p,i);//vérifie si conditions de victoire résolues
+		k++;
+	}while(p.position.x!=p.spawn.x && p.position.y!=p.spawn.y || win==0);//fin de boucle = fin du tour
+	//réinitialisation de la map
+	for (k=0;k<25;k++){
+		if(p.tiles[k].x==0 && p.tiles[k].y==0){
+		}
+		else if (map[p.tiles[k].x][p.tiles[k].y].state==1){
+			map[p.tiles[k].x][p.tiles[k].y].state=0;
+		}
+	}
+	//réinitialisation des données du personnage
+	p.artifact=0; //armes récupérées 
+	p.chest=0; //coffres
+	p.weapon=NOTHING; //arme équipée
+	if(p.tiles==NULL){
+			exit(10);
+	}
+	for (k=0;k<25;k++){
+		p.tiles[k].x=0; //tuiles explorées
+		p.tiles[k].y=0;
+	}
+	return win;	
+}
+
+void playGame(){//gestion d'une partie
+	Tile map[ARRAY][ARRAY];//genération de la map
  	generateTiles(map);//tab de 7*7 cases
  	viewTiles(map);
- 	Character* players;
- 	players=malloc(4*sizeof(Character));
+ 	Character* players; 
+ 	players=malloc(4*sizeof(Character)); //génération des persos
 	if(players==NULL){
 		exit(10);
 	}
 	players=createCharacters();
-	viewCharacters(players);	
+	int i=0;
+	for(i=0;i<4;i++){
+		viewCharacter(players[i],i);
+	}
+	i=0;
+	while(playerTurn(map,players[i],i)==0){
+		i++;
+		if(i>=4){
+			i=0;
+		}
+	}
+	printf("\nPlayer n°%d won the game!\n",i+1);
 	viewTiles(map);
-	int a=revealTile(map[3][3],players[0],map,0);
-	int b=revealTile(map[2][2],players[1],map,0);
-	int c=revealTile(map[4][4],players[2],map,0);
-	int d=revealTile(map[4][2],players[3],map,0);
-	printf("\na=%d\nb=%d\nc=%d\nd=%d\n",a,b,c,d);
-	viewTiles(map);
+}
+
+int main (){
+ 	playGame();
  	return 0;	
  
 }
