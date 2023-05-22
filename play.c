@@ -673,6 +673,25 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 	if(x=p.spawn.x && y=p.spawn.y){//si joueur au spawn
 		switch(p.color){
 			case RED:
+				switch (revealTile(map[x][y+1],p,map,i)){
+					case '1' : 
+						p.position.y = (p.position.y) + 1;
+						map[x][y+1].state = 1;
+						
+					break ;
+					
+					case '0' : 
+						p.position.y = p.spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
+						p.position.x = p.spawn.x;
+						
+					break ; 
+
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			break;
+			case BLUE:
 				switch (revealTile(map[x+1][y],p,map,i)){
 					case '1' : 
 						p.position.x = (p.position.x) + 1;
@@ -689,8 +708,29 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 						printf("\nErreur rencontrée\n");
 					break ;
 				}
+				
+				
 			break;
-			case BLUE:
+			case GREEN:
+				switch (revealTile(map[x-1][y],p,map,i)){
+					case '1' : 
+						p.position.x = (p.position.x) - 1;
+						map[x-1][y].state = 1;
+					break ;
+					
+					case '0' : 
+						p.position.y = p.spawn.y;
+						p.position.x = p.spawn.x;
+						
+					break ; 
+
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			
+			break;
+			case YELLOW:
 				switch (revealTile(map[x][y-1],p,map,i)){
 					case '1' : 
 						p.position.y = (p.position.y) - 1;
@@ -709,47 +749,10 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 				}
 				
 			break;
-			case GREEN:
-				switch (revealTile(map[x][y+1],p,map,i)){
-					case '1' : 
-						p.position.y = (p.position.y) + 1;
-						map[x][y+1].state = 1;
-						
-					break ;
-					
-					case '0' : 
-						p.position.y = p.spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
-						p.position.x = p.spawn.x;
-						
-					break ; 
-
-					default :
-						printf("\nErreur rencontrée\n");
-					break ;
-				}
-			
-			break;
-			case YELLOW:
-				switch (revealTile(map[x-1][y],p,map,i)){
-					case '1' : 
-						p.position.x = (p.position.x) - 1;
-						map[x-1][y].state = 1;
-					break ;
-					
-					case '0' : 
-						p.position.y = p.spawn.y;
-						p.position.x = p.spawn.x;
-						
-					break ; 
-
-					default :
-						printf("\nErreur rencontrée\n");
-					break ;
-				}
-			break;
 			default:
 				exit(21);
 			break;
+		}
 	}
 	else{//sinon
 		
