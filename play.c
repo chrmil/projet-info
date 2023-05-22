@@ -1,4 +1,4 @@
-//generation des tuiles
+///generation des tuiles
  
 #include <stdio.h>
 #include <math.h>
@@ -674,7 +674,7 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 		do{
 			printf("Now choose your way\n\t  Up\n\t  [z]\nLeft [q]        [d] Right\n\t  [s]\n\t Down\n"); //demande tant que réponse incorrecte
 			check = scan(&m);
-		}while(m != 122  && m != 113 && m != 115 && m != 100 && check != 1);
+		}while(m !='z' && m !='q' && m !='s' && m !='d' || check != 1);
 		switch(m){ // Action à faire selon la direction
 			case 'z': // up		
 				if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){
@@ -885,6 +885,14 @@ int victory(Character p,int i){
 		return 0;
 	}
 }
+int spawn(Character p){//1 si joueur au spawn, 0 sinon
+	if (p.position.x==p.spawn.x && p.position.y==p.spawn.y){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
 int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	if(map==NULL){
 		exit(30);
@@ -897,7 +905,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	win=victory(p,i);
 	k++;
 	printf("\nx=%d y=%d\n",p.position.x,p.position.y);
-	while(p.position.x!=p.spawn.x && p.position.y!=p.spawn.y ){
+	while(spawn(p)==0){
 		move(&p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(p,i);//vérifie si conditions de victoire résolues
 		k++;
@@ -909,6 +917,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	if(win==0){
 		printf("\nYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\n");
 	}
+	viewTiles(map);
 	//réinitialisation de la map
 	for (k=0;k<25;k++){
 		if(p.tiles[k].x==0 && p.tiles[k].y==0){
