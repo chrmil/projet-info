@@ -1,4 +1,4 @@
-//generation des tuiles et persos + gestion d'une partie 
+//generation des tuiles
  
 #include <stdio.h>
 #include <math.h>
@@ -670,45 +670,33 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 	char m;
 	x=p.position.x;
 	y=p.position.y;
-	do{
-		printf("Now choose your way\n\t  Up\n\t  [z]\nLeft [q]        [d] Right\n\t  [s]\n\t Down\n"); //demande tant que réponse incorrecte
-		check = scan(&m);
-	}while(m != 122  && m != 113 && m != 115 && m != 100 && check != 1);
-	switch(m){ // Action à faire selon la direction
-		case 'z': // up		
-			if((y+1)< 6 && x > 0 && x < 6 && map[x][y+1].state == 0){ // vérifier si la case où on veut aller n'est pas déjà revélée et qu'on se sort pas de la map
-				switch (revealTile(map[x][y+1],p,map,i)){
-					case '1' : 
-						p.position.y = (p.position.y) + 1;
-						map[x][y+1].state = 1;
-					
-					break ;
-				
-					case '0' : 
-						p.position.y = p.spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
-						p.position.x = p.spawn.x;
-					
-					break ; 
-
-					default :
-						printf("\nErreur rencontrée\n");
-					break ;
-				}
-			}	
-			else{
-				printf("\nYou can't go outside the map \n Please try again \n --------------------------- \n"); // Relance la procédure de déplacement si le joueur tente un déplacement impossible
-				move(p,map,i); 
-			}	
-		break;
-		case 'd': //right
-			if(x+1 < 6 && y < 6 && y > 0 && map[x+1][y].state == 0){
+	if(x=p.spawn.x && y=p.spawn.y){//si joueur au spawn
+		switch(p.color){
+			case RED:
 				switch (revealTile(map[x+1][y],p,map,i)){
 					case '1' : 
 						p.position.x = (p.position.x) + 1;
 						map[x+1][y].state = 1;
-					
+						
 					break ;
-				
+					
+					case '0' : 
+						p.position.y = p.spawn.y;
+						p.position.x = p.spawn.x;
+						
+					break ; 
+					default :
+						printf("\nErreur rencontrée\n");
+					break ;
+				}
+			break;
+			case BLUE:
+				switch (revealTile(map[x][y-1],p,map,i)){
+					case '1' : 
+						p.position.y = (p.position.y) - 1;
+						map[x][y-1].state = 1;
+					break ;
+						
 					case '0' : 
 						p.position.y = p.spawn.y;
 						p.position.x = p.spawn.x;
@@ -717,26 +705,22 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 
 					default :
 						printf("\nErreur rencontrée\n");
-					break ;
+					break;
 				}
-			}
-			else{
-				printf("\nYou can't go on this way Please try again \n --------------------------- \n");
-				move(p, map,i);
-			}
-		break;
-		case 'q': //left
-			if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){
-				switch (revealTile(map[x-1][y],p,map,i)){
-					case '1' : 
-						p.position.x = (p.position.x) - 1;
-						map[x-1][y].state = 1;
-					break ;
 				
-					case '0' : 
-						p.position.y = p.spawn.y;
-						p.position.x = p.spawn.x;
+			break;
+			case GREEN:
+				switch (revealTile(map[x][y+1],p,map,i)){
+					case '1' : 
+						p.position.y = (p.position.y) + 1;
+						map[x][y+1].state = 1;
+						
+					break ;
 					
+					case '0' : 
+						p.position.y = p.spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
+						p.position.x = p.spawn.x;
+						
 					break ; 
 
 					default :
@@ -744,39 +728,141 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 					break ;
 				}
 			
-			}
-			else{
-				printf("\nYou can't go on this way Please try again \n --------------------------- \n");
-				move(p, map,i);
-			}
 			break;
-		case 's': //down
-			if(y-1 > 0 && x < 6 && x > 0 && map[x][y-1].state == 0){
-				switch (revealTile(map[x][y-1],p,map,i)){
+			case YELLOW:
+				switch (revealTile(map[x-1][y],p,map,i)){
 					case '1' : 
-						p.position.y = (p.position.y) - 1;
-						map[x][y-1].state = 1;
+						p.position.x = (p.position.x) - 1;
+						map[x-1][y].state = 1;
 					break ;
 					
 					case '0' : 
 						p.position.y = p.spawn.y;
 						p.position.x = p.spawn.x;
-				
+						
 					break ; 
 
 					default :
 						printf("\nErreur rencontrée\n");
 					break ;
 				}
-			}
-			else{
-				printf("\nYou can't go on this way Please try again \n --------------------------- \n");
-				move(p, map,i);
-			}
-		break;
-		default :	
-			exit(2);
-		break;
+			break;
+			default:
+				exit(21);
+			break;
+	}
+	else{//sinon
+		
+		do{
+			printf("Now choose your way\n\t  Up\n\t  [z]\nLeft [q]        [d] Right\n\t  [s]\n\t Down\n"); //demande tant que réponse incorrecte
+			check = scan(&m);
+		}while(m != 122  && m != 113 && m != 115 && m != 100 && check != 1);
+		switch(m){ // Action à faire selon la direction
+			case 'z': // up		
+				if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){
+					switch (revealTile(map[x-1][y],p,map,i)){
+						case '1' : 
+							p.position.x = (p.position.x) - 1;
+							map[x-1][y].state = 1;
+						break ;
+					
+						case '0' : 
+							p.position.y = p.spawn.y;
+							p.position.x = p.spawn.x;
+						
+						break ; 
+
+						default :
+							printf("\nErreur rencontrée\n");
+						break ;
+					}
+				
+				}
+				else{
+					printf("\nYou can't go on this way Please try again \n --------------------------- \n");
+					move(p, map,i);
+				}
+				break;
+			break;
+			case 'q': //left
+				if(y-1 > 0 && x < 6 && x > 0 && map[x][y-1].state == 0){
+					switch (revealTile(map[x][y-1],p,map,i)){
+						case '1' : 
+							p.position.y = (p.position.y) - 1;
+							map[x][y-1].state = 1;
+						break ;
+						
+						case '0' : 
+							p.position.y = p.spawn.y;
+							p.position.x = p.spawn.x;
+					
+						break ; 
+
+						default :
+							printf("\nErreur rencontrée\n");
+						break ;
+					}
+				}
+				else{
+					printf("\nYou can't go on this way Please try again \n --------------------------- \n");
+					move(p, map,i);
+				}
+			break;
+			case 'd': //right
+				if((y+1)< 6 && x > 0 && x < 6 && map[x][y+1].state == 0){ // vérifier si la case où on veut aller n'est pas déjà revélée et qu'on se sort pas de la map
+					switch (revealTile(map[x][y+1],p,map,i)){
+						case '1' : 
+							p.position.y = (p.position.y) + 1;
+							map[x][y+1].state = 1;
+						
+						break ;
+					
+						case '0' : 
+							p.position.y = p.spawn.y; // remet les coordonnées du joueur aux valeurs du spawn 
+							p.position.x = p.spawn.x;
+						
+						break ; 
+
+						default :
+							printf("\nErreur rencontrée\n");
+						break ;
+					}
+				}	
+				else{
+					printf("\nYou can't go outside the map \n Please try again \n --------------------------- \n"); // Relance la procédure de déplacement si le joueur tente un déplacement impossible
+					move(p,map,i); 
+				}	
+			break;
+			case 's': //down
+				if(x+1 < 6 && y < 6 && y > 0 && map[x+1][y].state == 0){
+					switch (revealTile(map[x+1][y],p,map,i)){
+						case '1' : 
+							p.position.x = (p.position.x) + 1;
+							map[x+1][y].state = 1;
+						
+						break ;
+					
+						case '0' : 
+							p.position.y = p.spawn.y;
+							p.position.x = p.spawn.x;
+						
+						break ; 
+
+						default :
+							printf("\nErreur rencontrée\n");
+						break ;
+					}
+				}
+				else{
+					printf("\nYou can't go on this way Please try again \n --------------------------- \n");
+					move(p, map,i);
+				}
+			
+			break;
+			default :	
+				exit(2);
+			break;
+		}
 	}
 }
 
@@ -799,6 +885,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	int k=0;
 	int win=0;
 	printf("\nYou start a new expedition inside the dungeon.\n");
+	
 	do{
 		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(p,i);//vérifie si conditions de victoire résolues
