@@ -6,7 +6,7 @@ int scan(char* input){							// scanf function but deletes the end
 	return a;
 }
 
-char sortTab(pl tab[], char size){					// sorted tab verification
+char sortTab(Character tab[], char size){					// sorted tab verification
 	char i;
 	for (i=0;i<size-1;i++){
 		if (tab[i].pts<tab[i+1].pts){
@@ -16,12 +16,12 @@ char sortTab(pl tab[], char size){					// sorted tab verification
 	return 1;
 }
 
-void merge(pl tab[], char begin, char middle, char end, char size){	// mergesort Christelle
+void merge(Character tab[], char begin, char middle, char end, char size){	// mergesort Christelle
 	char i,k,j;
-	pl* tab2 = NULL;
-	tab2 = malloc(size * sizeof(pl));
+	Character* tab2 = NULL;
+	tab2 = malloc(size * sizeof(Character));
 	if (tab2 == NULL){
-		printf("Failed to allocate for pl* tab2 (func merge)");
+		printf("Failed to allocate for Character* tab2 (func merge)");
 		exit(61);
 	}
 	k=begin;
@@ -44,7 +44,7 @@ void merge(pl tab[], char begin, char middle, char end, char size){	// mergesort
 	}
 		
 }
-void mergeSortRec(pl tab[], char begin, char end, char size){		// mergesort function
+void mergeSortRec(Character tab[], char begin, char end, char size){		// mergesort function
 	char middle;
 	if (begin<end){
 		middle=(begin+end)/2;					// cuts the tab in half
@@ -54,7 +54,7 @@ void mergeSortRec(pl tab[], char begin, char end, char size){		// mergesort func
 	}
 }
 
-void mergeSort(pl tab[], char size){					// mergesort function call
+void mergeSort(Character tab[], char size){					// mergesort function call
 	if (sortTab(tab, size)){
 		return;
 	}
@@ -63,10 +63,10 @@ void mergeSort(pl tab[], char size){					// mergesort function call
 
 void sortRanks(FILE* f, char k){					// function sorts the rankings from highest to lowest scores
 	char i;
-	pl* sort = NULL;
-	sort = malloc(k * sizeof(pl));
+	Character* sort = NULL;
+	sort = malloc(k * sizeof(Character));
 	if (sort == NULL){
-		printf("Failed to allocate for pl* sort (func sortRanks)");
+		printf("Failed to allocate for Character* sort (func sortRanks)");
 		exit(51);
 	}
 	rewind(f);
@@ -82,10 +82,10 @@ void sortRanks(FILE* f, char k){					// function sorts the rankings from highest
 	free(sort);
 }
 
-char addScores(FILE* f, pl* s, char plrnb){				// function checks if name was already registered and prints scores accordingly
+char addScores(FILE* f, Character* s, char plrnb){				// function checks if name was already registered and prints scores accordingly
 	short t = 0;							// return of fscanf
 	char i, j, k = 0, ls, lrank, *a = NULL, *b = NULL;
-	pl rank;
+	Character rank;
 	a = malloc(plrnb * sizeof(char));
 	if (a == NULL){
 		printf("Failed to allocate for char* a (func addScores)");
@@ -136,7 +136,7 @@ char addScores(FILE* f, pl* s, char plrnb){				// function checks if name was al
 	return k;
 }
 
-void finish(char plrnb, char botnb, pl* s, char level[]){		// end of game
+void finish(char plrnb, char botnb, Character* s, char level[]){		// end of game
 	char back, k;
 	FILE* f = NULL;
 	f = fopen("test.txt", "r+");					// open file
@@ -231,7 +231,7 @@ y (3 txt, 4bg)
 z (0 black, 1 red, 2 green, 3 yellow, 4 blue, 5 purple, 6 cyan, 7 white)
 */
 
-void game(char plrnb, char botnb, pl* s, char level[]){		// game function
+void game(char plrnb, char botnb, Character* s, char level[]){		// game function
 	char i;
 	printf("\033[2J");
 	printf("\033[1;1H");
@@ -248,7 +248,7 @@ void game(char plrnb, char botnb, pl* s, char level[]){		// game function
 
 void start(){																// function asks for the initial player infos
 	char back, totalnb, plrnb, role, botnb, i, j, k, ls, lk, a, b, level[4];
-	pl* s = NULL;
+	Character* s = NULL;
 	printf("Input the total number of players in the game (between 2 and 4, humans and bots included)\n");				// total number of players (humans and bots)
 	scan(&totalnb);
 	while(totalnb > '4' || totalnb < '2'){
@@ -265,9 +265,9 @@ void start(){																// function asks for the initial player infos
 	plrnb -= 48;
 	botnb = totalnb - plrnb;
 	if (plrnb){															// username inputs (human only)
-		s = malloc(plrnb * sizeof(pl));
+		s = malloc(plrnb * sizeof(Character));
 		if (s == NULL){
-			printf("Failed to allocate for pl* s (func start)");
+			printf("Failed to allocate for Character* s (func start)");
 			exit(21);
 		}
 		for (i = 0; i < plrnb; i++){
@@ -296,7 +296,7 @@ void start(){																// function asks for the initial player infos
 					b = 1;
 				}
 			}
-			if (b == 1){							// redoes if the username is the same as another player's
+			if (b == 1){						// redoes if the username is the same as another player's
 				i--;
 				printf("Username is already taken\n");
 				b = 0;

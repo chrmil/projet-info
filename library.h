@@ -20,61 +20,60 @@ typedef struct Playercoordinates{
 	int y;
 }Coordinates;			// coordinates
 typedef struct Tiletype{
+	Coordinates position;	//coordonnées de la tuile
 	Type type;		//nature de la case
 	int state;		//0 si case cachée, 1 sinon
 	int player;		//0 si personne 1 , 2 , 3 , 4 en fonct° du joueur
-	Coordinates position;	//coordonnées de la tuile
 }Tile;				// tile type
 typedef struct Characterstats{
-	Weapon weapon;		//arme choisie
-	Class class;		//classe du personnage
-	int artifact;		//0 si arme antique pas trouvée, 1 sinon
-	int chest;		//nombre de coffres récupérés: 0, 1 ou 2
-	Coordinates position;	//position du personnage
-	Coordinates spawn;	//coordonées du spawn
-	Color color;		//couleur du perso + spawn
-	Coordinates* tiles;	//tableau des coordonnées de toutes les tuiles retournées par le joueur en un tour
-}Character;			// player stats (Christelle)
-typedef struct Player{		// structure player stats
+	Coordinates position;	// position du personnage
+	Coordinates spawn;	// coordonées du spawn
+	Coordinates* tiles;	// tableau des coordonnées de toutes les tuiles retournées par le joueur en un tour
+	Color color;		// couleur du perso + spawn
+	Weapon weapon;		// arme choisie
+	Class class;		// classe du personnage
+	int artifact;		// 0 si arme antique pas trouvée, 1 sinon
+	int chest;		// nombre de coffres récupérés: 0, 1 ou 2
+	int pts;		// amount of points of a player
 	char name[10];		// 10 characters name
-	int pts;
-}pl;				// player stats (Florian)
+}Character;			// player stats (Christelle)
 
-int scan(char* input);							// scanf but deletes the end
+int scan(char* input);								// scanf but deletes the end
 
 // Christelle
-int countTiles(int a, int* compteur);					// gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
-void generateTiles(Tile map[][ARRAY]);					// random map generator
-void viewTiles(Tile map[][ARRAY]);					// check type of tile
-Character chooseWeapon(Character p);					// choix d'une arme à chaque tuile
-int fightMonster(Character p, Tile monster);				// fight when monster encountered
-int legendaryWeapon(Character p, Tile treasure);			// found legendary weapon, checks if it's the player's or not
-int totemFunction(Tile totem, Tile map[][ARRAY]);			// found a totem
-int portalFunction(Tile portal, Tile map[][ARRAY], Character p);	// found a portal
-int revealTile(Tile tile, Character p, Tile map[][ARRAY], int i);	// renvoie 0 si fin du tour, 1 sinon
-Character* createCharacters();						// création des 4 persos
-void viewCharacter(Character player,int i);				// view each character's stats
-int victory(Character p,int i); 					// check if victor
-int playerTurn(Tile map[][ARRAY], Character p, int i);			// tour d'un joueur
-void playGame();							// gestion d'une partie
+int countTiles(int a, int* compteur);						// gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
+void generateTiles(Tile map[][ARRAY]);						// random map generator
+void viewTiles(Tile map[][ARRAY]);						// check type of tile
+void chooseWeapon(Character* p);						// choix d'une arme à chaque tuile
+int fightMonster(Character* p, Tile* monster);					// fight when monster encountered
+int legendaryWeapon(Character* p, Tile* treasure);				// found legendary weapon, checks if it's the player's or not
+int totemFunction(Tile* totem, Tile map[][ARRAY]);				// found a totem
+int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p);		// found a portal
+int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i);		// renvoie 0 si fin du tour, 1 sinon
+Character* createCharacters();							// création des 4 persos
+void viewCharacter(Character player,int i);					// view each character's stats
+int victory(Character p,int i); 						// check if victor
+int playerTurn(Tile map[][ARRAY], Character p, int i);				// tour d'un joueur
+void playGame();								// gestion d'une partie
 
 // Adrien
-void viewPosition(Character p);						// Procédure pour voir la position d'un joueur
-void countTilesReveal(Tile map[][ARRAY]);				// Compter les cases déjà révélées
-void move(Character p, Tile map[][ARRAY],int i);			// Procédure pour les déplacements d'un joueur
+void viewPosition(Character p);							// Procédure pour voir la position d'un joueur
+void countTilesReveal(Tile map[][ARRAY]);					// Compter les cases déjà révélées
+void move(Character* p, Tile map[][ARRAY],int i);				// Procédure pour les déplacements d'un joueur
+int stuck(Character* p, Tile map[][ARRAY]);					// if the player is stuck
 
 // Florian
-char sortTab(pl tab[], char size);					// sorted tab verification
-void merge(pl tab[], char begin, char middle, char end, char size);	// mergesort Christelle 1
-void mergeSortRec(pl tab[], char begin, char end, char size);		// mergesort Christelle 2
-void mergeSort(pl tab[], char size);					// mergesort call
-void sortRanks(FILE* f, char k);					// sorts the rankings from highest to lowest scores
-char addScores(FILE* f, pl* s, char plrnb);				// hecks if name was already registered and prints scores accordingly
-void finish(char plrnb, char botnb, pl* s, char level[]);		// end of game
+char sortTab(Character tab[], char size);					// sorted tab verification
+void merge(Character tab[], char begin, char middle, char end, char size);	// mergesort Christelle 1
+void mergeSortRec(Character tab[], char begin, char end, char size);		// mergesort Christelle 2
+void mergeSort(Character tab[], char size);					// mergesort call
+void sortRanks(FILE* f, char k);						// sorts the rankings from highest to lowest scores
+char addScores(FILE* f, Character* s, char plrnb);				// hecks if name was already registered and prints scores accordingly
+void finish(char plrnb, char botnb, Character* s, char level[]);		// end of game
 void printMapRec(int a, int b, char tab[][ARRAY], char i);			// map drawing
-void printMap();							// map drawing call
-void game(char plrnb, char botnb, pl* s, char level[]);			// game
-void start();								// asks for the initial player infos
-void play();									// unfinished
-void rank();								// shows the rankings
-void menu();								// shows the menu
+void printMap();								// map drawing call
+void game(char plrnb, char botnb, Character* s, char level[]);			// game
+void start();									// asks for the initial player infos
+void play();										// unfinished
+void rank();									// shows the rankings
+void menu();									// shows the menu
