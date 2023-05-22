@@ -163,49 +163,64 @@ void finish(char plrnb, char botnb, pl* s, char level[]){		// end of game
 	}
 }
 
-void printMapRec(int a, int b, char tab[][ARRAY]){	// map drawing function
-	if (a>53 || a<9 || b>29 || b<5){		// edges of map
+void printMapRec(int a, int b, char tab[][ARRAY], char i){	// map drawing function
+	if (a>53 || a<9 || b>29 || b<5){			// edges of map
 		if(a>53 && b<25 && b>19){
-			printf("\033[0;41m");		// red spawner (top left)
+			printf("\033[0;41m");			// red spawner (top left)
 		}
 		else if(a<45 && a>35 && b<5){
-			printf("\033[0;42m");		// green spawner (bottom left)
+			printf("\033[0;42m");			// green spawner (bottom left)
 		}
 		else if(a<9 && b<15 && b>9){
-			printf("\033[0;43m");		// yellow spawner (bottom right)
+			printf("\033[0;43m");			// yellow spawner (bottom right)
 		}
 		else if(a<27 && a>17 && b>29){
-			printf("\033[0;44m");		// blue spawner (top right)
+			printf("\033[0;44m");			// blue spawner (top right)
 		}
 		else{
-			printf("\033[0m");		// nothing
+			printf("\033[0m");			// nothing
 		}
 	}
 	else if (((a/9)-(b/5))%2 == 0){
-		printf("\033[0;40m");			// black cells
+		printf("\033[0;40m");				// black cells
 	}
 	else{
-		printf("\033[0;47m");			// white cells
+		printf("\033[0;47m");				// white cells
 	}
 	if (a>=0){
-		printf(" ");
-		printMapRec(a-1, b, tab);		// print line
+		if (a%9 == 4 && b == 32){
+			printf("%d", i);			// print column number
+			i++;
+			printMapRec(a-1, b, tab, i);		// print line
+		}
+		else if (a == 58 && b%5 == 2){
+			printf("%d", i);			// print line number
+			i++;
+			printMapRec(a-1, b, tab, i);		// print line
+		}
+		else{
+			printf(" ");
+			printMapRec(a-1, b, tab, i);		// print line
+		}
 	}
 	else if (b>0){
-		printf("\033[0m");			// end of line
+		printf("\033[0m");				// end of line
 		printf("\n");
-		printMapRec(SIZEX, b-1, tab);		// newline
+		if (i == 7){
+			i = 1;
+		}
+		printMapRec(SIZEX, b-1, tab, i);		// newline
 	}
 	else{
 		printf("\n");
-		printf("\033[0m");			// end of function
+		printf("\033[0m");				// end of function
 	}
 }
 
 void printMap(){			// calls map drawing function
 	char tab[ARRAY][ARRAY];
 	printf("\n");
-	printMapRec(SIZEX, SIZEY, tab);
+	printMapRec(SIZEX, SIZEY, tab, 0);
 }
 
 /*
@@ -218,6 +233,8 @@ z (0 black, 1 red, 2 green, 3 yellow, 4 blue, 5 purple, 6 cyan, 7 white)
 
 void game(char plrnb, char botnb, pl* s, char level[]){		// game function
 	char i;
+	printf("\033[2J");
+	printf("\033[1;1H");
 	printMap();
 	for (i = 0; i < plrnb; i++){
 		printf("Input %s's score: ", s[i].name);
@@ -365,6 +382,8 @@ void rank(){								// function shows the rankings
 
 void menu(){								// function shows the menu
 	char choice;
+	printf("\033[2J");
+	printf("\033[1;1H");
 	printf("Input 'p' to play\nInput 'r' to check the rankings\nInput 'c' to close the game\n");
 	scan(&choice);
 	switch(choice){
@@ -385,13 +404,8 @@ void menu(){								// function shows the menu
 }
 
 int main(){
-	// Adrien
- 	playGame();
-	printMap();
-	// Florian
 	srand(time(NULL));
 	menu();
-	// Christelle
 	return 0;
 }
 

@@ -633,7 +633,7 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 		check = scan(&m);
 	}while(m != 122  && m != 113 && m != 115 && m != 100 && check != 1);
 	switch(m){ // Action à faire selon la direction
-		case 'z': // up		
+		case 'q': // left		
 			if((y+1)< 6 && x > 0 && x < 6 && map[x][y+1].state == 0){ // vérifier si la case où on veut aller n'est pas déjà revélée et qu'on se sort pas de la map
 				switch (revealTile(map[x][y+1],p,map,i)){
 					case '1' : 
@@ -658,7 +658,7 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 				move(p,map,i); 
 			}	
 		break;
-		case 'd': //right
+		case 'z': // up
 			if(x+1 < 6 && y < 6 && y > 0 && map[x+1][y].state == 0){
 				switch (revealTile(map[x+1][y],p,map,i)){
 					case '1' : 
@@ -683,7 +683,7 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 				move(p, map,i);
 			}
 		break;
-		case 'q': //left
+		case 's': // down
 			if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){
 				switch (revealTile(map[x-1][y],p,map,i)){
 					case '1' : 
@@ -708,7 +708,7 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 				move(p, map,i);
 			}
 			break;
-		case 's': //down
+		case 'd': // right
 			if(y-1 > 0 && x < 6 && x > 0 && map[x][y-1].state == 0){
 				switch (revealTile(map[x][y-1],p,map,i)){
 					case '1' : 
@@ -732,7 +732,7 @@ void move(Character p, Tile map[][ARRAY],int i){ // Procédure pour les déplace
 				move(p, map,i);
 			}
 		break;
-		default :	
+		default:	
 			exit(2);
 		break;
 	}

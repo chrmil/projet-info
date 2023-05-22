@@ -61,7 +61,7 @@ void playGame();							// gestion d'une partie
 // Adrien
 void viewPosition(Character p);						// Procédure pour voir la position d'un joueur
 void countTilesReveal(Tile map[][ARRAY]);				// Compter les cases déjà révélées
-void move(Character p, Tile map[][ARRAY],int i);				// Procédure pour les déplacements d'un joueur
+void move(Character p, Tile map[][ARRAY],int i);			// Procédure pour les déplacements d'un joueur
 
 // Florian
 char sortTab(pl tab[], char size);					// sorted tab verification
@@ -71,7 +71,7 @@ void mergeSort(pl tab[], char size);					// mergesort call
 void sortRanks(FILE* f, char k);					// sorts the rankings from highest to lowest scores
 char addScores(FILE* f, pl* s, char plrnb);				// hecks if name was already registered and prints scores accordingly
 void finish(char plrnb, char botnb, pl* s, char level[]);		// end of game
-void printMapRec(int a, int b, char tab[][ARRAY]);			// map drawing
+void printMapRec(int a, int b, char tab[][ARRAY], char i);			// map drawing
 void printMap();							// map drawing call
 void game(char plrnb, char botnb, pl* s, char level[]);			// game
 void start();								// asks for the initial player infos
