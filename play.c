@@ -252,7 +252,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	if(map==NULL){
 		exit(30);
 	}
-	printf("\nPlayer n°%d is currently playing:\n",i+1);
+	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p.name);
 	int k=0;
 	int win=0;
 	printf("\nYou start a new expedition inside the dungeon.\n");
@@ -295,6 +295,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	return win;	
 }
 
+
 void playGame(char nbp, Character* players){//gestion d'une partie
 	Tile map[ARRAY][ARRAY];//genération de la map
  	generateTiles(map);//tab de 7*7 cases
@@ -305,12 +306,17 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 	players=createCharacters(players,nbp);
 	int i=0;
 	for(i=0;i<nbp;i++){
+
+
+
 		viewCharacter(players[i],i);
 	}
 	i=0;
 	while(playerTurn(map,players[i],i)==0){
 		i++;
+
 		if(i>=nbp){
+
 			i=0;
 		}
 	}

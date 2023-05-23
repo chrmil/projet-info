@@ -1,14 +1,17 @@
 //gestion des personnages
+
 #include "library.h"
 
 void createCharacters(Character* players, int nbp){ //création de nbp persos
 	if(players==NULL){
 		exit(10);
 	}
+
 	int i;
 	int error=0;
 	int k=0;
 	int a=0;
+
 	int n=0;
 	char alea='0';
 	int check=0;
@@ -20,14 +23,14 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 	char* color;
 	class=malloc(nbp*sizeof(char));
 	color=malloc(nbp*sizeof(char));
+
 	if(class==NULL){
 		exit(10);
 	}
 	if(color==NULL){
 		exit(10);
 	}
-	if(alea=='1'){
-		for(i=0; i<nbp; i++){	
+  for(i=0; i<nbp; i++){	
 			players[i].artifact=0;
 			players[i].chest=0;
 			players[i].weapon=NOTHING;
@@ -43,6 +46,9 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 				players[i].tiles[k].y=0;
 			}
 		}
+
+	if(alea=='1'){
+		
 		
 		for(i=0; i<nbp; i++){//génération couleur + class des joueurs
 
@@ -238,6 +244,8 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 			}
 		}
 	}
+=======
+	2
 }
 
 void viewCharacter(Character player,int i){
@@ -259,8 +267,9 @@ void viewCharacter(Character player,int i){
 			printf("\033[01;33m"); 
 		break;
 		}
-	
-	printf("\nPlayer n°%d: %s\n",i+1,p.name);
+
+	printf("\nPlayer n°%d: %s\n", i+1, player.name);
+
 	printf("Class: ");
 	switch(player.class){
 		case 0: 
