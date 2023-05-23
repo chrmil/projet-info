@@ -295,16 +295,14 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	return win;	
 }
 
-void playGame(){//gestion d'une partie
+void playGame(Character* players){//gestion d'une partie
 	Tile map[ARRAY][ARRAY];//genération de la map
  	generateTiles(map);//tab de 7*7 cases
- 	viewTiles(map);
- 	Character* players; 
- 	players=malloc(4*sizeof(Character)); //génération des persos
+ 	//viewTiles(map);
 	if(players==NULL){
 		exit(10);
 	}
-	players=createCharacters();
+	players=createCharacters(players);
 	int i=0;
 	for(i=0;i<4;i++){
 		viewCharacter(players[i],i);
