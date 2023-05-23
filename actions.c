@@ -48,6 +48,7 @@ int fightMonster(Character* p, Tile* monster){
 				printf("\nYou encounter a basilic."); 
 				if (p->weapon==SHIELD){
 					printf("\nYou reflect the basilic's deadly glare with your shield and successfully defat your foe. Victorious, you move onwards.\n");
+					p->monsters++;
 					return 1;
 				}
 				else{
@@ -59,6 +60,7 @@ int fightMonster(Character* p, Tile* monster){
 				printf("\nYou encounter a troll."); 
 				if (p->weapon==AXE){
 					printf("\nYou cut down the troll with your axe and successfully defat your foe. Victorious, you move onwards.\n");
+					p->monsters++;
 					return 1;
 				}
 				else{
@@ -70,6 +72,7 @@ int fightMonster(Character* p, Tile* monster){
 				printf("\nYou encounter a zombie.");
 				if (p->weapon==TORCH){
 					printf("\nYou set the zombie on fire with your torch and successfully defat your foe. Victorious, you move onwards.\n");
+					p->monsters++;
 					return 1;
 				}
 				else{
@@ -81,6 +84,7 @@ int fightMonster(Character* p, Tile* monster){
 				printf("\nYou encounter a harpy.");
 				if (p->weapon==BOW){
 					printf("\nYou fire an arrow at the harpy from afar with your bow and successfully defat your foe. Victorious, you move onwards.\n");
+					p->monsters++;
 					return 1;
 				}
 				else{
@@ -264,12 +268,14 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 	}
 	chooseWeapon(p); //On choisit une arme
 	printf("\nYou enter a new room.");
+	p->exploration++;
 	p->tiles[i]=tile->position;
 	if (tile->type>0 && tile->type<5){
 		return fightMonster(p, tile); //si tuile=monstre ->appelle fonction fightMonster, renvoie 0 ou 1 si défaite ou victoire
 	}
 	else if(tile->type>6 && tile->type<11){
 		//si tuile=arme antique->appelle fonction legendaryWeapon, renvoie toujours 1, met à jour le profil du personnage du joueur
+		p->treasure++;
 		return legendaryWeapon(p, tile);  
 	}
 	switch(tile->type){
@@ -280,6 +286,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 			tile->state=1;//On retourne la tuile.
 			printf("\nYou discover a treasure chest. You loot it and move on.\n");
 			p->chest++;
+			p->treasure++;
 			return 1;
 		break;
 		case 11: //portail découvert
