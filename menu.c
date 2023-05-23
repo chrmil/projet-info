@@ -139,7 +139,7 @@ char addScores(FILE* f, Character* s, char plrnb){				// function checks if name
 void finish(char plrnb, Character* s){		// end of game
 	char back, k;
 	FILE* f = NULL;
-	f = fopen("test.txt", "r+");					// open file
+	f = fopen("score.txt", "r+");					// open file
 	if (f == NULL) {						// open failed
 		printf("Failed to open the file\n");
 		printf("Error code = %d \n", errno);
@@ -341,7 +341,7 @@ void rank(){								// function shows the rankings
 	char* t = NULL;
 	char tab[SIZE], back;
 	char i = 0;
-	f = fopen("test.txt", "r");					// open file
+	f = fopen("score.txt", "r");					// open file
 	if (f == NULL) {						// open failed
 		printf("Failed to open the file\n");
 		printf("Error code = %d \n", errno);
