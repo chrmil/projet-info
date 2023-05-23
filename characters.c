@@ -1,7 +1,7 @@
 //gestion des personnages
 #include "library.h"
 
-Character* createCharacters(Character* players){ //création de 4 persos
+void createCharacters(Character* players, int nbp, Character* bots, int nbb){ //création de 4 persos
 	if(players==NULL){
 		exit(10);
 	}
@@ -9,9 +9,19 @@ Character* createCharacters(Character* players){ //création de 4 persos
 	int error=0;
 	int k=0;
 	int a=0;
+	int n=0;
 	char* class;
 	char* color;
-	for(i=0; i<4; i++){	
+	class=malloc(4*sizeof(char));
+	color=malloc(4*sizeof(char));
+	if(class==NULL){
+		exit(10);
+	}
+	if(color==NULL){
+		exit(10);
+	}
+	
+	for(i=0; i<nbp; i++){	
 		players[i].artifact=0;
 		players[i].chest=0;
 		players[i].weapon=NOTHING;
@@ -24,16 +34,21 @@ Character* createCharacters(Character* players){ //création de 4 persos
 			players[i].tiles[k].y=0;
 		}
 	}
-	class=malloc(4*sizeof(char));
-	color=malloc(4*sizeof(char));
-	if(class==NULL){
-		exit(10);
+	for(i=0; i<nbb; i++){	
+		bots[i].artifact=0;
+		bots[i].chest=0;
+		bots[i].weapon=NOTHING;
+		bots[i].tiles=malloc(25*sizeof(Coordinates));
+		if(bots[i].tiles==NULL){
+			exit(10);
+		}
+		for (k=0; k<25; k++){
+			bots[i].tiles[k].x=0;
+			bots[i].tiles[k].y=0;
+		}
 	}
-	if(color==NULL){
-		exit(10);
-	}
-	
-	for(i=0; i<4; i++){
+
+	for(i=0; i<nbp; i++){//génération couleur + class des joueurs
 		
 		do{	 
 			k=0;
@@ -79,7 +94,7 @@ Character* createCharacters(Character* players){ //création de 4 persos
 			break;
 		}
 	}
-	for(i=0; i<4; i++){
+	for(i=0; i<nbp; i++){
 		 //demande tant que réponse incorrecte
 		do{	
 			a=0;
@@ -135,8 +150,99 @@ Character* createCharacters(Character* players){ //création de 4 persos
 				exit(2);
 			break;
 		}
-	}	
-	return players;
+	}
+	if (nbb==0){
+		for(i=nbp; i<nbb+nbp; i++){//génération couleur + class des bots
+
+			n=0;
+			do{	
+				colors[i]='1'+n;
+				if (color[i]!='1' && color[i]!='2' && color[i]!='3' && color[i]!='4'){
+					error=1; 
+				}
+				for (k=0;k<i;k++){
+					if(color[k]==color[i]){
+						error=1;
+					}
+				}
+				n++;
+			}while (error);//vérifie que couleur libre
+			for(k=0; k<nbb; k++){		
+				switch(color[i]){		
+					case '1': //rouge
+						bots[k].color=0;
+						bots[k].position.x=2;
+						bots[k].spawn.x=2;
+						bots[k].position.y=0;
+						bots[k].spawn.y=0;
+
+					break;
+					case '2': //bleu
+						bots[k].color=1;
+						bots[k].position.x=0;
+						bots[k].spawn.x=0;
+						bots[k].position.y=4;
+						bots[k].spawn.y=4;
+					break;
+					case '3': //vert
+						bots[k].color=2;
+						bots[k].position.x=6;
+						bots[k].spawn.x=6;
+						bots[k].position.y=2;
+						bots[k].spawn.y=2;
+					break;
+					case '4': //jaune
+						bots[k].color=3;
+						bots[k].position.x=4;
+						bots[k].spawn.x=4;
+						bots[k].position.y=6;
+						bots[k].spawn.y=6;
+					break;
+					default: 
+						exit(2);
+					break;
+				}
+			}
+		}	
+		for(i=nbp; i<nbb+nbp; i++){
+			 //demande tant que réponse incorrecte
+			n=0;
+			do{	
+				class[i]='1'+n;
+				if (class[i]!='1' && class[i]!='2' && class[i]!='3' && class[i]!='4'){
+					error=1;
+				}
+				for (k=0;k<i;k++){
+					if(class[k]==class[i]){
+						error=1;
+					}
+				}
+				n++;
+			}while (error);//vérifie que classe libre
+			for(k=0; k<nbb; k++){		
+				switch(class[i]){		
+					case '1': //warrior
+						bots[k].class=0;
+
+
+					break;
+					case '2': //ranger
+						bots[k].class=1;
+					break;
+					case '3': //mage
+						bots[k].class=2;
+
+					break;
+					case '4': //thief
+						bots[k].class=3;
+					break;
+					default: 
+						exit(2);
+					break;
+				}
+			}
+		}	
+	}
 }
 
 void viewCharacter(Character player,int i){
