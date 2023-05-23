@@ -34,7 +34,10 @@ typedef struct Characterstats{
 	Class class;		// classe du personnage
 	int artifact;		// 0 si arme antique pas trouvée, 1 sinon
 	int chest;		// nombre de coffres récupérés: 0, 1 ou 2
-	int pts;		// amount of points of a player
+	int win;		// amount of points of a player
+	int treasure;		//nombre total de trésors (coffres + armes) découverts
+	int exploration;	//nombre total de cases découvertes
+	int monsters;		//nombre total de monstres tués
 	char name[10];		// 10 characters name
 }Character;			// player stats (Christelle)
 
