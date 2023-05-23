@@ -309,6 +309,7 @@ void start(){																// function asks for the initial player infos
 			scan(&level[i]);
 		}
 	}
+	while(getchar() != '\n'){}
 	playGame();
 	game(plrnb, botnb, s, level);
 }
