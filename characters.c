@@ -244,8 +244,6 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 			}
 		}
 	}
-=======
-	2
 }
 
 void viewCharacter(Character player,int i){
