@@ -1,4 +1,4 @@
-///generation des tuiles
+//generation des tuiles
  
 #include <stdio.h>
 #include <math.h>
@@ -232,7 +232,7 @@ int fightMonster(Character* p, Tile* monster){
 			case 1:  //en fonction du monstre rencontré, vérifie si le joueur a choisi l'arme appropriée : si oui, renvoie 1, continue; sinon, renvoie 0, respawn.
 				printf("\nYou encounter a basilic."); 
 				if (p->weapon==SHIELD){
-					printf("\nYou reflect the basilic's deadly glare with your shield and successfully defeat your foe. Victorious, you move onwards.\n");
+					printf("\nYou reflect the basilic's deadly glare with your shield and successfully defat your foe. Victorious, you move onwards.\n");
 					return 1;
 				}
 				else{
@@ -243,7 +243,7 @@ int fightMonster(Character* p, Tile* monster){
 			case 2:
 				printf("\nYou encounter a troll."); 
 				if (p->weapon==AXE){
-					printf("\nYou cut down the troll with your axe and successfully defeat your foe. Victorious, you move onwards.\n");
+					printf("\nYou cut down the troll with your axe and successfully defat your foe. Victorious, you move onwards.\n");
 					return 1;
 				}
 				else{
@@ -254,7 +254,7 @@ int fightMonster(Character* p, Tile* monster){
 			case 3:
 				printf("\nYou encounter a zombie.");
 				if (p->weapon==TORCH){
-					printf("\nYou set the zombie on fire with your torch and successfully defeat your foe. Victorious, you move onwards.\n");
+					printf("\nYou set the zombie on fire with your torch and successfully defat your foe. Victorious, you move onwards.\n");
 					return 1;
 				}
 				else{
@@ -265,7 +265,7 @@ int fightMonster(Character* p, Tile* monster){
 			case 4:
 				printf("\nYou encounter a harpy.");
 				if (p->weapon==BOW){
-					printf("\nYou fire an arrow at the harpy from afar with your bow and successfully defeat your foe. Victorious, you move onwards.\n");
+					printf("\nYou fire an arrow at the harpy from afar with your bow and successfully defat your foe. Victorious, you move onwards.\n");
 					return 1;
 				}
 				else{
@@ -662,6 +662,7 @@ void viewCharacter(Character player,int i){
 	printf("\n");
 	
 }
+
 int stuck(Character* p, Tile map[][ARRAY]){
 	int a=0, x, y;
 	x=p->position.x;
@@ -891,6 +892,7 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 int victory(Character p,int i){
 	viewCharacter(p,i);
 	if (p.chest>0 && p.artifact==1){
+		
 		printf("\nYou have successfully found the artifact you were looking for and some loot.\n You have completed your task and leave the dungeon victorious.\n Congratulations ! You have won!\n");
 		return 1;
 	}
@@ -917,7 +919,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	firstMove(&p,map,k);
 	win=victory(p,i);
 	k++;
-	printf("\nx=%d y=%d\n",p.position.x,p.position.y);
+
 	while(spawn(p)==0){
 		move(&p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(p,i);//vérifie si conditions de victoire résolues
@@ -925,12 +927,12 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		if(win){
 			break;
 		}
-		printf("\nx=%d y=%d\n",p.position.x,p.position.y);
+
 	}//fin de boucle = fin du tour
 	if(win==0){
 		printf("\nYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\n");
 	}
-	viewTiles(map);
+	//viewTiles(map);
 	//réinitialisation de la map
 	for (k=0;k<25;k++){
 		if(p.tiles[k].x==0 && p.tiles[k].y==0){
