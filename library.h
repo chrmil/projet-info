@@ -34,10 +34,7 @@ typedef struct Characterstats{
 	Class class;		// classe du personnage
 	int artifact;		// 0 si arme antique pas trouvée, 1 sinon
 	int chest;		// nombre de coffres récupérés: 0, 1 ou 2
-	int win;		// amount of points of a player
-	int treasure;		//nombre total de trésors (coffres + armes) découverts
-	int exploration;	//nombre total de cases découvertes
-	int monsters;		//nombre total de monstres tués
+	int pts;		// amount of points of a player
 	char name[10];		// 10 characters name
 }Character;			// player stats (Christelle)
 
@@ -53,11 +50,11 @@ int legendaryWeapon(Character* p, Tile* treasure);				// found legendary weapon,
 int totemFunction(Tile* totem, Tile map[][ARRAY]);				// found a totem
 int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p);		// found a portal
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i);		// renvoie 0 si fin du tour, 1 sinon
-Character* createCharacters();							// création des 4 persos
+Character* createCharacters(char plrnb, Character* players);			// création des 4 persos
 void viewCharacter(Character player,int i);					// view each character's stats
 int victory(Character p,int i); 						// check if victor
 int playerTurn(Tile map[][ARRAY], Character p, int i);				// tour d'un joueur
-void playGame();								// gestion d'une partie
+void playGame(char plrnb, char botnb, Character* s, char level[]);								// gestion d'une partie
 
 // Adrien
 void viewPosition(Character p);							// Procédure pour voir la position d'un joueur
