@@ -244,8 +244,6 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 			}
 		}
 	}
-=======
-	2
 }
 
 void viewCharacter(Character player,int i){
@@ -292,6 +290,10 @@ void viewCharacter(Character player,int i){
 		printf("\nArtifact not found.");
 	}
 	printf("\nNumber of chests found : %d.",player.chest); 
+	printf("\nScore:");
+	printf("\nNumber of treasures found : %d.",player.treasure); 
+	printf("\nNumber of tiles explored: %d.",player.exploration); 
+	printf("\nNumber of monsters killed : %d.",player.monsters); 
 	printf("\033[00m");
 	printf("\n");
 	
