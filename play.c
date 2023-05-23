@@ -229,13 +229,15 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 		}
 	}
 }
-int victory(Character p,int i){
-	viewCharacter(p,i);
-	if (p.chest>0 && p.artifact==1){
+int victory(Character* p,int i){
+	viewCharacter(*p,i);
+	if (p->chest>0 && p->artifact==1){
 		
-		printf("\nYou have successfully found the artifact you were looking for and some loot.\n You have completed your task and leave the dungeon victorious.\n Congratulations ! You have won!\n");
+		printf("\nYou have successfully found the artifact you were looking for and some loot.\n You have completed your task and leave the dungeon victorious.\n Congratulations ! You have won!\n");	
+		p->win++;
 		return 1;
 	}
+
 	else{
 		return 0;
 	}
@@ -262,7 +264,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 
 	while(spawn(p)==0){
 		move(&p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
-		win=victory(p,i);//vérifie si conditions de victoire résolues
+		win=victory(&p,i);//vérifie si conditions de victoire résolues
 		k++;
 		if(win){
 			break;
