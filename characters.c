@@ -88,7 +88,7 @@ Character* createCharacters(){ //création des 4 persos
 			k=0;
 			error=0;
 			printf("\nPlayer n°%d:\n",i+1);
-			printf("Choose a color for your character:\n[1]Red\n[2]Blue\n[3]Green\n[4]Yellow\n");
+			printf("Choose a color for your character:\n\033[01;31m[1]Red\n\033[01;34m[2]Blue\n\033[01;32m[3]Green\n\033[01;33m[4]Yellow\033[00m\n");
 			while (a==0){
 				a=scan( &color[i]);
 			}
