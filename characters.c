@@ -1,7 +1,7 @@
 //gestion des personnages
 #include "library.h"
 
-Character* createCharacters(Character* players){ //création de 1 perso
+Character* createCharacters(Character* players){ //création de 4 persos
 	if(players==NULL){
 		exit(10);
 	}
