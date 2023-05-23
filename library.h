@@ -54,7 +54,7 @@ Character* createCharacters(char plrnb, Character* players);			// création des 
 void viewCharacter(Character player,int i);					// view each character's stats
 int victory(Character p,int i); 						// check if victor
 int playerTurn(Tile map[][ARRAY], Character p, int i);				// tour d'un joueur
-void playGame(char plrnb, char botnb, Character* s, char level[]);								// gestion d'une partie
+void playGame(char plrnb, Character* s);					// gestion d'une partie
 
 // Adrien
 void viewPosition(Character p);							// Procédure pour voir la position d'un joueur
@@ -69,10 +69,10 @@ void mergeSortRec(Character tab[], char begin, char end, char size);		// mergeso
 void mergeSort(Character tab[], char size);					// mergesort call
 void sortRanks(FILE* f, char k);						// sorts the rankings from highest to lowest scores
 char addScores(FILE* f, Character* s, char plrnb);				// hecks if name was already registered and prints scores accordingly
-void finish(char plrnb, char botnb, Character* s, char level[]);		// end of game
+void finish(char plrnb, Character* s);						// end of game
 void printMapRec(int a, int b, char tab[][ARRAY], char i);			// map drawing
 void printMap();								// map drawing call
-void game(char plrnb, char botnb, Character* s, char level[]);			// game
+void game(char plrnb, Character* s);						// game
 void start();									// asks for the initial player infos
 void play();										// unfinished
 void rank();									// shows the rankings

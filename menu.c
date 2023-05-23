@@ -136,7 +136,7 @@ char addScores(FILE* f, Character* s, char plrnb){				// function checks if name
 	return k;
 }
 
-void finish(char plrnb, char botnb, Character* s, char level[]){		// end of game
+void finish(char plrnb, Character* s){		// end of game
 	char back, k;
 	FILE* f = NULL;
 	f = fopen("test.txt", "r+");					// open file
@@ -150,12 +150,12 @@ void finish(char plrnb, char botnb, Character* s, char level[]){		// end of game
 	sortRanks(f, k);
 	fclose(f);
 	printf("Game ended\nInput 'r' to replay with the same players\nInput anything else to go back to the menu\n");
-	scan(&back);					// asks to replay with the same players and bot levels
+	scan(&back);					// asks to replay with the same players
 	printf("%c\n", back);
 	switch(back){
 		case 'r':
 			printf("\nRestarting game...\n");
-			game(plrnb, botnb, s, level);
+			game(plrnb, s);
 		break;
 		default:
 			menu();
@@ -231,7 +231,7 @@ y (3 txt, 4bg)
 z (0 black, 1 red, 2 green, 3 yellow, 4 blue, 5 purple, 6 cyan, 7 white)
 */
 
-void game(char plrnb, char botnb, Character* s, char level[]){		// game function
+void game(char plrnb, Character* s){		// game function
 	char i;
 	printf("\033[2J");
 	printf("\033[1;1H");
@@ -243,28 +243,20 @@ void game(char plrnb, char botnb, Character* s, char level[]){		// game function
 			s[i].pts = -1;
 		}
 	}
-	finish(plrnb, botnb, s, level);
+	finish(plrnb, s);
 }
 
 void start(){																// function asks for the initial player infos
-	char back, totalnb, plrnb, role, botnb, i, j, k, ls, lk, a, b, level[4];
+	char back, plrnb, role, i, j, k, ls, lk, a, b;
 	Character* s = NULL;
-	printf("Input the total number of players in the game (between 2 and 4, humans and bots included)\n");				// total number of players (humans and bots)
-	scan(&totalnb);
-	while(totalnb > '4' || totalnb < '2'){
-		printf("Incorrect input\nInput the total number of players in the game (between 2 and 4, humans and bots included)\n");
-		scan(&totalnb);
-	}
-	printf("\nInput the number of human players in the game (between 0 and %c, the other players will be bots)\n", totalnb);	// number of human players
+	printf("Input the number of players in the game (between 2 and 4)\n");				// number of players
 	scan(&plrnb);
-	while(plrnb > totalnb || plrnb < '0'){
-		printf("Incorrect input\nInput the number of human players in the game (between 0 and %c, the other players will be bots)\n", totalnb);
+	while(plrnb > '4' || plrnb < '2'){
+		printf("Incorrect input\nInput the total number of players in the game (between 2 and 4)\n");
 		scan(&plrnb);
 	}
-	totalnb -= 48;
 	plrnb -= 48;
-	botnb = totalnb - plrnb;			// username inputs (human only)
-	s = malloc(plrnb * sizeof(Character));
+	s = malloc(plrnb * sizeof(Character));				// username inputs (human only)
 	if (s == NULL){
 		printf("Failed to allocate for Character* s (func start)");
 		exit(21);
@@ -301,13 +293,9 @@ void start(){																// function asks for the initial player infos
 			b = 0;
 		}
 	}
-	for (i = 0; i < botnb; i++){
-		printf("Input Bot%d's level: ", i+1);
-		scan(&level[i]);
-	}
 	while(getchar() != '\n'){}
-	playGame(plrnb, botnb, s, level);
-	game(plrnb, botnb, s, level);
+	playGame(plrnb, s);
+	game(plrnb,  s);
 }
 
 void play(){								// unfinished function
