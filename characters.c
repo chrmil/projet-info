@@ -1,9 +1,7 @@
 //gestion des personnages
 #include "library.h"
 
-Character* createCharacters(){ //création des 4 persos
-	Character* players;
-	players=malloc(4*sizeof(Character));
+Character* createCharacters(Character* players){ //création de 1 perso
 	if(players==NULL){
 		exit(10);
 	}
@@ -160,7 +158,8 @@ void viewCharacter(Character player,int i){
 			printf("\033[01;33m"); 
 		break;
 		}
-	printf("\nPlayer n°%d:\n",i+1);
+	
+	printf("\nPlayer n°%d: %s\n",i+1,p.name);
 	printf("Class: ");
 	switch(player.class){
 		case 0: 
