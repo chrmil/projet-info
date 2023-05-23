@@ -49,6 +49,9 @@ int fightMonster(Character* p, Tile* monster){
 				printf("\nYou encounter a basilic."); 
 				if (p->weapon==SHIELD){
 					printf("\nYou reflect the basilic's deadly glare with your shield and successfully defat your foe. Victorious, you move onwards.\n");
+
+					p->monsters++;
+
 					return 1;
 				}
 				else{
@@ -60,6 +63,9 @@ int fightMonster(Character* p, Tile* monster){
 				printf("\nYou encounter a troll."); 
 				if (p->weapon==AXE){
 					printf("\nYou cut down the troll with your axe and successfully defat your foe. Victorious, you move onwards.\n");
+
+					p->monsters++;
+
 					return 1;
 				}
 				else{
@@ -71,6 +77,9 @@ int fightMonster(Character* p, Tile* monster){
 				printf("\nYou encounter a zombie.");
 				if (p->weapon==TORCH){
 					printf("\nYou set the zombie on fire with your torch and successfully defat your foe. Victorious, you move onwards.\n");
+
+					p->monsters++;
+
 					return 1;
 				}
 				else{
@@ -82,6 +91,9 @@ int fightMonster(Character* p, Tile* monster){
 				printf("\nYou encounter a harpy.");
 				if (p->weapon==BOW){
 					printf("\nYou fire an arrow at the harpy from afar with your bow and successfully defat your foe. Victorious, you move onwards.\n");
+
+					p->monsters++;
+
 					return 1;
 				}
 				else{
@@ -206,7 +218,9 @@ int totemFunction(Tile* totem, Tile map[][ARRAY]){
 	return 0;
 }
 
-int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p){
+
+int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
+
 	if (portal->state==1 || portal->type==0 || portal->type!=PORTAL){
 		printf("\nErreur 14\n");
 		exit(14); //si tuile déjà explorée ou vide ou pas un portail
@@ -253,8 +267,11 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p){
 
 	p->position.x=line;
 	p->position.y=column;
-	return 1;
+
+	return revealTile(&map[line][column],p,map,i+1);
 }
+
+
              //tuile retournée, joueur actif, plateau, nombre d'actions du tour (de tuiles retournées)
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
 	if (tile->state==1 || tile->type==0 || tile->type==12){
@@ -263,12 +280,18 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 	}
 	chooseWeapon(p); //On choisit une arme
 	printf("\nYou enter a new room.");
+
+	p->exploration++;
+
 	p->tiles[i]=tile->position;
 	if (tile->type>0 && tile->type<5){
 		return fightMonster(p, tile); //si tuile=monstre ->appelle fonction fightMonster, renvoie 0 ou 1 si défaite ou victoire
 	}
 	else if(tile->type>6 && tile->type<11){
 		//si tuile=arme antique->appelle fonction legendaryWeapon, renvoie toujours 1, met à jour le profil du personnage du joueur
+
+		p->treasure++;
+
 		return legendaryWeapon(p, tile);  
 	}
 	switch(tile->type){
@@ -279,10 +302,13 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 			tile->state=1;//On retourne la tuile.
 			printf("\nYou discover a treasure chest. You loot it and move on.\n");
 			p->chest++;
+
+			p->treasure++;
 			return 1;
 		break;
 		case 11: //portail découvert
-			return portalFunction(tile, map , p);
+			return portalFunction(tile, map , p,i);
+
 		break;
 		default:
 			printf("\nErreur 5!\n");

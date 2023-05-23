@@ -295,19 +295,28 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	return win;	
 }
 
-void playGame(char plrnb, Character* players){//gestion d'une partie
+
+void playGame(char nbp, Character* players){//gestion d'une partie
 	Tile map[ARRAY][ARRAY];//genération de la map
  	generateTiles(map);//tab de 7*7 cases
- 	viewTiles(map);
-	players=createCharacters(plrnb, players);
+ 	//viewTiles(map);
+	if(players==NULL){
+		exit(10);
+	}
+	players=createCharacters(players,nbp);
 	int i=0;
-	for(i=0;i<plrnb;i++){
+	for(i=0;i<nbp;i++){
+
+
+
 		viewCharacter(players[i],i);
 	}
 	i=0;
 	while(playerTurn(map,players[i],i)==0){
 		i++;
-		if(i>=plrnb){
+
+		if(i>=nbp){
+
 			i=0;
 		}
 	}

@@ -36,7 +36,9 @@ typedef struct Characterstats{
 	int chest;		// nombre de coffres récupérés: 0, 1 ou 2
 	int pts;		// amount of points of a player
 	char name[10];		// 10 characters name
+
 }Character;			// player stats (Christelle)
+
 
 int scan(char* input);								// scanf but deletes the end
 
@@ -48,7 +50,9 @@ void chooseWeapon(Character* p);						// choix d'une arme à chaque tuile
 int fightMonster(Character* p, Tile* monster);					// fight when monster encountered
 int legendaryWeapon(Character* p, Tile* treasure);				// found legendary weapon, checks if it's the player's or not
 int totemFunction(Tile* totem, Tile map[][ARRAY]);				// found a totem
-int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p);		// found a portal
+
+int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i);	// found a portal
+
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i);		// renvoie 0 si fin du tour, 1 sinon
 Character* createCharacters(char plrnb, Character* players);			// création des 4 persos
 void viewCharacter(Character player,int i);					// view each character's stats
