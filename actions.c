@@ -252,7 +252,7 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p){
 
 	p->position.x=line;
 	p->position.y=column;
-	return 1;
+	return revealTile(map[line][column],p,map,i+1);
 }
              //tuile retournée, joueur actif, plateau, nombre d'actions du tour (de tuiles retournées)
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
