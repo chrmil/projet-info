@@ -15,7 +15,7 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 	do{
 		printf("\nCreate characters manually ? \n[1]Yes\n[0]No\n");
 		check=scan(&alea);
-	}while (check==0);
+	}while (check==0 || alea!='1' && alea!='0');
 	char* class;
 	char* color;
 	class=malloc(nbp*sizeof(char));
@@ -40,20 +40,7 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 				players[i].tiles[k].y=0;
 			}
 		}
-		for(i=0; i<nbb; i++){	
-			bots[i].artifact=0;
-			bots[i].chest=0;
-			bots[i].weapon=NOTHING;
-			bots[i].tiles=malloc(25*sizeof(Coordinates));
-			if(bots[i].tiles==NULL){
-				exit(10);
-			}
-			for (k=0; k<25; k++){
-				bots[i].tiles[k].x=0;
-				bots[i].tiles[k].y=0;
-			}
-		}
-
+		
 		for(i=0; i<nbp; i++){//génération couleur + class des joueurs
 
 			do{	 
