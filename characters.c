@@ -31,6 +31,9 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 			players[i].artifact=0;
 			players[i].chest=0;
 			players[i].weapon=NOTHING;
+			players[i].treasure=0;
+			players[i].exploration=0;
+			players[i].monsters=0;
 			players[i].tiles=malloc(25*sizeof(Coordinates));
 			if(players[i].tiles==NULL){
 				exit(10);
