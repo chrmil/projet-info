@@ -1,6 +1,6 @@
 //gestion de la partie
 
-#include "librairy.h"
+#include "library.h"
 
 
 int stuck(Character* p, Tile map[][ARRAY]){
