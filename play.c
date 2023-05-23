@@ -295,7 +295,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	return win;	
 }
 
-void playGame(Character* players, int nbp){//gestion d'une partie
+void playGame(int nbp, Character* players){//gestion d'une partie
 	Tile map[ARRAY][ARRAY];//genération de la map
  	generateTiles(map);//tab de 7*7 cases
  	//viewTiles(map);
