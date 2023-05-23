@@ -12,7 +12,7 @@ void countTilesReveal(Tile map[][ARRAY]){ // Compter les cases déjà révélée
 	for (i= 1; i<6; i++){
 		for(k=1;k<6;k++){
 			if(map[i][k].state == 1){		// vérifie état des cases de toute la map et rajoute 1 au compteur si révélée
-				count=count++;
+				count++;
 			}
 
 		}
