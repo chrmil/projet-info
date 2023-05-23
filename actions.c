@@ -205,7 +205,7 @@ int totemFunction(Tile* totem, Tile map[][ARRAY]){
 	return 0;
 }
 
-int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p){
+int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 	if (portal->state==1 || portal->type==0 || portal->type!=PORTAL){
 		printf("\nErreur 14\n");
 		exit(14); //si tuile déjà explorée ou vide ou pas un portail
@@ -252,8 +252,10 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p){
 
 	p->position.x=line;
 	p->position.y=column;
-	return revealTile(map[line][column],p,map,i+1);
+	return revealTile(&map[line][column],p,map,i+1);
 }
+
+
              //tuile retournée, joueur actif, plateau, nombre d'actions du tour (de tuiles retournées)
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
 	if (tile->state==1 || tile->type==0 || tile->type==12){
@@ -281,7 +283,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 			return 1;
 		break;
 		case 11: //portail découvert
-			return portalFunction(tile, map , p);
+			return portalFunction(tile, map , p,i);
 		break;
 		default:
 			printf("\nErreur 5!\n");
