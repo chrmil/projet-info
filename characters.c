@@ -31,6 +31,7 @@ void createCharacters(Character* players, int nbp){ //création de nbp persos
 		exit(10);
 	}
   for(i=0; i<nbp; i++){	
+	  		players[i].win=0;
 			players[i].artifact=0;
 			players[i].chest=0;
 			players[i].weapon=NOTHING;
