@@ -310,7 +310,7 @@ void start(){																// function asks for the initial player infos
 		}
 	}
 	while(getchar() != '\n'){}
-	playGame();
+	playGame(s);
 	game(plrnb, botnb, s, level);
 }
 
