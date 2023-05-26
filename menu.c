@@ -137,7 +137,7 @@ char addScores(FILE* f, Character* s, char plrnb){				// function checks if name
 }
 
 void finish(char plrnb, Character* s){		// end of game
-	char back, k;
+	char back = '0', k;
 	/*
 	FILE* f = NULL;
 	f = fopen("score.txt", "r+");					// open file
@@ -252,6 +252,7 @@ void start(){																// function asks for the initial player infos
 	for (i = 0; i < plrnb; i++){
 		printf("Input P%d's username: ", i+1);
 		scanf("\n%[^\n]s", s[i].name);
+		while(getchar() != '\n'){}
 		ls = strlen(s[i].name);
 		for (j = 0; j < ls; j++){
 			if (s[i].name[j] <= 'z' && s[i].name[j] >= 'a'){
@@ -280,10 +281,6 @@ void start(){																// function asks for the initial player infos
 			printf("Username is already taken\n");
 			b = 0;
 		}
-	}
-	while(getchar() != '\n'){}
-	for (i = 0; i < plrnb; i++){
-		printf("\n%s",s[i].name);
 	}
 	playGame(plrnb, s);
 }
