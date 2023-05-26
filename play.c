@@ -247,8 +247,10 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		move(&p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(&p,i);//vérifie si conditions de victoire résolues
 		k++;
+		sleep(4);
 		printf("\033[2J");
 		printf("\033[1;1H");
+		viewCharacter(p);
 		if(win){
 			break;
 		}
