@@ -307,7 +307,9 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 	unsigned long hours=minutes /60;
 	minutes=minutes%60;
   	printf( "Finished in %ld h %ld min %ld sec\n",hours, minutes, secondes ); 
-	
+	for(i=0;i<nbp;i++){
+		viewCharacter(players[i],i);
+	}
 	//viewTiles(map);
 	finish(nbp, players);
 }
