@@ -16,7 +16,6 @@ char sortTab(Character tab[], char size){					// sorted tab verification
 	return 1;
 }
 
-
 void merge(Character tab[], char begin, char middle, char end, char size){	// mergesort Christelle
 	char i,k,j;
 	Character* tab2 = NULL;
@@ -139,8 +138,9 @@ char addScores(FILE* f, Character* s, char plrnb){				// function checks if name
 
 void finish(char plrnb, Character* s){		// end of game
 	char back, k;
+	/*
 	FILE* f = NULL;
-	f = fopen("test.txt", "r+");					// open file
+	f = fopen("score.txt", "r+");					// open file
 	if (f == NULL) {						// open failed
 		printf("Failed to open the file\n");
 		printf("Error code = %d \n", errno);
@@ -150,13 +150,15 @@ void finish(char plrnb, Character* s){		// end of game
 	k = addScores(f, s, plrnb);
 	sortRanks(f, k);
 	fclose(f);
+	*/
+	while(getchar() != '\n'){}
 	printf("Game ended\nInput 'r' to replay with the same players\nInput anything else to go back to the menu\n");
 	scan(&back);					// asks to replay with the same players
 	printf("%c\n", back);
 	switch(back){
 		case 'r':
 			printf("\nRestarting game...\n");
-			game(plrnb, s);
+			playGame(plrnb, s);
 		break;
 		default:
 			menu();
@@ -232,12 +234,6 @@ y (3 txt, 4bg)
 z (0 black, 1 red, 2 green, 3 yellow, 4 blue, 5 purple, 6 cyan, 7 white)
 */
 
-void game(char plrnb, Character* s){		// game function
-	printMap();
-	playGame(plrnb, s);
-	finish(plrnb, s);
-}
-
 void start(){																// function asks for the initial player infos
 	char back, plrnb, role, i, j, k, ls, lk, a, b;
 	Character* s = NULL;
@@ -289,7 +285,7 @@ void start(){																// function asks for the initial player infos
 	for (i = 0; i < plrnb; i++){
 		printf("\n%s",s[i].name);
 	}
-	game(plrnb, s);
+	playGame(plrnb, s);
 }
 
 void play(){								// unfinished function
@@ -335,7 +331,7 @@ void rank(){								// function shows the rankings
 	char* t = NULL;
 	char tab[SIZE], back;
 	char i = 0;
-	f = fopen("test.txt", "r");					// open file
+	f = fopen("score.txt", "r");					// open file
 	if (f == NULL) {						// open failed
 		printf("Failed to open the file\n");
 		printf("Error code = %d \n", errno);
