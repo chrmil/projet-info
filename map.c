@@ -144,3 +144,14 @@ void viewTiles(Tile map[][ARRAY]){
 	}
 	printf("\n");
 }
+void displayAvatar&Case(){ 
+switch(revealTile()){
+printf("⬛⬛\n⬛⬛");   // si non révélées 
+
+printf("🔲🔲\n🔲🔲"); // si révélée
+switch(p.class[i]){
+
+} 
+//si looted -> changer la place du perso
+}
+}
