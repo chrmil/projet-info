@@ -129,12 +129,13 @@ void generateTiles(Tile map[][ARRAY]){
 			map[i][k].position.y=k;
 			//compte le nb de cases d'un type sur le plateau; vérifie qu'il y en ait le bon nb ;
 			while(countTiles(a,compteur)==0) {
+				printf("No is already taken\n");
 				a=rand()%11+1;
 				map[i][k].type=a;
         		}
     		}
   	}
-
+  	free(compteur);
 	printf("\n");
 }
 
@@ -142,23 +143,20 @@ void viewTiles(Tile map[][ARRAY]){
 	int i,k,j;
 	printf("\n");
 	for (i=0; i<7; i++){
-		
+	printf("\n");
 		for(k=0;k<7;k++){
-			
+			printf(" %d (%d)",map[i][k].type, map[i][k].state);//affiche "nature de la case(statut de la case)" pour toute la map + les bords
+
 		}
 	}
 	printf("\n");
 }
 
 void displayMap(Tile map[][ARRAY],Character p){ 
-	int i,k;
+	int i, k;
 //	printf("⬛⬛\n⬛⬛");   // si révélées 
 //	printf("🔲🔲\n🔲🔲"); // si non révélée
 	for (i=0; i<7; i++){
-		printf("\n");
-		for(k=0;k<7;k++){
-			printf("  ");
-		}
 		printf("\n");
 		for(k=0;k<7;k++){
 			if(map[i][k].type==SPAWN){
@@ -244,16 +242,16 @@ void displayMap(Tile map[][ARRAY],Character p){
 						break;
 						case 12:
 							if(i==2 && k==0){//rouge
-								printf("🟥🟥 ");
+								printf("🟥 ");
 							}
 							if(i==6 && k==2){//vert
-								printf("🟩🟩 ");
+								printf("🟩 ");
 							}
 							if(i==0 && k==4){//bleu
-								printf("🟦🟦 ");
+								printf("🟦 ");
 							}
 							if(i==4 && k==6){//jaune
-								printf("🟨🟨 ");
+								printf("🟨 ");
 							}
 						break;
 						default: 
@@ -342,7 +340,5 @@ void displayMap(Tile map[][ARRAY],Character p){
 				}
 			}
 		}
-				
 	}
-	printf("\n");
 }

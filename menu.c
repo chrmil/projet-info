@@ -33,9 +33,39 @@ void merge(Character tab[], char begin, char middle, char end, char size){	// me
 		tab2[i]=tab[end-i+middle+1];
 	}
 	for (i=begin; i<end+1; i++){
-		if(tab2[k].win>=tab2[j].win){
+		if(tab2[k].win>tab2[j].win){
 			tab[i]=tab2[k];
 			k++;
+		}
+		else if(tab2[k].win==tab2[j].win){
+			if(tab2[k].treasure>tab2[j].treasure){
+				tab[i]=tab2[k];
+				k++;
+			}
+			else if(tab2[k].treasure==tab2[j].treasure){
+				if(tab2[k].monsters>tab2[j].monsters){
+					tab[i]=tab2[k];
+					k++;
+				}
+				else if(tab2[k].monsters==tab2[j].monsters){
+					if(tab2[k].exploration>=tab2[j].exploration){
+						tab[i]=tab2[k];
+						k++;
+					}
+					else{
+						tab[i]=tab2[j];
+						j--;
+					}
+				}
+				else{
+					tab[i]=tab2[j];
+					j--;
+				}
+			}
+			else{
+				tab[i]=tab2[j];
+				j--;
+			}
 		}
 		else{
 			tab[i]=tab2[j];
@@ -77,7 +107,7 @@ void sortRanks(FILE* f, char k){					// function sorts the rankings from highest
 	mergeSort(sort, k);						// sort the tab
 	rewind(f);
 	for (i = 0; i < k; i++){					// print the sorted tab
-		fprintf(f, "%10d %10d %10d %10d %10d %10.10s\n", sort[i].win, sort[i].treasure, sort[i].monsters, sort[i].exploration, sort[i].name);
+		fprintf(f, "%10d %10d %10d %10d %10.10s\n", sort[i].win, sort[i].treasure, sort[i].monsters, sort[i].exploration, sort[i].name);
 	}
 	free(sort);
 }
@@ -96,8 +126,9 @@ char addScores(FILE* f, Character* s, char plrnb){			// function checks if name 
 		printf("Failed to allocate for char* b (func addScores)");
 		exit(42);
 	}
-	t = fscanf(f, " %d %d %d %d", &rank.win, &rank.treasure, &rank.monsters, &rank.exploration);				// read file
-	while(t != EOF){						// compares the names
+	t = fscanf(f, " %d", &rank.win);									// read file
+	while(t != EOF){											// compares the names
+		t = fscanf(f, " %d %d %d", &rank.treasure, &rank.monsters, &rank.exploration);			// read file
 		k++;
 		t = fscanf(f, "\n%[^\n]s", rank.name);
 		for (i = 0; i < plrnb; i++){
@@ -116,9 +147,12 @@ char addScores(FILE* f, Character* s, char plrnb){			// function checks if name 
 			}
 			if (a[i] == 0){					// adds the new score to the player's total score
 				rank.win += s[i].win;
+				rank.treasure += s[i].treasure;
+				rank.monsters += s[i].monsters;
+				rank.exploration += s[i].exploration;
 				fseek(f, -51, SEEK_CUR);
 				fprintf(f, "%10d %10d %10d %10d", rank.win, rank.treasure, rank.monsters, rank.exploration);
-				fseek(f, 41, SEEK_CUR);
+				fseek(f, 11, SEEK_CUR);
 				b[i] = 1;
 			}
 		}
@@ -138,7 +172,6 @@ char addScores(FILE* f, Character* s, char plrnb){			// function checks if name 
 
 void finish(char plrnb, Character* s){		// end of game
 	char back = '0', k;
-
 	FILE* f = NULL;
 	f = fopen("score.txt", "r+");					// open file
 	if (f == NULL) {						// open failed
@@ -150,6 +183,7 @@ void finish(char plrnb, Character* s){		// end of game
 	k = addScores(f, s, plrnb);
 	sortRanks(f, k);
 	fclose(f);
+	while(getchar()!= '\n'){}
 	printf("Game ended\nInput 'r' to replay with the same players\nInput anything else to go back to the menu\n");
 	scan(&back);					// asks to replay with the same players
 	printf("%c\n", back);
@@ -159,13 +193,14 @@ void finish(char plrnb, Character* s){		// end of game
 			playGame(plrnb, s);
 		break;
 		default:
+			free(s);
 			menu();
 		break;
 	}
 }
 
 void start(){																// function asks for the initial player infos
-	char back, plrnb, role, i, j, k, ls, lk, a, b;
+	char back, plrnb, i, j, k, ls, lk, a, b;
 	Character* s = NULL;
 	printf("Input the number of players in the game (between 2 and 4)\n");				// number of players
 	scan(&plrnb);
@@ -182,7 +217,6 @@ void start(){																// function asks for the initial player infos
 	for (i = 0; i < plrnb; i++){
 		printf("Input P%d's username: ", i+1);
 		scanf("\n%[^\n]s", s[i].name);
-		while(getchar() != '\n'){}
 		ls = strlen(s[i].name);
 		for (j = 0; j < ls; j++){
 			if (s[i].name[j] <= 'z' && s[i].name[j] >= 'a'){
@@ -212,6 +246,7 @@ void start(){																// function asks for the initial player infos
 			b = 0;
 		}
 	}
+	while(getchar() != '\n'){}
 	playGame(plrnb, s);
 }
 
@@ -272,13 +307,13 @@ void rank(){								// function shows the rankings
 	while(i <= 18 && t != NULL){					// reads the first 10 players
 		printf("Wins : %s", tab);
 		t = fgets(tab, SIZE, f);
-		printf("Treasures found : %s", tab);
+		printf("    Treasures found : %s", tab);
 		t = fgets(tab, SIZE, f);
-		printf("Monsters defeated : %s", tab);
+		printf("    Monsters defeated : %s", tab);
 		t = fgets(tab, SIZE, f);
-		printf("Revealed tiles : %s", tab);
+		printf("    Revealed tiles : %s", tab);
 		t = fgets(tab, SIZE, f);
-		printf("Username : %s", tab);
+		printf("    Username : %s", tab);
 		t = fgets(tab, SIZE, f);
 		i+=2;
 	}
@@ -312,7 +347,6 @@ void menu(){								// function shows the menu
 }
 
 int main(){
-	srand(time(NULL));
 	menu();
 	return 0;
 }

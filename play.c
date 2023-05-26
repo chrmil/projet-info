@@ -227,7 +227,7 @@ int spawn(Character p){//1 si joueur au spawn, 0 sinon
 	}
 }
 
-int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
+int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 	char c;
 	if(map==NULL){
 		exit(30);
@@ -235,7 +235,8 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 	printf("\033[2J");
 	printf("\033[1;1H");
 	map[p->position.x][p->position.y].player=1;
-	displayMap(map, *p);
+	//displayMap(map, *p);
+	viewTiles(map);
 	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p->name);
 	int x=p->position.x;
 	int y=p->position.y;
@@ -252,10 +253,11 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 	printf("\033[1;1H");
 	k++;
 	while(spawn(*p)==0){
+		viewTiles(map);
 		map[p->position.x][p->position.y].player=1;
 		x=p->position.x;
 		y=p->position.y;
-		displayMap(map, *p);
+		//displayMap(map, *p);
 		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(p,i);//vérifie si conditions de victoire résolues
 		k++;
@@ -296,7 +298,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 				map[n][k].state=1;
 			}
 		}
-		displayMap(map, *p);
+		//displayMap(map, *p);
 	}
 	if(p->tiles==NULL){
 		exit(10);
@@ -305,11 +307,12 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 		p->tiles[k].x=0; //tuiles explorées
 		p->tiles[k].y=0;
 	}
-	return win;	
+	return win;
 }
 
 
 void playGame(char nbp, Character* players){//gestion d'une partie
+	printf("Yes is already taken\n");
 	char c;
 	time_t begin = time( NULL );
 	Tile map[ARRAY][ARRAY];//genération de la map
@@ -332,7 +335,7 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 			i=0;
 		}
 	}
-	printf("\nPlayer n°%d won the game!🏆  \n",i+1);
+	printf("\nPlayer n°%d won the game! 🏆  \n",i+1);
 	time_t end= time( NULL );
 	unsigned long secondes=difftime( end, begin );
 	unsigned long minutes=secondes /60;
@@ -344,7 +347,6 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 		viewCharacter(players[i],i);
 	}
 	printf("\nInput anything to end the game\n");
-	fflush(stdin);
 	//viewTiles(map);
 	finish(nbp, players);
 }
