@@ -46,7 +46,7 @@ int fightMonster(Character* p, Tile* monster){
 	printf("\nA foe attacks you.");
 	switch (monster->type){
 		case 1:		//en fonction du monstre rencontré, vérifie si le joueur a choisi l'arme appropriée : si oui, renvoie 1, continue; sinon, renvoie 0, respawn.
-			printf("\nYou encounter a basilic."); 
+			printf("\nYou encounter a basilic. 🐉"); 
 			if (p->weapon==SHIELD){
 				printf("\nYou reflect the basilic's deadly glare with your shield and successfully defat your foe. Victorious, you move onwards.\n");
 				p->monsters++;
@@ -59,7 +59,7 @@ int fightMonster(Character* p, Tile* monster){
 			}
 		break;
 		case 2:
-			printf("\nYou encounter a troll."); 
+			printf("\nYou encounter a troll. 👾"); 
 			if (p->weapon==AXE){
 				printf("\nYou cut down the troll with your axe and successfully defat your foe. Victorious, you move onwards.\n");
 				p->monsters++;
@@ -72,7 +72,7 @@ int fightMonster(Character* p, Tile* monster){
 			}
 		break;
 		case 3:
-			printf("\nYou encounter a zombie.");
+			printf("\nYou encounter a zombie. 🧟");
 			if (p->weapon==TORCH){
 				printf("\nYou set the zombie on fire with your torch and successfully defat your foe. Victorious, you move onwards.\n");
 				p->monsters++;
@@ -85,7 +85,7 @@ int fightMonster(Character* p, Tile* monster){
 			}
 		break;
 		case 4:
-			printf("\nYou encounter a harpy.");
+			printf("\nYou encounter a harpy. 🪶");
 			if (p->weapon==BOW){
 				printf("\nYou fire an arrow at the harpy from afar with your bow and successfully defat your foe. Victorious, you move onwards.\n");
 				p->monsters++;
