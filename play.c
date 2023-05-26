@@ -241,9 +241,11 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 	int win=0;
 	printf("\nYou start a new expedition inside the dungeon.\n");
 	firstMove(p,map,k);
+	win=victory(p,i);
 	printf("\nInput anything to continue\n");
 	scan(&c);
-	win=victory(p,i);
+	printf("\033[2J");
+	printf("\033[1;1H");
 	k++;
 	while(spawn(*p)==0){
 		viewTiles(map);
