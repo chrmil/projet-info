@@ -235,7 +235,6 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		move(&p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(&p,i);//vérifie si conditions de victoire résolues
 		k++;
-		sleep(1);
 		printf("\033[2J");
 		printf("\033[1;1H");
 		if(win){
@@ -244,6 +243,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	}	//fin de boucle = fin du tour
 	if(win==0){
 		printf("\nYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\n");
+		sleep(1);
 		//viewTiles(map);
 		//réinitialisation de la map
 		for (k=0;k<25;k++){
