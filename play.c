@@ -2,6 +2,13 @@
 
 #include "library.h"
 
+
+timeval getTime(){
+	struct timeval tv;
+	gettimeofday(&tv,NULL);
+	return (tv);
+}
+
 int stuck(Character* p, Tile map[][ARRAY]){
 	int a=0, x, y;
 	x=p->position.x;
@@ -205,6 +212,8 @@ int victory(Character* p,int i){
 	}
 }
 
+
+
 int spawn(Character p){//1 si joueur au spawn, 0 sinon
 	if (p.position.x==p.spawn.x && p.position.y==p.spawn.y){
 		return 1;
@@ -275,6 +284,8 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 
 
 void playGame(char nbp, Character* players){//gestion d'une partie
+	struct timeval start=getTime();
+	printf ("\n %l %l %l \n", start.tv_hour, start.tv_min, start.tv_sec);
 	Tile map[ARRAY][ARRAY];//genération de la map
 	generateTiles(map);//tab de 7*7 cases
 	//viewTiles(map);
@@ -294,7 +305,9 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 		}
 	}
 	printf("\nPlayer n°%d won the game!\n",i+1);
-	viewTiles(map);
+	struct timeval end=getTime();
+	
+	//viewTiles(map);
 	finish(nbp, players);
 }
 
