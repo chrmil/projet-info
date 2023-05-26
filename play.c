@@ -33,8 +33,11 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 			case 'z': // up		
 				if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){
 					p->position.x = (p->position.x) - 1;
-					map[x-1][y].state = 1;
+					
 					switch (revealTile(&map[x-1][y],p,map,i)){
+						case 1:
+							map[x-1][y].state = 1;
+						break;
 						case 0 : 
 							map[x-1][y].state = 0;
 							p->position.y = p->spawn.y;
@@ -53,8 +56,10 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 			case 'q': //left
 				if(y-1 > 0 && x < 6 && x > 0 && map[x][y-1].state == 0){
 					p->position.y = (p->position.y) - 1;
-					map[x][y-1].state = 1;
 					switch (revealTile(&map[x][y-1],p,map,i)){
+						case 1:
+							map[x][y-1].state = 1;
+						break;
 						case 0 : 
 							map[x][y-1].state = 0;
 							p->position.y = p->spawn.y;
@@ -73,8 +78,10 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 			case 'd': //right
 				if((y+1)< 6 && x > 0 && x < 6 && map[x][y+1].state == 0){// vérifier si la case où on veut aller n'est pas déjà revélée et qu'on se sort pas de la map
 					p->position.y = (p->position.y) + 1;
-					map[x][y+1].state = 1;
 					switch (revealTile(&map[x][y+1],p,map,i)){
+						case 1:
+							map[x][y+1].state = 1;
+						break;
 						case 0 : 
 							map[x][y+1].state = 0;
 							p->position.y = p->spawn.y;
@@ -93,8 +100,10 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 			case 's': //down
 				if(x+1 < 6 && y < 6 && y > 0 && map[x+1][y].state == 0){
 					p->position.x = (p->position.x) + 1;
-					map[x+1][y].state = 1;
 					switch (revealTile(&map[x+1][y],p,map,i)){
+						case 1:
+							map[x+1][y].state = 1;
+						break;
 						case 0 : 
 							map[x+1][y].state = 0;
 							p->position.y = p->spawn.y;
@@ -126,8 +135,10 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 		switch(p->color){
 			case RED:
 				p->position.y = (p->position.y) + 1;
-				map[x][y+1].state = 1;
 				switch (revealTile(&map[x][y+1],p,map,i)){
+					case 1:
+						map[x][y+1].state = 1;
+					break;
 					case 0 : 
 						map[x][y+1].state = 0;
 						p->position.y = p->spawn.y;
@@ -140,8 +151,10 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 			break;
 			case BLUE:
 				p->position.x = (p->position.x) + 1;
-				map[x+1][y].state = 1;
 				switch (revealTile(&map[x+1][y],p,map,i)){
+					case 1:
+						map[x+1][y].state = 1;
+					break;
 					case 0 : 
 						map[x+1][y].state = 0;
 						p->position.y = p->spawn.y;
@@ -154,8 +167,10 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 			break;
 			case GREEN:
 				p->position.x = (p->position.x) - 1;
-				map[x-1][y].state = 1;
 				switch (revealTile(&map[x-1][y],p,map,i)){
+					case 1:
+						map[x-1][y].state = 1;
+					break;
 					case 0 : 
 						map[x-1][y].state = 0;
 						p->position.y = p->spawn.y;
@@ -168,8 +183,10 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 			break;
 			case YELLOW:
 				p->position.y = (p->position.y) - 1;
-				map[x][y-1].state = 1;
 				switch (revealTile(&map[x][y-1],p,map,i)){
+					case 1:
+						map[x][y-1].state = 1;
+					break;
 					case 0 : 
 						map[x][y-1].state = 0;
 						p->position.y = p->spawn.y;
