@@ -277,6 +277,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 	}
 	if (tile->position.x!=p->position.x || tile->position.y!=p->position.y){
 		printf("Erreur! position incorrect!");
+		printf("\n%d %d; %d %d\n",tile->position.x, tile->position.y,p->position.x, ,p->position.y)
 	}
 	chooseWeapon(p); //On choisit une arme
 	printf("\nYou enter a new room.");
