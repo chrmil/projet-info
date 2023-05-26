@@ -77,7 +77,6 @@ char addScores(FILE* f, Character* s, char plrnb);				// hecks if name was alrea
 void finish(char plrnb, Character* s);						// end of game
 void printMapRec(int a, int b, char tab[][ARRAY], char i);			// map drawing
 void printMap();								// map drawing call
-void game(char plrnb, Character* s);						// game
 void start();									// asks for the initial player infos
 void play();										// unfinished
 void rank();									// shows the rankings
