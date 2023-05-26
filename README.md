@@ -1,6 +1,6 @@
 # projet-info
 Use 'make' and then './exec.exe'
-The menu opens.
+The menu opens.\n
 Input 'p' to play,'r' to check the rankings, 'c' to close the game.
 When checking the rankings, input anything to go back to the menu.
 Input 'n' to start a new game,'m' to go back to the menu.
