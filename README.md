@@ -1,4 +1,4 @@
-# projet-info
+# projet-info : Memory-RPG
 Use 'make' and then './exec.exe'.  
 The menu opens.  
 Input 'p' to play, 'r' to check the rankings, 'c' to close the game.   
