@@ -212,19 +212,19 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 			}while (error);//vérifie que classe libre
 			switch(class[i]){
 				case '1':
-					printf("\nPlayer n°%d (%s) will play as a warrior.\n",i+1, players[i].name); 
+					printf("\nPlayer n°%d : %s will play as a warrior.\n",i+1, players[i].name); 
 					players[i].class=0;
 				break;
 				case '2':
-					printf("\nPlayer n°%d (%s) will play as a ranger.\n",i+1, players[i].name);
+					printf("\nPlayer n°%d : %s will play as a ranger.\n",i+1, players[i].name);
 					players[i].class=1;
 				break;
 				case '3':
-					printf("\nPlayer n°%d (%s) will play as a mage.\n",i+1, players[i].name);
+					printf("\nPlayer n°%d : %s will play as a mage.\n",i+1, players[i].name);
 					players[i].class=2;
 				break;
 				case '4':
-					printf("\nPlayer n°%d (%s) will play as a thief.\n",i+1, players[i].name);
+					printf("\nPlayer n°%d : %s will play as a thief.\n",i+1, players[i].name);
 					players[i].class=3;
 				break;
 				default:
