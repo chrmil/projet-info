@@ -250,7 +250,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		sleep(4);
 		printf("\033[2J");
 		printf("\033[1;1H");
-		viewCharacter(p);
+		viewCharacter(p,i);
 		if(win){
 			break;
 		}
