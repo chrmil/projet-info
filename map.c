@@ -144,14 +144,27 @@ void viewTiles(Tile map[][ARRAY]){
 	}
 	printf("\n");
 }
-void displayAvatar&Case(){ 
+void displayAvatarCase(){ 
 switch(revealTile()){
-printf("⬛⬛\n⬛⬛");   // si non révélées 
-
-printf("🔲🔲\n🔲🔲"); // si révélée
-switch(p.class[i]){		// 🧙	 🛡️	🥷	🏹  avatars des persos
-
-} 
+	printf("⬛⬛\n⬛⬛");   // si non révélées 
+	printf("🔲🔲\n🔲🔲"); // si révélée
+	switch(p.class[i]){			// 🧙	 🛡️	🥷	🏹  avatars des persos
+		case '1' : // warrior
+			printf(" ");
+		break;
+		case '2' : //ranger
+			printf(" ");
+		break;
+		case '3' : // mage
+			printf(" ");
+		break;
+		case'4' :   // thief
+			printf(" ");
+		break;
+		default : 
+			exit();
+		break;
+	} 
 //si looted -> changer la place du perso
 }
 }
