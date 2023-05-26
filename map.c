@@ -149,7 +149,7 @@ switch(revealTile()){
 printf("⬛⬛\n⬛⬛");   // si non révélées 
 
 printf("🔲🔲\n🔲🔲"); // si révélée
-switch(p.class[i]){
+switch(p.class[i]){		// 🧙	 🛡️	🥷	🏹  avatars des persos
 
 } 
 //si looted -> changer la place du perso
