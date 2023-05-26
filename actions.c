@@ -272,7 +272,7 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
              //tuile retournée, joueur actif, plateau, nombre d'actions du tour (de tuiles retournées)
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
 	if (tile->state==1 || tile->type==0 || tile->type==12){
-		printf("\nError (reveal tile)\n %d %d %d ",tile->state, tile->type);
+		printf("\nError (reveal tile)\n %d %d  ",tile->state, tile->type);
 		printf("\n%d %d; %d %d\n",tile->position.x, tile->position.y,p->position.x ,p->position.y);
 		exit(24); //si tuile déjà explorée ou vide
 	}
