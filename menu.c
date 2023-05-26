@@ -128,7 +128,7 @@ char addScores(FILE* f, Character* s, char plrnb){				// function checks if name
 	for (i = 0; i < plrnb; i++){					// print scores in file if player name doesn't exist yet
 		if (b[i] == 0){
 			k++;
-			fprintf(f, "%10d %10d %10d %10d %10.10s\n", s[i].win, s[i].treasure, s[i].monsters s[i].exploration, s[i].name);
+			fprintf(f, "%10d %10d %10d %10d %10.10s\n", s[i].win, s[i].treasure, s[i].monsters, s[i].exploration, s[i].name);
 		}
 	}
 	free(a);
