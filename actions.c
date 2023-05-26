@@ -275,6 +275,9 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 		printf("\nErreur 24\n");
 		exit(24); //si tuile déjà explorée ou vide
 	}
+	if (tile->position.x!=p->position.x || tile->position.y!=p->position.y){
+		printf("Erreur! position incorrect!");
+	}
 	chooseWeapon(p); //On choisit une arme
 	printf("\nYou enter a new room.");
 	p->exploration++;
