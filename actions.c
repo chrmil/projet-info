@@ -227,6 +227,8 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 	char x;
 	char y;
 	int line, column;
+	line=0;
+	column=0;
 	int error=0;
 	int a=0;
 	int b=0;
@@ -249,8 +251,9 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 			}	
 		}while(error);
 		error=0;
-		line=x-'0'+1;
-		column=y-'0'+1;
+		line=x-'0';
+		column=y-'0';
+		printf("\n%d %d \n",line, column);
 		if(map[line][column].state==1){
 			error=1;
 			printf("\nOnly hidden tiles can be chosen!\n");
@@ -286,7 +289,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 	}
 	switch(tile->type){
 		case 5: //totem découvert
-			return totemFunction(tile, map); //à finir
+			return totemFunction(tile, map); 
 		break;
 		case 6://coffre découvert
 			tile->state=1;//On retourne la tuile.
