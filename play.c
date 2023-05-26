@@ -234,24 +234,32 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 	}
 	printf("\033[2J");
 	printf("\033[1;1H");
+	map[p->position.x][p->position.y].player=1;
 	displayMap(map, *p)
 	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p->name);
+	int x=p->position.x;
+	int y=p->position.y;
 	int k=0;
 	int n=0;
 	int win=0;
 	printf("\nYou start a new expedition inside the dungeon.\n");
 	firstMove(p,map,k);
 	win=victory(p,i);
+	map[x][y].player=0;
 	printf("\nInput anything to continue\n");
 	scan(&c);
 	printf("\033[2J");
 	printf("\033[1;1H");
 	k++;
 	while(spawn(*p)==0){
+		map[p->position.x][p->position.y].player=1;
+		x=p->position.x;
+		y=p->position.y;
 		displayMap(map, *p)
 		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(p,i);//vérifie si conditions de victoire résolues
 		k++;
+		map[x][y].player=0;
 		printf("\nInput anything to continue\n");
 		scan(&c);
 		printf("\033[2J");
@@ -261,6 +269,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 			break;
 		}
 	}	//fin de boucle = fin du tour
+	map[p->position.x][p->position.y].player=0;
 	if(win==0){
 		printf("\nYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\n");
 		printf("\nInput anything to end your turn\n");
