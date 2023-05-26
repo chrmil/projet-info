@@ -235,7 +235,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 	printf("\033[2J");
 	printf("\033[1;1H");
 	map[p->position.x][p->position.y].player=1;
-	displayMap(map, *p)
+	displayMap(map, *p);
 	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p->name);
 	int x=p->position.x;
 	int y=p->position.y;
@@ -255,7 +255,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 		map[p->position.x][p->position.y].player=1;
 		x=p->position.x;
 		y=p->position.y;
-		displayMap(map, *p)
+		displayMap(map, *p);
 		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(p,i);//vérifie si conditions de victoire résolues
 		k++;
@@ -296,7 +296,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 				map[n][k].state=1;
 			}
 		}
-		displayMap(map, *p)
+		displayMap(map, *p);
 	}
 	if(p->tiles==NULL){
 		exit(10);
