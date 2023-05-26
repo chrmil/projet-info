@@ -144,36 +144,142 @@ void viewTiles(Tile map[][ARRAY]){
 	}
 	printf("\n");
 }
-void displayAvatarCase(Tile map[][ARRAY],Character* players){ 
-switch(revealTile(map, p, i)){
+void displayAvatarCase(Tile map[][ARRAY],Character p){ 
+
 	printf("⬛⬛\n⬛⬛");   // si non révélées 
 	printf("🔲🔲\n🔲🔲"); // si révélée
 	for (i=0; i<7; i++){
-		if(){
-			
+		printf("\n");
 		for(k=0;k<7;k++){
-			printf(" %d (%d)",map[i][k].type, map[i][k].state);	//affiche "nature de la case(statut de la case)" pour toute la map + les bords
+			if(map[i][k].state){
+				printf("🔲🔲");
+			}
+			else{
+				printf("⬛⬛");
+			}
+		}
+		printf("\n");	
+		for(k=0;k<7;k++){
+			if(map[i][k].state){	
+				if(map[i][k].player== 1){
+					switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos
+						case 1 : // warrior
+							printf("🛡️");
+						break;
+						case 2: //ranger
+							printf(" 🏹 ");
+						break;
+						case 3 : // mage
+							printf("🧙");
+						break;
+						case 4 :   // thief
+							printf("🥷");
+						break;
+						default : 
+							exit(40);
+						break;
+					} 
+					switch(map[i][k].type){
+						case 0:
+						break;
+						case 1:	
+							printf("");
+						break;
+						case 2:
+							printf("");
+						break;
+						case 3:
+							printf("");
+						break;
+						case 4:
+							printf("");
+						break;
+						case 5:
+							printf("");
+						break;
+						case 6:
+							printf("");
+						break;
+						case 7:
+							printf("");
+						break;
+						case 8:
+							printf("");
+						break;
+						case 9:
+							printf("");
+						break;
+						case 10:
+							printf("");
+						break;
+						case 11:
+							printf("");
+						break;
+						case 12:
+							if(){
+								printf("");
+							}
+						break;
+						default: 
+							exit(1);
+						break;
+					}
+				}
+				else if(map[i][k].looted== 1){
+					printf("⬛⬛")
+				}
+				else{
+					switch(map[i][k].type){
+						case 0:
+							printf("⬛⬛")
+						break;
+						case 1:	
+							printf("⬛");
+						break;
+						case 2:
+							printf("⬛");
+						break;
+						case 3:
+							printf("⬛");
+						break;
+						case 4:
+							printf("⬛");
+						break;
+						case 5:
+							printf("⬛");
+						break;
+						case 6:
+							printf("⬛");
+						break;
+						case 7:
+							printf("⬛");
+						break;
+						case 8:
+							printf("⬛");
+						break;
+						case 9:
+							printf("⬛");
+						break;
+						case 10:
+							printf("⬛");
+						break;
+						case 11:
+							printf("⬛");
+						break;
+						case 12:
+							if(){
+								printf("");
+							}
+						break;
+						default: 
+							exit(1);
+						break;
+					}
+				}
+			}
+			else{
+				printf("⬛⬛");
+			}
 		}
 	}
-	if(tile.looted == 1){
-		switch(p.class[i]){			// 🧙	 🛡️	🥷	🏹  avatars des persos
-			case '1' : // warrior
-				printf("🛡️");
-			break;
-			case '2' : //ranger
-				printf(" 🏹 ");
-			break;
-			case '3' : // mage
-				printf("🧙");
-			break;
-			case'4' :   // thief
-				printf("🥷");
-			break;
-			default : 
-				exit(40);
-			break;
-		} 
-	}
-//si looted -> changer la place du perso
-}
 }
