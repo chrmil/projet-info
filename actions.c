@@ -112,7 +112,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 	printf("\nYou discover an artifact.");
 	switch(treasure->type){
 		case 7: //épée découverte
-			printf("\nYou find the legendary sword of fire.");
+			printf("\nYou find the legendary sword of fire.⚔️ ");
 			if(p->class==WARRIOR){
 				printf("\nAs a warrior, you were looking for this artifact. You take it with you.");
 				p->artifact++;
@@ -124,7 +124,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 			}
 		break;
 		case 8: //baton découvert
-			printf("\nYou find the legendary familiars' command staff.");
+			printf("\nYou find the legendary familiars' command staff. 🦯");
 			if(p->class==RANGER){
 				printf("\nAs a ranger, you were looking for this artifact. You take it with you.");
 				p->artifact++;
@@ -137,7 +137,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 			}
 		break;
 		case 9://grimoire découvert
-			printf("\nYou find the legendary spellbook.");
+			printf("\nYou find the legendary spellbook.📜");
 			if(p->class==MAGE){
 				printf("\nAs a mage, you were looking for this artifact. You take it with you.");
 				p->artifact++;
@@ -149,7 +149,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 			}
 		break;
 		case 10: //dague découverte
-			printf("\nYou find the legendary dagger of sleep.");
+			printf("\nYou find the legendary dagger of sleep.🗡️ ");
 			if(p->class==THIEF){
 				printf("\nAs a thief, you were looking for this artifact. You take it with you.");
 				p->artifact++;
