@@ -77,7 +77,7 @@ void generateTiles(Tile map[][ARRAY]){
 	}
 	int i,k,j;
 	int* compteur=NULL;
-	compteur=malloc(8*sizeof(int));		//compte le nombre de : 0=monstres, 1=totems, 2=coffres, 3=épée, 4=baton, 5=grimoire, 6=dague, 7=portail
+	compteur=calloc(8,sizeof(int));		//compte le nombre de : 0=monstres, 1=totems, 2=coffres, 3=épée, 4=baton, 5=grimoire, 6=dague, 7=portail
 	if(compteur==NULL){
 		exit(1);
 	} 
