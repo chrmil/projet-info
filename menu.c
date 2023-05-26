@@ -96,7 +96,7 @@ char addScores(FILE* f, Character* s, char plrnb){				// function checks if name
 		printf("Failed to allocate for char* b (func addScores)");
 		exit(42);
 	}
-	t = fscanf(f, " %d", &rank.pts);				// read file
+	t = fscanf(f, " %d %d %d %d", &rank.win, &rank.treasure, &rank.monsters, &rank.exploration);				// read file
 	while(t != EOF){						// compares the names
 		k++;
 		t = fscanf(f, "\n%[^\n]s", rank.name);
@@ -115,20 +115,20 @@ char addScores(FILE* f, Character* s, char plrnb){				// function checks if name
 				}
 			}
 			if (a[i] == 0){					// adds the new score to the player's total score
-				rank.pts += s[i].pts;
+				rank.pts += s[i].win;
 				fseek(f, -21, SEEK_CUR);
-				fprintf(f, "%10d", rank.pts);
+				fprintf(f, "%10d %10d %10d %10d", rank.win, rank.treasure, rank.monsters, rank.exploration);
 				fseek(f, 11, SEEK_CUR);
 				b[i] = 1;
 			}
 		}
-		t = fscanf(f, " %d", &rank.pts);
+		t = fscanf(f, " %d %d %d %d", &rank.win, &rank.treasure, &rank.monsters, &rank.exploration);	
 	}
 	while(getchar() != '\n'){}					// clears buffer
 	for (i = 0; i < plrnb; i++){					// print scores in file if player name doesn't exist yet
 		if (b[i] == 0){
 			k++;
-			fprintf(f, "%10d %10.10s\n", s[i].pts, s[i].name);
+			fprintf(f, "%10d %10d %10d %10d %10.10s\n", s[i].win, s[i].treasure, s[i].monsters s[i].exploration, s[i].name);
 		}
 	}
 	free(a);
