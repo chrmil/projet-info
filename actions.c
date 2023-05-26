@@ -50,6 +50,7 @@ int fightMonster(Character* p, Tile* monster){
 			if (p->weapon==SHIELD){
 				printf("\nYou reflect the basilic's deadly glare with your shield and successfully defat your foe. Victorious, you move onwards.\n");
 				p->monsters++;
+				monster->looted=1;
 				return 1;
 			}
 			else{
@@ -62,6 +63,7 @@ int fightMonster(Character* p, Tile* monster){
 			if (p->weapon==AXE){
 				printf("\nYou cut down the troll with your axe and successfully defat your foe. Victorious, you move onwards.\n");
 				p->monsters++;
+				monster->looted=1;
 				return 1;
 			}
 			else{
@@ -74,6 +76,7 @@ int fightMonster(Character* p, Tile* monster){
 			if (p->weapon==TORCH){
 				printf("\nYou set the zombie on fire with your torch and successfully defat your foe. Victorious, you move onwards.\n");
 				p->monsters++;
+				monster->looted=1;
 				return 1;
 			}
 			else{
@@ -86,6 +89,7 @@ int fightMonster(Character* p, Tile* monster){
 			if (p->weapon==BOW){
 				printf("\nYou fire an arrow at the harpy from afar with your bow and successfully defat your foe. Victorious, you move onwards.\n");
 				p->monsters++;
+				monster->looted=1;
 				return 1;
 			}
 			else{
@@ -112,6 +116,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 			if(p->class==WARRIOR){
 				printf("\nAs a warrior, you were looking for this artifact. You take it with you.");
 				p->artifact++;
+				treasure->looted=1;
 			}
 			else{
 				printf("\nYou aren't a warrior. Not interested, you leave it there.");
@@ -123,10 +128,12 @@ int legendaryWeapon(Character* p, Tile* treasure){
 			if(p->class==RANGER){
 				printf("\nAs a ranger, you were looking for this artifact. You take it with you.");
 				p->artifact++;
+				treasure->looted=1;
 			}
 			else{
 				printf("\nYou aren't a ranger. Not interested, you leave it there.");
 				treasure->state=0;
+				
 			}
 		break;
 		case 9://grimoire découvert
@@ -134,6 +141,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 			if(p->class==MAGE){
 				printf("\nAs a mage, you were looking for this artifact. You take it with you.");
 				p->artifact++;
+				treasure->looted=1;
 			}
 			else{
 				printf("\nYou aren't a mage. Not interested, you leave it there.");
@@ -145,6 +153,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 			if(p->class==THIEF){
 				printf("\nAs a thief, you were looking for this artifact. You take it with you.");
 				p->artifact++;
+				treasure->looted=1;
 			}
 			else{
 				printf("\nYou aren't a thief. Not interested, you leave it there.");
@@ -282,6 +291,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 		case 6://coffre découvert
 			tile->state=1;//On retourne la tuile.
 			printf("\nYou discover a treasure chest. You loot it and move on.\n");
+			tile->looted=1;
 			p->chest++;
 			p->treasure++;
 			return 1;
