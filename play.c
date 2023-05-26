@@ -3,11 +3,6 @@
 #include "library.h"
 
 
-timeval getTime(){
-	struct timeval tv;
-	gettimeofday(&tv,NULL);
-	return (tv);
-}
 
 int stuck(Character* p, Tile map[][ARRAY]){
 	int a=0, x, y;
@@ -284,7 +279,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 
 
 void playGame(char nbp, Character* players){//gestion d'une partie
-	struct timeval start=getTime();
+	time_t begin = time( NULL );
 	printf ("\n %l %l %l \n", start.tv_hour, start.tv_min, start.tv_sec);
 	Tile map[ARRAY][ARRAY];//genération de la map
 	generateTiles(map);//tab de 7*7 cases
@@ -305,7 +300,13 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 		}
 	}
 	printf("\nPlayer n°%d won the game!\n",i+1);
-	struct timeval end=getTime();
+	time_t end= time( NULL );
+	unsigned long secondes=difftime( end, begin );
+	unsigned long minutes=secondes /60;
+	secondes=secondes%60;
+	unsigned long hours=minutes /60;
+	minutes=minutes%60;
+  	printf( "Finished in %ld h %ld min %ld sec\n",hours, minutes, secondes ); 
 	
 	//viewTiles(map);
 	finish(nbp, players);
