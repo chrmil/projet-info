@@ -10,7 +10,7 @@ Each player will play a turn until one wins, starting from their spawn until the
 A turn consists of:  
 -choosing a weapon;  
 -revealing a tile and acting accordingly;  
--moving onto or going back to the spawn;  
+-moving on or going back to the spawn;  
 This repeats until the turn ends.  
 The game ends when one player discovers both their class' artifact and at least one chest in the same turn.  
 
