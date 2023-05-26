@@ -34,17 +34,13 @@ typedef struct Characterstats{
 	Class class;		// classe du personnage
 	int artifact;		// 0 si arme antique pas trouvée, 1 sinon
 	int chest;		// nombre de coffres récupérés: 0, 1 ou 2
-
-	int treasure;
-	int monsters;
-	int win;		
-	int exploration;
+	int treasure;		// total amount of treasures found during the game
+	int monsters;		// amount of monsters defeated during the game
+	int win;		// whether the player won or not
+	int exploration;	// amount of revealed tiles during the game
+	int pts;			// à retirer
 	char name[10];		// 10 characters name
-
 }Character;			// player stats (Christelle)
-
-
-int scan(char* input);								// scanf but deletes the end
 
 // Christelle
 int countTiles(int a, int* compteur);						// gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
@@ -54,15 +50,13 @@ void chooseWeapon(Character* p);						// choix d'une arme à chaque tuile
 int fightMonster(Character* p, Tile* monster);					// fight when monster encountered
 int legendaryWeapon(Character* p, Tile* treasure);				// found legendary weapon, checks if it's the player's or not
 int totemFunction(Tile* totem, Tile map[][ARRAY]);				// found a totem
-
 int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i);	// found a portal
-
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i);		// renvoie 0 si fin du tour, 1 sinon
-Character* createCharacters(char plrnb, Character* players);			// création des 4 persos
+Character* createCharacters(Character* players, int nbp);			// création des 4 persos
 void viewCharacter(Character player,int i);					// view each character's stats
-int victory(Character p,int i); 						// check if victor
+int victory(Character* p,int i); 						// check if victor
 int playerTurn(Tile map[][ARRAY], Character p, int i);				// tour d'un joueur
-void playGame(char plrnb, Character* s);					// gestion d'une partie
+void playGame(char nbp, Character* players);					// gestion d'une partie
 
 // Adrien
 void viewPosition(Character p);							// Procédure pour voir la position d'un joueur
@@ -71,6 +65,7 @@ void move(Character* p, Tile map[][ARRAY],int i);				// Procédure pour les dép
 int stuck(Character* p, Tile map[][ARRAY]);					// if the player is stuck
 
 // Florian
+int scan(char* input);								// scanf but deletes the end
 char sortTab(Character tab[], char size);					// sorted tab verification
 void merge(Character tab[], char begin, char middle, char end, char size);	// mergesort Christelle 1
 void mergeSortRec(Character tab[], char begin, char end, char size);		// mergesort Christelle 2

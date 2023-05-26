@@ -42,8 +42,8 @@ void merge(Character tab[], char begin, char middle, char end, char size){	// me
 			j--;
 		}
 	}
-		
 }
+
 void mergeSortRec(Character tab[], char begin, char end, char size){	// mergesort function
 	char middle;
 	if (begin<end){
@@ -232,17 +232,8 @@ z (0 black, 1 red, 2 green, 3 yellow, 4 blue, 5 purple, 6 cyan, 7 white)
 */
 
 void game(char plrnb, Character* s){		// game function
-	char i;
-	printf("\033[2J");
-	printf("\033[1;1H");
 	printMap();
-	for (i = 0; i < plrnb; i++){
-		printf("Input %s's score: ", s[i].name);
-		scanf("%d", &s[i].pts);
-		if (s[i].pts <= -1){				// if the score is too high
-			s[i].pts = -1;
-		}
-	}
+	playGame(plrnb, s);
 	finish(plrnb, s);
 }
 
@@ -294,8 +285,10 @@ void start(){																// function asks for the initial player infos
 		}
 	}
 	while(getchar() != '\n'){}
-	playGame(plrnb, s);
-	game(plrnb,  s);
+	for (i = 0; i < plrnb; i++){
+		printf("\n%s",s[i].name);
+	}
+	game(plrnb, s);
 }
 
 void play(){								// unfinished function
