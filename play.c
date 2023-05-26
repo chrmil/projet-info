@@ -233,6 +233,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	}
 	printf("\033[2J");
 	printf("\033[1;1H");
+	viewTiles(map);
 	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p.name);
 	int k=0;
 	int win=0;
@@ -241,6 +242,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	win=victory(&p,i);
 	k++;
 	while(spawn(p)==0){
+		viewTiles(map);
 		move(&p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(&p,i);//vérifie si conditions de victoire résolues
 		k++;
