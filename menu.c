@@ -150,8 +150,6 @@ void finish(char plrnb, Character* s){		// end of game
 	k = addScores(f, s, plrnb);
 	sortRanks(f, k);
 	fclose(f);
-	
-	while(getchar() != '\n'){}
 	printf("Game ended\nInput 'r' to replay with the same players\nInput anything else to go back to the menu\n");
 	scan(&back);					// asks to replay with the same players
 	printf("%c\n", back);
