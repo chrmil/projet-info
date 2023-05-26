@@ -244,8 +244,9 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		for (k=0;k<25;k++){
 			if(p.tiles[k].x==0 && p.tiles[k].y==0){
 			}
-			else if (map[p.tiles[k].x][p.tiles[k].y].state==1){
+			else if (map[p.tiles[k].x][p.tiles[k].y].state==1 || map[p.tiles[k].x][p.tiles[k].y].looted==1){
 				map[p.tiles[k].x][p.tiles[k].y].state=0;
+				map[p.tiles[k].x][p.tiles[k].y].looted=0;
 			}
 		}
 		//réinitialisation des données du personnage
