@@ -240,16 +240,16 @@ void displayMap(Tile map[][ARRAY],Character p){
 						break;
 						case 12:
 							if(i==2 && k==0){//rouge
-								printf("🟥 ");
+								printf("🟥🟥 ");
 							}
 							if(i==6 && k==2){//vert
-								printf("🟩 ");
+								printf("🟩🟩 ");
 							}
 							if(i==0 && k==4){//bleu
-								printf("🟦 ");
+								printf("🟦🟦 ");
 							}
 							if(i==4 && k==6){//jaune
-								printf("🟨 ");
+								printf("🟨🟨 ");
 							}
 						break;
 						default: 
