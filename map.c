@@ -86,24 +86,28 @@ void generateTiles(Tile map[][ARRAY]){
 		map[0][i].type=VOID;
 		map[0][i].position.x=0;
 		map[0][i].position.y=i;
+		map[0][i].looted=0;
 	}
 	for (i=0; i<7; i++){
 		map[6][i].state=1;
 		map[6][i].type=VOID;
 		map[6][i].position.x=6;
 		map[6][i].position.y=i;
+		map[6][i].looted=0;
 	}
 	for (i=0; i<7; i++){
 		map[i][0].state=1;
 		map[i][0].type=VOID;
 		map[i][0].position.x=i;
 		map[i][0].position.y=0;
+		map[i][0].looted=0;
 	}
 	for (i=0; i<7; i++){
 		map[i][6].state=1;
 		map[i][6].type=VOID;
 		map[i][6].position.x=i;
 		map[i][6].position.y=6;
+		map[i][6].looted=0;
 	}
 	map[0][4].type=SPAWN;
 	map[2][0].type=SPAWN;
@@ -115,6 +119,7 @@ void generateTiles(Tile map[][ARRAY]){
 			map[i][k].state=0;	//cases face cachée
 			a=rand()%11+1;
 			map[i][k].type=a;	//type de la case
+			map[i][k].looted=0;
 			map[i][k].position.x=i;
 			map[i][k].position.y=k;
 			//compte le nb de cases d'un type sur le plateau; vérifie qu'il y en ait le bon nb ;
