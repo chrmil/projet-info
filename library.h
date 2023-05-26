@@ -40,7 +40,6 @@ typedef struct Characterstats{
 	int monsters;		// amount of monsters defeated during the game
 	int win;		// whether the player won or not
 	int exploration;	// amount of revealed tiles during the game
-	int pts;			// à retirer
 	char name[10];		// 10 characters name
 }Character;			// player stats (Christelle)
 
