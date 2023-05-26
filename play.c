@@ -280,7 +280,6 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 
 void playGame(char nbp, Character* players){//gestion d'une partie
 	time_t begin = time( NULL );
-	printf ("\n %l %l %l \n", start.tv_hour, start.tv_min, start.tv_sec);
 	Tile map[ARRAY][ARRAY];//genération de la map
 	generateTiles(map);//tab de 7*7 cases
 	//viewTiles(map);
