@@ -291,6 +291,7 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 	for(i=0;i<nbp;i++){
 		viewCharacter(players[i],i);
 	}
+	sleep(2);
 	i=0;
 	while(playerTurn(map,players[i],i)==0){
 		i++;
