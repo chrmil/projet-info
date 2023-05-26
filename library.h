@@ -18,7 +18,12 @@ typedef enum Playercolor{RED, BLUE, GREEN, YELLOW}Color;	// player color
 typedef struct Playercoordinates{
 	int x;
 	int y;
-}Coordinates;			// coordinates
+}Coordinates;	// coordinates
+typedef struct Time{
+	int hour;
+	int min;
+	int sec;
+}Time; //temps en h:min:s
 typedef struct Tiletype{
 	Coordinates position;	//coordonnées de la tuile
 	Type type;		//nature de la case
