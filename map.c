@@ -145,10 +145,17 @@ void viewTiles(Tile map[][ARRAY]){
 	printf("\n");
 }
 void displayAvatarCase(Tile map[][ARRAY],Character* players){ 
-int i=0;
+switch(revealTile(map, p, i)){
 	printf("⬛⬛\n⬛⬛");   // si non révélées 
 	printf("🔲🔲\n🔲🔲"); // si révélée
-	if(tile.player == 1){
+	for (i=0; i<7; i++){
+		if(){
+			
+		for(k=0;k<7;k++){
+			printf(" %d (%d)",map[i][k].type, map[i][k].state);	//affiche "nature de la case(statut de la case)" pour toute la map + les bords
+		}
+	}
+	if(tile.looted == 1){
 		switch(p.class[i]){			// 🧙	 🛡️	🥷	🏹  avatars des persos
 			case '1' : // warrior
 				printf("🛡️");
@@ -168,4 +175,5 @@ int i=0;
 		} 
 	}
 //si looted -> changer la place du perso
+}
 }
