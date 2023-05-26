@@ -9,7 +9,7 @@ int scan(char* input){							// scanf function but deletes the end
 char sortTab(Character tab[], char size){					// sorted tab verification
 	char i;
 	for (i=0;i<size-1;i++){
-		if (tab[i].pts<tab[i+1].pts){
+		if (tab[i].win<tab[i+1].win){
 			return 0;
 		}
 	}
@@ -71,13 +71,13 @@ void sortRanks(FILE* f, char k){					// function sorts the rankings from highest
 	}
 	rewind(f);
 	for (i = 0; i < k; i++){					// group the rankings in a tab
-		fscanf(f, " %d", &sort[i].pts);
+		fscanf(f, " %d %d %d %d", &sort[i].win, &sort[i].treasure, &sort[i].monsters, &sort[i].exploration);
 		fscanf(f, "\n%[^\n]s", sort[i].name);
 	}
 	mergeSort(sort, k);						// sort the tab
 	rewind(f);
 	for (i = 0; i < k; i++){					// print the sorted tab
-		fprintf(f, "%10d %10.10s\n", sort[i].pts, sort[i].name);
+		fprintf(f, "%10d %10d %10d %10d %10d %10.10s\n", sort[i].win, sort[i].treasure, sort[i].monsters, sort[i].exploration, sort[i].name);
 	}
 	free(sort);
 }
@@ -138,7 +138,7 @@ char addScores(FILE* f, Character* s, char plrnb){				// function checks if name
 
 void finish(char plrnb, Character* s){		// end of game
 	char back = '0', k;
-	/*
+
 	FILE* f = NULL;
 	f = fopen("score.txt", "r+");					// open file
 	if (f == NULL) {						// open failed
@@ -150,7 +150,7 @@ void finish(char plrnb, Character* s){		// end of game
 	k = addScores(f, s, plrnb);
 	sortRanks(f, k);
 	fclose(f);
-	*/
+	
 	while(getchar() != '\n'){}
 	printf("Game ended\nInput 'r' to replay with the same players\nInput anything else to go back to the menu\n");
 	scan(&back);					// asks to replay with the same players
