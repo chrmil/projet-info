@@ -145,7 +145,8 @@ void viewTiles(Tile map[][ARRAY]){
 	printf("\n");
 }
 void displayAvatarCase(Tile map[][ARRAY],Character* players){ 
-switch(revealTile(map, p, i)){
+int i=0;
+	switch(revealTile(map, p, i)){
 	printf("⬛⬛\n⬛⬛");   // si non révélées 
 	printf("🔲🔲\n🔲🔲"); // si révélée
 	if(tile.looted == 1){
