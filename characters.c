@@ -210,7 +210,6 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 				}
 				n++;
 			}while (error);//vérifie que classe libre
-			printf("\033[01;3%cm", color[i]);
 			switch(class[i]){
 				case '1':
 					printf("\nPlayer n°%d (%s) will play as a warrior.\n",i+1, players[i].name); 
