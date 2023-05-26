@@ -109,10 +109,10 @@ void generateTiles(Tile map[][ARRAY]){
 		map[i][6].position.y=6;
 		map[i][6].looted=0;
 	}
-	map[0][4].type=SPAWN;
-	map[2][0].type=SPAWN;
-	map[4][6].type=SPAWN;
-	map[6][2].type=SPAWN;
+	map[0][4].type=SPAWN;	//BLEU
+	map[2][0].type=SPAWN;	//ROUGE
+	map[4][6].type=SPAWN;	//JAUNE
+	map[6][2].type=SPAWN;	//VERT
 	int a;
 	for (i=1; i<6; i++){
 		for(k=1;k<6;k++){
