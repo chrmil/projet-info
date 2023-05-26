@@ -309,7 +309,7 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 			i=0;
 		}
 	}
-	printf("\nPlayer n°%d won the game!\n",i+1);
+	printf("\nPlayer n°%d won the game!🏆  \n",i+1);
 	time_t end= time( NULL );
 	unsigned long secondes=difftime( end, begin );
 	unsigned long minutes=secondes /60;
