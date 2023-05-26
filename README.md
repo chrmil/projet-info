@@ -8,9 +8,9 @@ When beginning a new game, choose the number of players and select a username fo
 Create your characters, manually (select a class and a color) or not.   
 Each player will play a turn until one wins, starting from their spawn until their character dies, becomes stuck or wins.  
 A turn consists of:  
--choosing a weapon;
--revealing a tile and acting accordingly;
--moving onto or going back to the spawn;
+-choosing a weapon;  
+-revealing a tile and acting accordingly;  
+-moving onto or going back to the spawn;  
 This repeats until the turn ends.  
 
 
