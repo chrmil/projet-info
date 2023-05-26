@@ -16,6 +16,12 @@ char sortTab(Character tab[], char size){					// sorted tab verification
 	return 1;
 }
 
+long getTimeMs(){
+	struct timeval tv;
+	gettimeofday(&tv,NULL);
+	return (tv.tv_sec*1000)+(tv.tv_usec/1000);
+}
+
 void merge(Character tab[], char begin, char middle, char end, char size){	// mergesort Christelle
 	char i,k,j;
 	Character* tab2 = NULL;
