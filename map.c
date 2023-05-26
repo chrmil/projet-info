@@ -145,7 +145,7 @@ void viewTiles(Tile map[][ARRAY]){
 	printf("\n");
 }
 
-void displayAvatarCase(Tile map[][ARRAY],Character p){ 
+void displayMap(Tile map[][ARRAY],Character p){ 
 
 //	printf("⬛⬛\n⬛⬛");   // si révélées 
 //	printf("🔲🔲\n🔲🔲"); // si non révélée
