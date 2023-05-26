@@ -227,30 +227,30 @@ int spawn(Character p){//1 si joueur au spawn, 0 sinon
 	}
 }
 
-int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
+int playerTurn(Tile map[][ARRAY], Character* p, int i){//tour d'un joueur
 	if(map==NULL){
 		exit(30);
 	}
 	printf("\033[2J");
 	printf("\033[1;1H");
 	viewTiles(map);
-	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p.name);
+	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p->name);
 	int k=0;
 	int n=0;
 	int win=0;
 	printf("\nYou start a new expedition inside the dungeon.\n");
-	firstMove(&p,map,k);
-	win=victory(&p,i);
+	firstMove(p,map,k);
+	win=victory(p,i);
 	k++;
-	while(spawn(p)==0){
+	while(spawn(*p)==0){
 		viewTiles(map);
-		move(&p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
-		win=victory(&p,i);//vérifie si conditions de victoire résolues
+		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
+		win=victory(p,i);//vérifie si conditions de victoire résolues
 		k++;
 		sleep(4);
 		printf("\033[2J");
 		printf("\033[1;1H");
-		viewCharacter(p,i);
+		viewCharacter(*p,i);
 		if(win){
 			break;
 		}
@@ -262,17 +262,17 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		//réinitialisation de la map
 		for (k=0;k<25;k++){
 			//printf("\n%d : %d, %d\n",k,p.tiles[k].x,p.tiles[k].y); checker le parcours du joueur
-			if(p.tiles[k].x==0 && p.tiles[k].y==0){
+			if(p->tiles[k].x==0 && p->tiles[k].y==0){
 			}
-			else if (map[p.tiles[k].x][p.tiles[k].y].state==1 || map[p.tiles[k].x][p.tiles[k].y].looted==1){
-				map[p.tiles[k].x][p.tiles[k].y].state=0;
-				map[p.tiles[k].x][p.tiles[k].y].looted=0;
+			else if (map[p->tiles[k].x][p->tiles[k].y].state==1 || map[p->tiles[k].x][p->tiles[k].y].looted==1){
+				map[p->tiles[k].x][p->tiles[k].y].state=0;
+				map[p->tiles[k].x][p->tiles[k].y].looted=0;
 			}
 		}
 		//réinitialisation des données du personnage
-		p.artifact=0;		//armes récupérées 
-		p.chest=0;		//coffres
-		p.weapon=NOTHING;	//arme équipée
+		p->artifact=0;		//armes récupérées 
+		p->chest=0;		//coffres
+		p->weapon=NOTHING;	//arme équipée
 	}
 	else{
 		for (k=0;k<7;k++){
@@ -285,8 +285,8 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		exit(10);
 	}
 	for (k=0;k<25;k++){
-		p.tiles[k].x=0; //tuiles explorées
-		p.tiles[k].y=0;
+		p->tiles[k].x=0; //tuiles explorées
+		p->tiles[k].y=0;
 	}
 	return win;	
 }
@@ -307,7 +307,7 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 	}
 	sleep(2);
 	i=0;
-	while(playerTurn(map,players[i],i)==0){
+	while(playerTurn(map,&players[i],i)==0){
 		i++;
 		if(i>=nbp){
 			i=0;
