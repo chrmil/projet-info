@@ -57,7 +57,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i);		// renvoie 
 Character* createCharacters(Character* players, int nbp);			// création des 4 persos
 void viewCharacter(Character player,int i);					// view each character's stats
 int victory(Character* p,int i); 						// check if victor
-int playerTurn(Tile map[][ARRAY], Character p, int i);				// tour d'un joueur
+int playerTurn(Tile map[][ARRAY], Character* p, int i);				// tour d'un joueur
 void playGame(char nbp, Character* players);					// gestion d'une partie
 
 // Adrien
