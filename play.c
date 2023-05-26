@@ -258,7 +258,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		//viewTiles(map);
 		//réinitialisation de la map
 		for (k=0;k<25;k++){
-			printf("\n%d : %d, %d\n",i,p.tiles[k].x,p.tiles[k].y);
+			printf("\n%d : %d, %d\n",k,p.tiles[k].x,p.tiles[k].y);
 			if(p.tiles[k].x==0 && p.tiles[k].y==0){
 			}
 			else if (map[p.tiles[k].x][p.tiles[k].y].state==1 || map[p.tiles[k].x][p.tiles[k].y].looted==1){
