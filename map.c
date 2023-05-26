@@ -147,17 +147,32 @@ void viewTiles(Tile map[][ARRAY]){
 
 void displayAvatarCase(Tile map[][ARRAY],Character p){ 
 
-//	printf("⬛⬛\n⬛⬛");   // si non révélées 
-//	printf("🔲🔲\n🔲🔲"); // si révélée
+//	printf("⬛⬛\n⬛⬛");   // si révélées 
+//	printf("🔲🔲\n🔲🔲"); // si non révélée
 	for (i=0; i<7; i++){
 		printf("\n");
 		for(k=0;k<7;k++){
-
-			if(map[i][k].state){
-				printf("🔲🔲");
+			if(map[i][k].type==SPAWN){
+				if(i==2 && k==0){//rouge
+					printf("🟥🟥 ");
+				}
+				if(i==6 && k==2){//vert
+					printf("🟩🟩 ");
+				}
+				if(i==0 && k==4){//bleu
+					printf("🟦🟦 ");
+				}
+				if(i==4 && k==6){//jaune
+					printf("🟨🟨 ");
+				}
 			}
 			else{
-				printf("⬛⬛");
+				if(map[i][k].state){
+					printf("⬛⬛ ");
+				}
+				else{
+					printf("🔲🔲 ");
+				}
 			}
 		}
 		printf("\n");	
@@ -169,7 +184,7 @@ void displayAvatarCase(Tile map[][ARRAY],Character p){
 							printf("🛡️");
 						break;
 						case 2: //ranger
-							printf(" 🏹 ");
+							printf("🏹");
 						break;
 						case 3 : // mage
 							printf("🧙");
@@ -183,43 +198,53 @@ void displayAvatarCase(Tile map[][ARRAY],Character p){
 					} 
 					switch(map[i][k].type){
 						case 0:
+							printf("⬛ ");	
 						break;
 						case 1:	
-							printf("");
+							printf("🐉 ");
 						break;
 						case 2:
-							printf("");
+							printf("👾 ");
 						break;
 						case 3:
-							printf("");
+							printf("🧟 ");
 						break;
 						case 4:
-							printf("");
+							printf("🪶 ");
 						break;
 						case 5:
-							printf("");
+							printf("🔼 ");
 						break;
 						case 6:
-							printf("");
+							printf("💰 ");
 						break;
 						case 7:
-							printf("");
+							printf("⚔️ ");
 						break;
 						case 8:
-							printf("");
+							printf("🦯 ");
 						break;
 						case 9:
-							printf("");
+							printf("📜 ");
 						break;
 						case 10:
-							printf("");
+							printf("🗡️ ");
 						break;
 						case 11:
-							printf("");
+							printf("🛸 ");
 						break;
 						case 12:
-							if(){
-								printf("");
+							if(i==2 && k==0){//rouge
+								printf("🟥 ");
+							}
+							if(i==6 && k==2){//vert
+								printf("🟩 ");
+							}
+							if(i==0 && k==4){//bleu
+								printf("🟦 ");
+							}
+							if(i==4 && k==6){//jaune
+								printf("🟨 ");
 							}
 						break;
 						default: 
@@ -228,49 +253,58 @@ void displayAvatarCase(Tile map[][ARRAY],Character p){
 					}
 				}
 				else if(map[i][k].looted== 1){
-					printf("⬛⬛")
+					printf("⬛⬛ ")
 				}
 				else{
 					switch(map[i][k].type){
 						case 0:
-							printf("⬛⬛")
+							printf("⬛⬛ ")
 						break;
 						case 1:	
-							printf("⬛");
+							printf("⬛🐉 ");
 						break;
 						case 2:
-							printf("⬛");
+							printf("⬛👾 ");
 						break;
 						case 3:
-							printf("⬛");
+							printf("⬛🧟 ");
 						break;
 						case 4:
-							printf("⬛");
+							printf("⬛🪶 ");
 						break;
 						case 5:
-							printf("⬛");
+							printf("⬛🔼 ");
 						break;
 						case 6:
-							printf("⬛");
+							printf("⬛💰 ");
 						break;
 						case 7:
-							printf("⬛");
+							printf("⬛⚔️ ");
 						break;
 						case 8:
-							printf("⬛");
+							printf("⬛🦯 ");
 						break;
 						case 9:
-							printf("⬛");
+							printf("⬛📜 ");
 						break;
 						case 10:
-							printf("⬛");
+							printf("⬛🗡️ ");
 						break;
 						case 11:
-							printf("⬛");
+							printf("⬛🛸 ");
 						break;
 						case 12:
-							if(){
-								printf("");
+							if(i==2 && k==0){//rouge
+								printf("🟥 ");
+							}
+							if(i==6 && k==2){//vert
+								printf("🟩 ");
+							}
+							if(i==0 && k==4){//bleu
+								printf("🟦 ");
+							}
+							if(i==4 && k==6){//jaune
+								printf("🟨 ");
 							}
 						break;
 						default: 
@@ -280,7 +314,23 @@ void displayAvatarCase(Tile map[][ARRAY],Character p){
 				}
 			}
 			else{
-				printf("⬛⬛");
+				if(map[i][k].type==SPAWN){
+					if(i==2 && k==0){//rouge
+						printf("🟥🟥 ");
+					}
+					if(i==6 && k==2){//vert
+						printf("🟩🟩 ");
+					}
+					if(i==0 && k==4){//bleu
+						printf("🟦🟦 ");
+					}
+					if(i==4 && k==6){//jaune
+						printf("🟨🟨 ");
+					}
+				}
+				else{
+					printf("🔲🔲 ");
+				}
 			}
 		}
 	}
