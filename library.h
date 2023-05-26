@@ -11,7 +11,7 @@
 #define SIZEX 62					// 9 width cells (63 between 0 and 62)
 #define SIZEY 34					// 5 height cells (35 between 0 and 34)
 
-typedef enum Tiletype{VOID/*0*/, BASILIC/*1*/, TROLL/*2*/, ZOMBIE/*3*/, HARPY/*4*/, TOTEM/*5*/, CHEST/*6*/, SWORD/*7*/, STAFF/*8*/, SPELLBOOK/*9*/, DAGGER/*10*/, PORTAL /*11*/, SPAWN/*12*/}Type;								// monster types
+typedef enum {VOID/*0*/, BASILIC/*1*/, TROLL/*2*/, ZOMBIE/*3*/, HARPY/*4*/, TOTEM/*5*/, CHEST/*6*/, SWORD/*7*/, STAFF/*8*/, SPELLBOOK/*9*/, DAGGER/*10*/, PORTAL /*11*/, SPAWN/*12*/}Type;								// monster types
 typedef enum Weapontype{NOTHING,TORCH,SHIELD,AXE,BOW}Weapon;	// choosable weapons
 typedef enum Playerclass{WARRIOR,RANGER,MAGE,THIEF}Class;	// player classes
 typedef enum Playercolor{RED, BLUE, GREEN, YELLOW}Color;	// player color
