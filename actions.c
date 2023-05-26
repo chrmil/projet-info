@@ -253,7 +253,6 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 		error=0;
 		line=x-'0';
 		column=y-'0';
-		printf("\n%d %d \n",line, column);
 		if(map[line][column].state==1){
 			error=1;
 			printf("\nOnly hidden tiles can be chosen!\n");
