@@ -146,7 +146,6 @@ void viewTiles(Tile map[][ARRAY]){
 }
 void displayAvatarCase(Tile map[][ARRAY],Character* players){ 
 int i=0;
-	switch(revealTile(map, p, i)){
 	printf("⬛⬛\n⬛⬛");   // si non révélées 
 	printf("🔲🔲\n🔲🔲"); // si révélée
 	if(tile.player == 1){
@@ -169,5 +168,4 @@ int i=0;
 		} 
 	}
 //si looted -> changer la place du perso
-}
 }
