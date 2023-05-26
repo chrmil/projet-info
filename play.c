@@ -41,7 +41,7 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 							p->position.x = p->spawn.x;
 						break ;
 						default :
-							printf("\nErreur rencontrée\n");
+							printf("\nError\n");
 						break ;
 					}
 				}
@@ -61,7 +61,7 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 							p->position.x = p->spawn.x;
 						break ; 
 						default :
-							printf("\nErreur rencontrée\n");
+							printf("\nError\n");
 						break ;
 					}
 				}
@@ -81,7 +81,7 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 							p->position.x = p->spawn.x;
 						break ;
 						default :
-							printf("\nErreur rencontrée\n");
+							printf("\nError\n");
 						break ;
 					}
 				}	
@@ -101,7 +101,7 @@ void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplac
 							p->position.x = p->spawn.x;
 						break ; 
 						default :
-							printf("\nErreur rencontrée\n");
+							printf("\nError\n");
 						break ;
 					}
 				}
@@ -134,7 +134,7 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 						p->position.x = p->spawn.x;
 					break ;
 					default :
-						printf("\nErreur rencontrée\n");
+						printf("\nError\n");
 					break ;
 				}
 			break;
@@ -148,7 +148,7 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 						p->position.x = p->spawn.x;
 					break ; 
 					default :
-						printf("\nErreur rencontrée\n");
+						printf("\nError\n");
 					break ;
 				}
 			break;
@@ -162,7 +162,7 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 						p->position.x = p->spawn.x;
 					break ;
 					default :
-						printf("\nErreur rencontrée\n");
+						printf("\nError\n");
 					break ;
 				}
 			break;
@@ -176,7 +176,7 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){
 						p->position.x = p->spawn.x;
 					break ; 
 					default :
-						printf("\nErreur rencontrée\n");
+						printf("\nError\n");
 					break ;
 				}
 			break;
