@@ -179,7 +179,7 @@ int totemFunction(Tile* totem, Tile map[][ARRAY]){
 	int a=0;
 	int b=0;
 	int line, column;
-	printf("\nYou find a magical totem glowing ominously. As you feel yourself dying, you are presented with a choice:\n");
+	printf("\nYou find a magical totem glowing ominously 🔼. As you feel yourself dying, you are presented with a choice:\n");
 	int error=0;
 	do{
 		do{
@@ -232,7 +232,7 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 	int error=0;
 	int a=0;
 	int b=0;
-	printf("\nYou find a magical portal. As you feel yourself pulled in, you are presented with a choice:\n");
+	printf("\nYou find a magical portal 🛸. As you feel yourself pulled in, you are presented with a choice:\n");
 	do{
 		do{	
 			error=0;
