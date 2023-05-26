@@ -151,7 +151,7 @@ void viewTiles(Tile map[][ARRAY]){
 }
 
 void displayMap(Tile map[][ARRAY],Character p){ 
-
+	int i,k;
 //	printf("⬛⬛\n⬛⬛");   // si révélées 
 //	printf("🔲🔲\n🔲🔲"); // si non révélée
 	for (i=0; i<7; i++){
@@ -258,12 +258,12 @@ void displayMap(Tile map[][ARRAY],Character p){
 					}
 				}
 				else if(map[i][k].looted== 1){
-					printf("⬛⬛ ")
+					printf("⬛⬛ ");
 				}
 				else{
 					switch(map[i][k].type){
 						case 0:
-							printf("⬛⬛ ")
+							printf("⬛⬛ ");
 						break;
 						case 1:	
 							printf("⬛🐉 ");
