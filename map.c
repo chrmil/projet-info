@@ -157,6 +157,10 @@ void displayMap(Tile map[][ARRAY],Character p){
 	for (i=0; i<7; i++){
 		printf("\n");
 		for(k=0;k<7;k++){
+			printf("  ");
+		}
+		printf("\n");
+		for(k=0;k<7;k++){
 			if(map[i][k].type==SPAWN){
 				if(i==2 && k==0){//rouge
 					printf("🟥🟥 ");
@@ -338,5 +342,7 @@ void displayMap(Tile map[][ARRAY],Character p){
 				}
 			}
 		}
+				
 	}
+	printf("\n");
 }
