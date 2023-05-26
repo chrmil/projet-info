@@ -149,7 +149,7 @@ int i=0;
 	switch(revealTile(map, p, i)){
 	printf("⬛⬛\n⬛⬛");   // si non révélées 
 	printf("🔲🔲\n🔲🔲"); // si révélée
-	if(tile.looted == 1){
+	if(tile.players == 1){
 		switch(p.class[i]){			// 🧙	 🛡️	🥷	🏹  avatars des persos
 			case '1' : // warrior
 				printf("🛡️");
