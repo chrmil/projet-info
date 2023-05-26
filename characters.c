@@ -6,10 +6,12 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 	if(players==NULL){
 		exit(10);
 	}
+
 	int i;
 	int error=0;
 	int k=0;
 	int a=0;
+
 	int n=0;
 	char alea='0';
 	int check=0;
@@ -21,30 +23,36 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 	char* color;
 	class=malloc(nbp*sizeof(char));
 	color=malloc(nbp*sizeof(char));
+
 	if(class==NULL){
 		exit(10);
 	}
 	if(color==NULL){
 		exit(10);
 	}
-	for(i=0; i<nbp; i++){	
-		players[i].artifact=0;
-		players[i].chest=0;
-		players[i].weapon=NOTHING;
-		players[i].treasure=0;
-		players[i].exploration=0;
-		players[i].monsters=0;
-		players[i].tiles=malloc(25*sizeof(Coordinates));
-		if(players[i].tiles==NULL){
-			exit(10);
+  for(i=0; i<nbp; i++){	
+	  		players[i].win=0;
+			players[i].artifact=0;
+			players[i].chest=0;
+			players[i].weapon=NOTHING;
+			players[i].treasure=0;
+			players[i].exploration=0;
+			players[i].monsters=0;
+			players[i].tiles=malloc(25*sizeof(Coordinates));
+			if(players[i].tiles==NULL){
+				exit(10);
+			}
+			for (k=0; k<25; k++){
+				players[i].tiles[k].x=0;
+				players[i].tiles[k].y=0;
+			}
 		}
-		for (k=0; k<25; k++){
-			players[i].tiles[k].x=0;
-			players[i].tiles[k].y=0;
-		}
-	}
+
 	if(alea=='1'){
+		
+		
 		for(i=0; i<nbp; i++){//génération couleur + class des joueurs
+
 			do{	 
 				k=0;
 				a=0;
@@ -54,10 +62,12 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 				while (a==0){
 					a=scan( &class[i]);
 				}
+
 				if (class[i]!='1' && class[i]!='2' && class[i]!='3' && class[i]!='4'){
 					error=1;
 					printf("\nWrong input!\n");
 				}
+
 				for (k=0;k<i;k++){
 					if(class[k]==class[i]){
 						error=1;
@@ -87,9 +97,8 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 				break;
 			}
 		}
-		
 		for(i=0; i<nbp; i++){
-			//demande tant que réponse incorrecte
+			 //demande tant que réponse incorrecte
 			do{	
 				a=0;
 				k=0;
@@ -111,28 +120,29 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 				}
 			}while(error);
 			switch(color[i]){		
-				case '1':	//rouge
+				case '1': //rouge
 					players[i].color=0;
 					players[i].position.x=2;
 					players[i].spawn.x=2;
 					players[i].position.y=0;
 					players[i].spawn.y=0;
+
 				break;
-				case '2':	//bleu
+				case '2': //bleu
 					players[i].color=1;
 					players[i].position.x=0;
 					players[i].spawn.x=0;
 					players[i].position.y=4;
 					players[i].spawn.y=4;
 				break;
-				case '3':	//vert
+				case '3': //vert
 					players[i].color=2;
 					players[i].position.x=6;
 					players[i].spawn.x=6;
 					players[i].position.y=2;
 					players[i].spawn.y=2;
 				break;
-				case '4':	//jaune
+				case '4': //jaune
 					players[i].color=3;
 					players[i].position.x=4;
 					players[i].spawn.x=4;
@@ -146,10 +156,11 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 		}
 	}
 	else{
-		for(i=0; i<nbp; i++){		//génération couleur + class des joueurs automatique
+		for(i=0; i<nbp; i++){//génération couleur + class des joueurs automatique
+
 			n=0;
 			do{	
-				color[i]='1'+n;
+				colors[i]='1'+n;
 				if (color[i]!='1' && color[i]!='2' && color[i]!='3' && color[i]!='4'){
 					error=1; 
 				}
@@ -159,9 +170,9 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 					}
 				}
 				n++;
-			}while (error);		//vérifie que couleur libre
-			switch(color[i]){		
-				case '1':	//rouge
+			}while (error);//vérifie que couleur libre
+					switch(color[i]){		
+				case '1': //rouge
 					players[i].color=0;
 					players[i].position.x=2;
 					players[i].spawn.x=2;
@@ -169,21 +180,21 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 					players[i].spawn.y=0;
 
 				break;
-				case '2':	//bleu
+				case '2': //bleu
 					players[i].color=1;
 					players[i].position.x=0;
 					players[i].spawn.x=0;
 					players[i].position.y=4;
 					players[i].spawn.y=4;
 				break;
-				case '3':	//vert
+				case '3': //vert
 					players[i].color=2;
 					players[i].position.x=6;
 					players[i].spawn.x=6;
 					players[i].position.y=2;
 					players[i].spawn.y=2;
 				break;
-				case '4':	//jaune
+				case '4': //jaune
 					players[i].color=3;
 					players[i].position.x=4;
 					players[i].spawn.x=4;
@@ -194,10 +205,12 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 					exit(2);
 				break;
 			}
+			
 		}	
 		for(i=0; i<nbp; i++){
+			 
 			n=0;
-			do{
+			do{	
 				class[i]='1'+n;
 				if (class[i]!='1' && class[i]!='2' && class[i]!='3' && class[i]!='4'){
 					error=1;
@@ -232,28 +245,31 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 			}
 		}
 	}
+	return players
 }
 
 void viewCharacter(Character player,int i){
 	switch(player.color){
 		case 0: 
 		/*	printf("\033[0;1m"); en gras  */ 
-			printf("\033[01;31m");		// rouge
+			printf("\033[01;31m");
 		break;
 		case 1: 
 		/* 	printf("\033[0;4m"); en surligné */
-			printf("\033[01;34m");		// bleu
+			printf("\033[01;34m");
 		break;
 		case 2: 
 		/*	printf("\033[0;2m"); en plus sombre (gris?) */
-			printf("\033[01;32m");		// vert
+			printf("\033[01;32m");
 		break;
 		case 3: 
 		/*	printf("\033[0;3m"); en italiques */
-			printf("\033[01;33m");		// jaune
+			printf("\033[01;33m"); 
 		break;
 		}
+
 	printf("\nPlayer n°%d: %s\n", i+1, player.name);
+
 	printf("Class: ");
 	switch(player.class){
 		case 0: 
@@ -266,7 +282,7 @@ void viewCharacter(Character player,int i){
 			printf("Mage.");
 		break;
 		case 3: 
-		printf("Thief.");
+			printf("Thief.");
 		break;
 	}
 	if (player.artifact){
@@ -282,4 +298,5 @@ void viewCharacter(Character player,int i){
 	printf("\nNumber of monsters killed : %d.",player.monsters); 
 	printf("\033[00m");
 	printf("\n");
+	
 }
