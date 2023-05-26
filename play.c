@@ -236,6 +236,7 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 	viewTiles(map);
 	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p.name);
 	int k=0;
+	int n=0;
 	int win=0;
 	printf("\nYou start a new expedition inside the dungeon.\n");
 	firstMove(&p,map,k);
@@ -272,11 +273,9 @@ int playerTurn(Tile map[][ARRAY], Character p, int i){//tour d'un joueur
 		p.weapon=NOTHING;	//arme équipée
 	}
 	else{
-		for (k=0;k<25;k++){
-			if(p.tiles[k].x==0 && p.tiles[k].y==0){
-			}
-			else if (map[p.tiles[k].x][p.tiles[k].y].state==0){
-				map[p.tiles[k].x][p.tiles[k].y].state=1;
+		for (k=0;k<7;k++){
+			for (n=0;n<7;n++){
+				map[n][k].state=1;
 			}
 		}
 	}
