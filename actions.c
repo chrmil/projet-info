@@ -297,7 +297,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 		break;
 		case 6://coffre découvert
 			tile->state=1;//On retourne la tuile.
-			printf("\nYou discover a treasure chest. You loot it and move on.\n");
+			printf("\nYou discover a treasure chest 💰. You loot it and move on.\n");
 			tile->looted=1;
 			p->chest++;
 			p->treasure++;
