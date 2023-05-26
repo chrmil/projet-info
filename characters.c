@@ -50,7 +50,7 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 				a=0;
 				error=0;
 				printf("\nPlayer n°%d (%s):\n",i+1, players[i].name);
-				printf("Choose a class for your character:\n[1]Warrior\n[2]Ranger\n[3]Mage\n[4]Thief\n");
+				printf("Choose a class for your character:\n[1]🛡️  Warrior\n[2]🏹 Ranger\n[3]🧙 Mage\n[4]🥷 Thief\n");
 				while (a==0){
 					a=scan( &class[i]);
 				}
