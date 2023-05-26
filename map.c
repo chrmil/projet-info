@@ -132,10 +132,10 @@ void generateTiles(Tile map[][ARRAY]){
 				printf("No is already taken\n");			// Boucle infinie après redo
 				a=rand()%11+1;
 				map[i][k].type=a;
-        		}
-    		}
-  	}
-  	free(compteur);
+			}
+		}
+	}
+	free(compteur);
 	printf("\n");
 }
 
