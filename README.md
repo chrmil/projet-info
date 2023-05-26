@@ -13,6 +13,9 @@ A turn consists of:
 -moving on or going back to the spawn;  
 This repeats until the turn ends.  
 The game ends when one player discovers both their class' artifact and at least one chest in the same turn.  
+Once the game ends, restart with the same parameters with 'r' or return to the menu.   
+ 
+
 
 
 
