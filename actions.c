@@ -27,7 +27,7 @@ void chooseWeapon(Character* p){  //choix d'une arme à chaque tuile
 			p->weapon=BOW;
 		break;
 		default:
-			printf("\nErreur 2\n");
+			printf("\nError (weapon choice)\n");
 			exit(2);
 		break;	
 	}
@@ -35,7 +35,7 @@ void chooseWeapon(Character* p){  //choix d'une arme à chaque tuile
 
 int fightMonster(Character* p, Tile* monster){
 	if (monster->state==1 || monster->type==0 || monster->type>4){
-		printf("\nErreur 3\n");
+		printf("\nError (monster fight)\n");
 		exit(3);	//si tuile déjà explorée ou pas un monstre
 	}
 	monster->state=1;	//on retourne la tuile
@@ -97,7 +97,7 @@ int fightMonster(Character* p, Tile* monster){
 				return 0;
 			}
 		default:
-			printf("\nErreur 20\n");
+			printf("\nError (monster fight bis)\n");
 			exit(20);
 		break;
 	}
@@ -105,7 +105,7 @@ int fightMonster(Character* p, Tile* monster){
 
 int legendaryWeapon(Character* p, Tile* treasure){
 	if (treasure->state==1 || treasure->type<7 || treasure->type>=11){
-		printf("\nErreur 6\n");
+		printf("\nError (legendary weapon)\n");
 		exit(6); //si tuile déjà explorée ou vide ou pas une arme antique
 	}
 	treasure->state=1;//On retourne la tuile
@@ -161,7 +161,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 			}
 		break;
 		default:
-			printf("\nErreur 7\n");
+			printf("\nError (legendary weapon bis)\n");
 			exit(7);
 		break;
 	}
@@ -171,7 +171,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 
 int totemFunction(Tile* totem, Tile map[][ARRAY]){
 	if (totem->state==1 || totem->type==0 || totem->type!=TOTEM){
-		printf("\nErreur 4\n");
+		printf("\nError (totem)\n");
 		exit(4); //si tuile déjà explorée ou vide ou pas un totem
 	}
 	char x;
@@ -220,7 +220,7 @@ int totemFunction(Tile* totem, Tile map[][ARRAY]){
 
 int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 	if (portal->state==1 || portal->type==0 || portal->type!=PORTAL){
-		printf("\nErreur 14\n");
+		printf("\nError (portal)\n");
 		exit(14); //si tuile déjà explorée ou vide ou pas un portail
 	}
 	portal->state=1;//On retourne la tuile
@@ -272,11 +272,11 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
              //tuile retournée, joueur actif, plateau, nombre d'actions du tour (de tuiles retournées)
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
 	if (tile->state==1 || tile->type==0 || tile->type==12){
-		printf("\nErreur 24\n");
+		printf("\nError (reveal tile)\n");
 		exit(24); //si tuile déjà explorée ou vide
 	}
 	if (tile->position.x!=p->position.x || tile->position.y!=p->position.y){
-		printf("Erreur! position incorrect!");
+		printf("Error (position)");
 		printf("\n%d %d; %d %d\n",tile->position.x, tile->position.y,p->position.x, ,p->position.y)
 	}
 	chooseWeapon(p); //On choisit une arme
@@ -307,7 +307,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 			return portalFunction(tile, map , p,i);
 		break;
 		default:
-			printf("\nErreur 5!\n");
+			printf("\nError (reveal tile bis)\n");
 			exit(5);
 		break;
 	}
