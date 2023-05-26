@@ -24,7 +24,7 @@ typedef struct Tiletype{
 	Coordinates position;	//coordonnées de la tuile
 	Type type;		//nature de la case
 	int state;		//0 si case cachée, 1 sinon
-	int player;		//0 si personne 1 , 2 , 3 , 4 en fonct° du joueur
+	int player;		//0 si vide (pas de joueur) 1 sinon
 	int looted; 		//1 si joueur a tué le monstre/récupéré le trésor 0 sinon
 }Tile;				// tile type
 typedef struct Characterstats{
