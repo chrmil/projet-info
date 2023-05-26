@@ -6,7 +6,7 @@ void chooseWeapon(Character* p){  //choix d'une arme à chaque tuile
 	int check=0;
 	char weapon;
 	do{
-		printf("Choose a weapon to defend yourself in the next room:\n[1]🔦 Torch\n[2]🛡️ Shield\n[3]🪓 Axe\n[4]🏹 Bow\n"); //demande tant que réponse incorrecte
+		printf("Choose a weapon to defend yourself in the next room:\n[1]🔦 Torch\n[2]🛡️  Shield\n[3]🪓 Axe\n[4]🏹 Bow\n"); //demande tant que réponse incorrecte
 		check=scan(&weapon);
 	}while(weapon!='1' && weapon!='2' && weapon!='3' && weapon!='4' || check==0);
 	switch(weapon){
