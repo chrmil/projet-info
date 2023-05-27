@@ -2,27 +2,27 @@
 
 #include "library.h"
 
-void chooseWeapon(Character* p){  //choix d'une arme à chaque tuile
+void chooseWeapon(Character* p){	// choix d'une arme à chaque tuile
 	int check=0;
 	char weapon;
 	do{
-		printf("Choose a weapon to defend yourself in the next room:\n[1]🔦 Torch\n[2]🛡️  Shield\n[3]🪓 Axe\n[4]🏹 Bow\n"); //demande tant que réponse incorrecte
+		printf("Choose a weapon to defend yourself in the next room:\n[1]🔦 Torch\n[2]🛡️  Shield\n[3]🪓 Axe\n[4]🏹 Bow\n");	// demande tant que réponse incorrecte
 		check=scan(&weapon);
 	}while(weapon!='1' && weapon!='2' && weapon!='3' && weapon!='4' || check==0);
 	switch(weapon){
-		case '1':
+		case '1':	// select torch (kills zombies)
 			printf("\nYou chose a torch to light the way.\n"); //renvoie la valeur correspondant à l'arme dans l'enumération Weapon
 			p->weapon=TORCH;
 		break;
-		case '2':
+		case '2':	// select shield (kills basilics)
 			printf("\nYou chose a shield to defend yourself.\n");
 			p->weapon=SHIELD;
 		break;
-		case '3':
+		case '3':	// select axe (kills trolls)
 			printf("\nYou chose an axe to cut down monsters.\n");
 			p->weapon=AXE;
 		break;
-		case '4':
+		case '4':	// select bow (kills harpies)
 			printf("\nYou chose a bow to kill monsters from afar.\n");
 			p->weapon=BOW;
 		break;
