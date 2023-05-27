@@ -285,12 +285,14 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 	p->tiles[i]=tile->position;
 	fflush(stdout);
 	sleep(2);
-	printf("\033[2J");
-	printf("\033[1;1H");
 	if (tile->type>0 && tile->type<5){
+		printf("\033[2J");
+		printf("\033[1;1H");
 		return fightMonster(p, tile); //si tuile=monstre ->appelle fonction fightMonster, renvoie 0 ou 1 si défaite ou victoire
 	}
 	else if(tile->type>6 && tile->type<11){
+		printf("\033[2J");
+		printf("\033[1;1H");
 		//si tuile=arme antique->appelle fonction legendaryWeapon, renvoie toujours 1, met à jour le profil du personnage du joueur
 		p->treasure++;
 		return legendaryWeapon(p, tile);  
