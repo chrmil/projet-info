@@ -28,8 +28,8 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 			check = scan(&m);
 		}while(m !='z' && m !='q' && m !='s' && m !='d' || check != 1);		// vérifie valeur retournée par le scan
 		switch(m){				// Action à faire selon la direction choisie
-			case 'z': // up		
-				if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){	//vérifie que déplacement est possible
+			case 'z':		// up		
+				if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){	// vérifie si le déplacement est possible
 					p->position.x = (p->position.x) - 1;		// déplacement du joueur
 					switch (revealTile(&map[x-1][y],p,map,i)){	// action -> on retourne la tuile
 						case 1:					// on continue
@@ -45,19 +45,19 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 						break ;
 					}
 				}
-				else{ //sinon
+				else{	// redemande si le déplacement est impossible
 					printf("\nYou can't go on this way Please try again \n --------------------------- \n");
 					move(p, map,i);
 				}
 			break;
-			case 'q': //left
-				if(y-1 > 0 && x < 6 && x > 0 && map[x][y-1].state == 0){ //vérifie que déplacement possible
-					p->position.y = (p->position.y) - 1;  //déplacement du joueur
-					switch (revealTile(&map[x][y-1],p,map,i)){ //action -> on retourne la tuile
-						case 1:
-							map[x][y-1].state = 1; //on continue
+			case 'q':		// left
+				if(y-1 > 0 && x < 6 && x > 0 && map[x][y-1].state == 0){	// vérifie que déplacement possible
+					p->position.y = (p->position.y) - 1;		// déplacement du joueur
+					switch (revealTile(&map[x][y-1],p,map,i)){	// action -> on retourne la tuile
+						case 1:					// on continue
+							map[x][y-1].state = 1;
 						break;
-						case 0 : //on retourne au spawn = fin du tour
+						case 0 :				// on retourne au spawn = fin du tour
 							map[x][y-1].state = 0; 
 							p->position.y = p->spawn.y;
 							p->position.x = p->spawn.x;
@@ -73,13 +73,13 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 				}
 			break;
 			case 'd': //right
-				if((y+1)< 6 && x > 0 && x < 6 && map[x][y+1].state == 0){// vérifier si la case où on veut aller n'est pas déjà revélée et qu'on ne sort pas de la map
-					p->position.y = (p->position.y) + 1; //déplacement du joueur
-					switch (revealTile(&map[x][y+1],p,map,i)){ //action -> on retourne la tuile
-						case 1:
-							map[x][y+1].state = 1;  //on continue
+				if((y+1)< 6 && x > 0 && x < 6 && map[x][y+1].state == 0){	// vérifie si le déplacement est possible
+					p->position.y = (p->position.y) + 1;		// déplacement du joueur
+					switch (revealTile(&map[x][y+1],p,map,i)){	// action -> on retourne la tuile
+						case 1:					// on continue
+							map[x][y+1].state = 1;
 						break;
-						case 0 :   //on retourne au spawn = fin du tour
+						case 0 :				// on retourne au spawn = fin du tour
 							map[x][y+1].state = 0;
 							p->position.y = p->spawn.y;
 							p->position.x = p->spawn.x;
