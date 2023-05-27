@@ -31,6 +31,7 @@ The game ends when one player discovers both their class' artifact and at least 
 At the end of the game, two inputs are asked for some reason.
 All along the game, inputs will be required to move onto the next action, screen or turn.  
 Inputs for specific data will repeat with an appropriate error message until valid data is provided .   
+The map's display may be staggered in some places due to printing issues.  
 Once the game ends, restart with the same parameters with 'r' or return to the menu.   
  
 
