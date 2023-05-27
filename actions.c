@@ -283,6 +283,10 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 	printf("\nYou enter a new room.");
 	p->exploration++;
 	p->tiles[i]=tile->position;
+	fflush(stdout);
+	sleep(2);
+	printf("\033[2J");
+	printf("\033[1;1H");
 	if (tile->type>0 && tile->type<5){
 		return fightMonster(p, tile); //si tuile=monstre ->appelle fonction fightMonster, renvoie 0 ou 1 si défaite ou victoire
 	}
