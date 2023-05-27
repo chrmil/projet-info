@@ -253,40 +253,20 @@ void start(){																// function asks for the initial player infos
 }
 
 void play(){								// unfinished function
-	char choice;
-	if (NULL){							// if there is a saved file
-		printf("Saved data was found, input 's', to continue the game\nInput 'n' to start a new game (saved data will be erased)\nInput 'm' to go back to the menu\n");
-		scan(&choice);
-		switch(choice){
-			case 's':					// will be added later
-			break;
-			case 'n':
-				start();
-			break;
-			case 'm':
-				menu();
-			break;
-			default:
-				printf("Incorrect input\n");
-				play();
-			break;
-		}
-	}
-	else{								// if there is no saved file
-		printf("Input 'n' to start a new game\nInput 'm' to go back to the menu\n");
-		scan(&choice);
-		switch(choice){
-			case 'n':
-				start();
-			break;
-			case 'm':
-				menu();
-			break;
-			default:
-				printf("Incorrect input\n");
-				play();
-			break;
-		}
+	char choice;							// if there is no saved file
+	printf("Input 'n' to start a new game\nInput 'm' to go back to the menu\n");
+	scan(&choice);
+	switch(choice){
+		case 'n':
+			start();
+		break;
+		case 'm':
+			menu();
+		break;
+		default:
+			printf("Incorrect input\n");
+			play();
+		break;
 	}
 }
 
