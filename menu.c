@@ -191,6 +191,7 @@ void finish(char plrnb, Character* s){		// end of game
 	switch(back){
 		case 'r':
 			printf("\nRestarting game...\n");
+			sleep(1);
 			playGame(plrnb, s);
 		break;
 		default:
