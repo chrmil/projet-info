@@ -263,7 +263,6 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 	printf("\033[1;1H");
 	k++;
 	while(spawn(*p)==0){
-		viewTiles(map);
 		map[p->position.x][p->position.y].player=1;
 		x=p->position.x;
 		y=p->position.y;
@@ -286,10 +285,8 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 		printf("\n\033[01;31mYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\033[00m\n");
 		printf("\nInput anything to end your turn\n");
 		scan(&c);
-		//viewTiles(map);
 		//réinitialisation de la map
 		for (k=0;k<25;k++){
-			//printf("\n%d : %d, %d\n",k,p.tiles[k].x,p.tiles[k].y); checker le parcours du joueur
 			if(p->tiles[k].x==0 && p->tiles[k].y==0){
 			}
 			else if (map[p->tiles[k].x][p->tiles[k].y].state==1 || map[p->tiles[k].x][p->tiles[k].y].looted==1){
@@ -327,7 +324,6 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 	time_t begin = time( NULL );
 	Tile map[ARRAY][ARRAY];//genération de la map
 	generateTiles(map);//tab de 7*7 cases
-	//viewTiles(map);
 	if(players==NULL){
 		exit(10);
 	}
@@ -357,7 +353,6 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 		viewCharacter(players[i],i);
 	}
 	printf("\nInput anything to end the game\n");
-	//viewTiles(map);
 	finish(nbp, players);
 }
 
