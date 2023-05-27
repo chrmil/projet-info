@@ -18,6 +18,7 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 	char m;
 	x=p->position.x;
 	y=p->position.y;
+	displayMap(map, *p);
 	if (stuck(p,map)){				// si joueur bloqué
 		p->position.y = p->spawn.y;		// retour au spawn = fin du tour
 		p->position.x = p->spawn.x;
