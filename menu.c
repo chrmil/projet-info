@@ -1,8 +1,8 @@
 #include "library.h"
 
-int scan(char* input){							// scanf function but deletes the end
+int scan(char* input){					// scanf function but deletes the end
 	int a=scanf("%c", input);
-	while(getchar() != '\n'){}
+	while(getchar() != '\n'){}			// clears buffer
 	return a;
 }
 
@@ -166,9 +166,9 @@ char addScores(FILE* f, Character* s, char plrnb){			// function checks if name 
 				rank.treasure += s[i].treasure;
 				rank.monsters += s[i].monsters;
 				rank.exploration += s[i].exploration;
-				fseek(f, -51, SEEK_CUR);
+				fseek(f, -51, SEEK_CUR);		// goes back to the beginning of the line to replace the stats
 				fprintf(f, "%10d %10d %10d %10d", rank.win, rank.treasure, rank.monsters, rank.exploration);
-				fseek(f, 11, SEEK_CUR);
+				fseek(f, 11, SEEK_CUR);			// goes to the end of the line to continue reading
 				b[i] = 1;
 			}
 		}
