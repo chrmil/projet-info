@@ -6,7 +6,7 @@ int scan(char* input){							// scanf function but deletes the end
 	return a;
 }
 
-char sortTab(Character tab[], char size){					// sorted tab verification
+char sortTab(Character tab[], char size){				// sorted tab verification
 	char i;
 	for (i=0;i<size-1;i++){
 		if (tab[i].win<tab[i+1].win){
