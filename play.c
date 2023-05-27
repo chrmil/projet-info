@@ -245,6 +245,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 		case 3:
 			printf("\033[01;33m");
 		break;
+	}
 	printf("\nPlayer n°%d: %s is currently playing\033[00m\n", i+1, p->name); //nom et n° du joueur
 	int x=p->position.x;
 	int y=p->position.y;
