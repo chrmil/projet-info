@@ -307,8 +307,6 @@ void displayMap(Tile map[][ARRAY],Character p){  //affichage de la map
 						break;
 					}
 				}
-					
-			 
 				else if(map[i][k].looted== 1){//si pas de joueur mais case pillée
 					printf("⬛⬛⬛⬛ ");
 				} 
