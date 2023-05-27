@@ -6,7 +6,7 @@ int stuck(Character* p, Tile map[][ARRAY]){		// checks if the character can move
 	int a=0, x, y;
 	x=p->position.x;
 	y=p->position.y;
-	if(map[x+1][y].state == 1 && map[x-1][y].state == 1 && map[x][y+1].state == 1 && map[x][y-1].state == 1){
+	if(map[x+1][y].state == 1 && map[x-1][y].state == 1 && map[x][y+1].state == 1 && map[x][y-1].state == 1){	// if each tile around the player is revealed
 		printf("\nYou're stuck. Restart at the beginning and end your turn here.\n");
 		a = 1;
 	}
