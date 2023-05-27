@@ -46,7 +46,6 @@ typedef struct Characterstats{
 // Christelle
 int countTiles(int a, int* compteur);						// gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
 void generateTiles(Tile map[][ARRAY]);						// random map generator
-void viewTiles(Tile map[][ARRAY]);						// check type of tile
 void chooseWeapon(Character* p);						// choix d'une arme à chaque tuile
 int fightMonster(Character* p, Tile* monster);					// fight when monster encountered
 int legendaryWeapon(Character* p, Tile* treasure);				// found legendary weapon, checks if it's the player's or not
