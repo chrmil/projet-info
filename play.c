@@ -13,13 +13,13 @@ int stuck(Character* p, Tile map[][ARRAY]){		// checks if the character can move
 	return a;
 }
 
-void move(Character* p, Tile map[][ARRAY],int i){ // Procédure pour les déplacements d'un joueur
+void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplacements d'un joueur
 	int x, y, check = 0;
 	char m;
 	x=p->position.x;
 	y=p->position.y;
 	if (stuck(p,map)){ //si joueur stuck
-		p->position.y = p->spawn.y; //retour au spwan = fin du tour
+		p->position.y = p->spawn.y;		// retour au spawn = fin du tour
 		p->position.x = p->spawn.x;
 	}
 	else{ //sinon
