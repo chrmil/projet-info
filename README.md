@@ -24,8 +24,9 @@ A turn consists of:
 
 - moving on or going back to the spawn:  
    - moving on means selecting an adjacent hidden tile with zqsd controls for the player's character new position.  
-   - going back to the spawn is triggered by the character's death or being stuck (having no available adjacent tiles). It triggers the end of the turn
-
+   - going back to the spawn is triggered by the character's death or being stuck (having no available adjacent tiles). It triggers the end of the turn. 
+  
+The first action of a turn, the player moves automatically onto the spot next to their spawn, so they don't select a side until their turn's second action. 
 This repeats until the turn ends.  
 The game ends when one player discovers both their class' artifact and at least one chest in the same turn.  
 At the end of the game, two inputs are asked for some reason.
