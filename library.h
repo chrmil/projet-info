@@ -59,6 +59,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i);				// tour d'un joueur
 void playGame(char nbp, Character* players);					// gestion d'une partie
 void displayMap(Tile map[][ARRAY],Character p);					// shows the map
 void firstMove(Character* p, Tile map[][ARRAY],int i);				// first move of a player's turn
+int spawn(Character p);								//1 si joueur au spawn, 0 sinon
 
 // Adrien
 void viewPosition(Character p);							// Procédure pour voir la position d'un joueur
