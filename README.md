@@ -29,6 +29,8 @@ A turn consists of:
 This repeats until the turn ends.  
 The game ends when one player discovers both their class' artifact and at least one chest in the same turn.  
 At the end of the game, two inputs are asked for some reason.
+All along the game, inputs will be required to move onto the next action, screen or turn.  
+Inputs for specific data will repeat with an appropriate error message until valid data is provided .   
 Once the game ends, restart with the same parameters with 'r' or return to the menu.   
  
 
