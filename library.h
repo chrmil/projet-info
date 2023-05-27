@@ -58,7 +58,8 @@ void viewCharacter(Character player,int i);					// view each character's stats
 int victory(Character* p,int i); 						// check if victor
 int playerTurn(Tile map[][ARRAY], Character* p, int i);				// tour d'un joueur
 void playGame(char nbp, Character* players);					// gestion d'une partie
-void displayMap(Tile map[][ARRAY],Character p);
+void displayMap(Tile map[][ARRAY],Character p);					// shows the map
+
 // Adrien
 void viewPosition(Character p);							// Procédure pour voir la position d'un joueur
 void countTilesReveal(Tile map[][ARRAY]);					// Compter les cases déjà révélées
