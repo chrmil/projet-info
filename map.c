@@ -138,23 +138,10 @@ void generateTiles(Tile map[][ARRAY]){
 	printf("\n");
 }
 
-void viewTiles(Tile map[][ARRAY]){
-	int i,k,j;
-	printf("\n");
-	for (i=0; i<7; i++){
-	printf("\n");
-		for(k=0;k<7;k++){
-			printf(" %d (%d)",map[i][k].type, map[i][k].state);//affiche "nature de la case(statut de la case)" pour toute la map + les bords
-
-		}
-	}
-	printf("\n");
-}
-
 void displayMap(Tile map[][ARRAY],Character p){ 
 	int i, k;
-//	printf("⬛⬛⬛⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛");   // si révélées 
-//	printf("🔲🔲🔲🔲\n🔲🔲🔲🔲\n🔲🔲🔲🔲"); // si non révélée
+	// printf("⬛⬛⬛⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛");   // si révélées 
+	// printf("🔲🔲🔲🔲\n🔲🔲🔲🔲\n🔲🔲🔲🔲"); // si non révélée
 	for (i=0; i<7; i++){
 		printf("\n");
 		for(k=0;k<7;k++){
