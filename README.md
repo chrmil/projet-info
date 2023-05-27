@@ -13,6 +13,10 @@ A turn consists of:
 - choosing a weapon;  
 - revealing a tile and acting accordingly:
    - if the tile is a monster, the player will die or defeat it depending on their selected weapon.   
+      - the basilics will kill the player if he doesn't wield a shield   
+      - the trolls will kill the player if he doesn't wield an axe
+      - the zombies will kill the player if he doesn't wield a torch
+      - the harpies will kill the player if he doesn't wield a bow
    - if the tile is an artifact, the player will collect or leave it depending on their selected class.   
    - if the tile is a treasure chest, the player will collect it and move on.   
    - if the tile is a totem, the player will have to enter two numbers corresponding to the line and column of the totem's new location before dying.   
