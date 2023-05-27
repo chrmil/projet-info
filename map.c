@@ -70,19 +70,19 @@ int countTiles(int a, int* compteur){	// gère le compteur et renvoie 0 si le no
 
 
 
-void generateTiles(Tile map[][ARRAY]){ //génération du plateau de jeu
+void generateTiles(Tile map[][ARRAY]){		// génération du plateau de jeu
 	srand( time( NULL ) );
 	if (map==NULL){
 		exit(1);
 	}
 	int i,k,j;
 	int* compteur=NULL;
-	compteur=calloc(8,sizeof(int));		//compte le nombre de : 0=monstres, 1=totems, 2=coffres, 3=épée, 4=baton, 5=grimoire, 6=dague, 7=portail
+	compteur=calloc(8,sizeof(int));		// compte le nombre de : 0=monstres, 1=totems, 2=coffres, 3=épée, 4=baton, 5=grimoire, 6=dague, 7=portail
 	if(compteur==NULL){
 		exit(1);
 	} 
 	for (i=0; i<7; i++){
-		map[0][i].state=1;	// création des contours du plateau, cases vides=cases révélées
+		map[0][i].state=1;		// création des contours du plateau, cases vides=cases révélées
 		map[0][i].type=VOID;
 		map[0][i].position.x=0;
 		map[0][i].position.y=i;
