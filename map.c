@@ -198,56 +198,57 @@ void displayMap(Tile map[][ARRAY],Character p){  //affichage de la map
 			if(map[i][k].state){	//si case révélée
 				if(map[i][k].player== 1){ //si joueur présent
           				if (map[i][k].type==SPAWN){ //si case=spawn
-		    					if(i==2 && k==0){//rouge
-								printf("🟥");
-							}
-							if(i==6 && k==2){//vert
-								printf("🟩");
-							}
-							if(i==0 && k==4){//bleu
-								printf("🟦");
-							}
-							if(i==4 && k==6){//jaune
-								printf("🟨");
-							}
-            				switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos en fonction de leurs classes
-  						case 0 : // warrior
-  							printf("🛡️ ");
-  						break;
-  						case 1: //ranger
-  							printf("🏹 ");
-  						break;
-  						case 2 : // mage
-  							printf("🧙 ");
-  						break;
-  						case 3 :   // thief
-  							printf("🥷 ");
-  						break;
-  						default : 
-                     					printf("Error 41");
-  							exit(40);
-  						break;
-  					} 
-          			}
-          			else{	//si case!=spawn
-            				switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos en fonction de leurs classes
-  						case 0 : // warrior
-  							printf("⬛🛡️ ");
-  						break;
-  						case 1: //ranger
-  							printf("⬛🏹");
-  						break;
-  						case 2 : // mage
-  							printf("⬛🧙");
-  						break;
-  						case 3 :   // thief
-  							printf("⬛🥷 ");
-  						break;
-  						default : 
-                     					printf("Error 40");
-  							exit(40);
-  						break;
-  					} 
+		    				if(i==2 && k==0){//rouge
+							printf("🟥");
+						}
+						if(i==6 && k==2){//vert
+							printf("🟩");
+						}
+						if(i==0 && k==4){//bleu
+							printf("🟦");
+						}
+						if(i==4 && k==6){//jaune
+							printf("🟨");
+						}
+						switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos en fonction de leurs classes
+							case 0 : // warrior
+								printf("🛡️ ");
+							break;
+							case 1: //ranger
+								printf("🏹 ");
+							break;
+							case 2 : // mage
+								printf("🧙 ");
+							break;
+							case 3 :   // thief
+								printf("🥷 ");
+							break;
+							default : 
+								printf("Error 41");
+								exit(40);
+							break;
+						} 
+          				}
+          				else{	//si case!=spawn
+						switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos en fonction de leurs classes
+							case 0 : // warrior
+								printf("⬛🛡️ ");
+							break;
+							case 1: //ranger
+								printf("⬛🏹");
+							break;
+							case 2 : // mage
+								printf("⬛🧙");
+							break;
+							case 3 :   // thief
+								printf("⬛🥷 ");
+							break;
+							default : 
+								printf("Error 40");
+								exit(40);
+							break;
+						} 
+					}
          			 //joueur affiché, on affiche le reste de la case
 					switch(map[i][k].type){ //en fonction du type
 						case 0:
