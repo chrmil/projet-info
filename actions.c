@@ -217,7 +217,6 @@ int totemFunction(Tile* totem, Tile map[][ARRAY]){
 	return 0;
 }
 
-
 int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 	if (portal->state==1 || portal->type==0 || portal->type!=PORTAL){
 		printf("\nError (portal)\n");
@@ -266,7 +265,6 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 	p->position.y=column;
 	return revealTile(&map[line][column],p,map,i+1);
 }
-
 
              //tuile retournée, joueur actif, plateau, nombre d'actions du tour (de tuiles retournées)
 int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 si fin du tour, 1 sinon
