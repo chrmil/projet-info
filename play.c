@@ -231,7 +231,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){		// tour d'un joueur
 	printf("\033[1;1H");
 	map[p->position.x][p->position.y].player=1;		// met à jour la position du joueur sur la map
 	displayMap(map, *p);	// affiche la map
-	switch(p->color){	// couleur de l'affichage
+	switch(p->color){	// couleur de l'affichage du joueur
 		case 0:
 			printf("\033[01;31m");
 		break;
@@ -245,108 +245,106 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){		// tour d'un joueur
 			printf("\033[01;33m");
 		break;
 	}
-	printf("\nPlayer n°%d: %s is currently playing\033[00m\n", i+1, p->name); //nom et n° du joueur
+	printf("\nPlayer n°%d: %s is currently playing\033[00m\n", i+1, p->name);	// nom et n° du joueur
 	int x=p->position.x;
 	int y=p->position.y;
 	int k=0;
 	int n=0;
 	int win=0; 
 	printf("\nYou start a new expedition inside the dungeon.\n");
-	firstMove(p,map,k); //début du tour -> 1ère action
-	win=victory(p,i); //check si joueur a gagné + affiche les stats
-	map[x][y].player=0;  //met à jour la position du joueur sur la map
+	firstMove(p,map,k);		// début du tour -> 1ère action
+	win=victory(p,i);		// check si joueur a gagné + affiche les stats
+	map[x][y].player=0;		// met à jour la position du joueur sur la map
 	printf("\nInput anything to continue\n");
 	scan(&c);
 	printf("\033[2J");
 	printf("\033[1;1H");
 	k++;
-	while(spawn(*p)==0){ //tant que joueur n'est pas sur le spawn => tant que joueur vivant 
-		map[p->position.x][p->position.y].player=1;  //met à jour la position du joueur sur la map
+	while(spawn(*p)==0){		// tant que joueur n'est pas sur le spawn => tant que joueur vivant 
+		map[p->position.x][p->position.y].player=1;	// met à jour la position du joueur sur la map
 		x=p->position.x;
 		y=p->position.y;
-		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
-		win=victory(p,i);//vérifie si conditions de victoire résolues + affiche stats
+		move(p,map,k);					// déplacement+revealTiles -> retour au spawn inclus dans la fonction
+		win=victory(p,i);				// vérifie si conditions de victoire remplies + affiche stats
 		k++;
-		map[x][y].player=0;  //met à jour la position du joueur sur la map
+		map[x][y].player=0;				// met à jour la position du joueur sur la map
 		printf("\nInput anything to continue\n");
 		scan(&c);
 		printf("\033[2J");
 		printf("\033[1;1H");
-		if(win){ //victoire => fin du tour
+		if(win){		// victoire -> fin du tour
 			break;
 		}
-	}	//fin de boucle = fin du tour
-	map[p->position.x][p->position.y].player=0; //met à jour la position du joueur sur la map
-	if(win==0){ //si joueur est mort
+	}			// fin de boucle = fin du tour
+	map[p->position.x][p->position.y].player=0;	// met à jour la position du joueur sur la map
+	if(win==0){				// si joueur est mort
 		printf("\n\033[01;31mYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\033[00m\n");
 		printf("\nInput anything to end your turn\n");
 		scan(&c);
-		//réinitialisation de la map
-		for (k=0;k<25;k++){
+		for (k=0;k<25;k++){			//réinitialisation de la map
 			if(p->tiles[k].x==0 && p->tiles[k].y==0){
 			}
 			else if (map[p->tiles[k].x][p->tiles[k].y].state==1 || map[p->tiles[k].x][p->tiles[k].y].looted==1){
 				map[p->tiles[k].x][p->tiles[k].y].state=0;
 				map[p->tiles[k].x][p->tiles[k].y].looted=0;
 			}
-		}
-		//réinitialisation des données du personnage
+		}		//réinitialisation des données du personnage
 		p->artifact=0;		//armes récupérées 
 		p->chest=0;		//coffres
 		p->weapon=NOTHING;	//arme équipée
 	}
-	else{ //si joueur a gagné
+	else{		// si joueur a gagné
 		for (k=0;k<7;k++){
-			for (n=0;n<7;n++){
+			for (n=0;n<7;n++){	// révèle toutes les cases
 				map[n][k].state=1;
 				map[n][k].looted = 0;
 			}
 		}
-		displayMap(map, *p); //affiche la map
+		displayMap(map, *p);		// affiche la map révélée
 	}
 	if(p->tiles==NULL){
 		exit(10);
 	}
-	for (k=0;k<25;k++){ //réinitialise le compteur des tuiles explorées
+	for (k=0;k<25;k++){		// réinitialise le compteur des tuiles explorées
 		p->tiles[k].x=0; 
 		p->tiles[k].y=0;
 	}
 	return win;
 }
 
-void playGame(char nbp, Character* players){//gestion d'une partie
+void playGame(char nbp, Character* players){	// gestion d'une partie
 	char c;
-	time_t begin = time( NULL ); //temps de début de la partie
-	Tile map[ARRAY][ARRAY];//plateau de 7*7 cases
-	generateTiles(map);//genération de la map
+	time_t begin = time( NULL );	// temps de début de la partie
+	Tile map[ARRAY][ARRAY];		// plateau de 7*7 cases
+	generateTiles(map);		// genération de la map
 	if(players==NULL){
 		exit(10);
 	}
-	createCharacters(players,nbp);//création des persos
+	createCharacters(players,nbp);	// création des persos
 	int i=0;
 	for(i=0;i<nbp;i++){
-		viewCharacter(players[i],i); //affichage des stats des joueurs
+		viewCharacter(players[i],i);	// affichage des stats des joueurs
 	}
 	printf("\nInput anything to continue\n");
 	scan(&c);
 	i=0;
-	while(playerTurn(map,&players[i],i)==0){ //tours de chaque joueur tant que pas de gagnant
+	while(playerTurn(map,&players[i],i)==0){	// tours de chaque joueur tant que pas de gagnant
 		i++;
 		if(i>=nbp){
 			i=0;
 		}
 	}
-	printf("\nPlayer n°%d won the game! 🏆  \n",i+1); //victoire
-	time_t end= time( NULL ); //temps de fin de la partie
-	unsigned long secondes=difftime( end, begin ); //temps de la partie
+	printf("\nPlayer n°%d won the game! 🏆  \n",i+1);	// victoire d'un joueur
+	time_t end= time( NULL );			// temps de fin de la partie
+	unsigned long secondes=difftime( end, begin );	// temps de la partie
 	unsigned long minutes=secondes /60;
 	secondes=secondes%60;
 	unsigned long hours=minutes /60;
 	minutes=minutes%60;
-  	printf( "Finished in %ld h %ld min %ld sec\n",hours, minutes, secondes ); //affichage chrono en h:min:s
+  	printf( "Finished in %ld h %ld min %ld sec\n",hours, minutes, secondes );	// affichage chrono en h:min:s
 	for(i=0;i<nbp;i++){
-		viewCharacter(players[i],i); //affichage des stats des joueurs
+		viewCharacter(players[i],i);	// affichage des stats des joueurs
 	}
 	printf("\nInput anything to end the game\n");
-	finish(nbp, players); //fin de la partie
+	finish(nbp, players);			// fin de la partie
 }
