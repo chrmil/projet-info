@@ -199,39 +199,39 @@ void finish(char plrnb, Character* s){		// end of game
 	k = addScores(f, s, plrnb);
 	sortRanks(f, k);
 	fclose(f);
-	while(getchar()!= '\n'){}
+	while(getchar()!= '\n'){}					// clears buffer
 	printf("Game ended\nInput 'r' to replay with the same players\nInput anything else to go back to the menu\n");
 	scan(&back);					// asks to replay with the same players
 	printf("%c\n", back);
 	switch(back){
-		case 'r':
+		case 'r':			// replays and generates another map
 			printf("\nRestarting game...\n");
 			sleep(1);
 			playGame(plrnb, s);
 		break;
-		default:
+		default:			// back to the menu
 			free(s);
 			menu();
 		break;
 	}
 }
 
-void start(){																// function asks for the initial player infos
+void start(){		// function asks for the initial player infos
 	char back, plrnb, i, j, k, ls, lk, a, b;
 	Character* s = NULL;
-	printf("Input the number of players in the game (between 2 and 4)\n");				// number of players
+	printf("Input the number of players in the game (between 2 and 4)\n");		// number of players
 	scan(&plrnb);
 	while(plrnb > '4' || plrnb < '2'){
 		printf("Incorrect input\nInput the total number of players in the game (between 2 and 4)\n");
 		scan(&plrnb);
 	}
 	plrnb -= 48;
-	s = malloc(plrnb * sizeof(Character));				// username inputs (human only)
+	s = malloc(plrnb * sizeof(Character));		// tab of players
 	if (s == NULL){
 		printf("Failed to allocate for Character* s (func start)");
 		exit(21);
 	}
-	for (i = 0; i < plrnb; i++){
+	for (i = 0; i < plrnb; i++){			// username inputs
 		printf("Input P%d's username: ", i+1);
 		scanf("\n%[^\n]s", s[i].name);
 		ls = strlen(s[i].name);
@@ -240,10 +240,10 @@ void start(){																// function asks for the initial player infos
 				s[i].name[j] -= 32;
 			}
 		}
-		for (k = 0; k < i; k++){				// checks if two players have the same username
+		for (k = 0; k < i; k++){		// checks if two players have the same username
 			a = 0;
 			lk = strlen(s[k].name);
-			if (ls != lk){					// compares name length
+			if (ls != lk){			// compares name length
 				a = 1;
 			}
 			else{
@@ -257,26 +257,26 @@ void start(){																// function asks for the initial player infos
 				b = 1;
 			}
 		}
-		if (b == 1){						// redoes if the username is the same as another player's
+		if (b == 1){				// redoes if the username is the same as another player's
 			i--;
 			printf("Username is already taken\n");
 			b = 0;
 		}
 	}
-	while(getchar() != '\n'){}
+	while(getchar() != '\n'){}		// clears buffer
 	playGame(plrnb, s);
 }
 
-void play(){
+void play(){				// asks if player wants to start a game
 	char choice;
 	printf("Input 'n' to start a new game\nInput 'm' to go back to the menu\n");
 	scan(&choice);
 	switch(choice){
 		case 'n':
-			start();		// starts a game
+			start();	// starts a game
 		break;
 		case 'm':
-			menu();			// back to the menu
+			menu();		// back to the menu
 		break;
 		default:
 			printf("Incorrect input\n");
@@ -285,23 +285,23 @@ void play(){
 	}
 }
 
-void rank(){								// function shows the rankings
+void rank(){							// function shows the rankings
 	FILE* f = NULL;
 	char* t = NULL;
 	char tab[SIZE], back;
 	char i = 0;
-	f = fopen("score.txt", "r");					// open file
-	if (f == NULL) {						// open failed
+	f = fopen("score.txt", "r");				// open file
+	if (f == NULL) {					// open failed
 		printf("Failed to open the file\n");
 		printf("Error code = %d \n", errno);
 		printf("Error message = %s \n", strerror(errno));
 		exit(10);
 	}
-	t = fgets(tab, SIZE, f);					// read file
-	if (t == NULL){							// read failed
+	t = fgets(tab, SIZE, f);				// read file
+	if (t == NULL){						// read failed
 		printf("Failed to show the rankings\n");
 	}
-	while(i <= 18 && t != NULL){					// reads the first 10 players
+	while(i <= 18 && t != NULL){				// reads the first 10 players
 		printf("Wins : %s", tab);
 		t = fgets(tab, SIZE, f);
 		printf("    Treasures found : %s", tab);
@@ -321,20 +321,20 @@ void rank(){								// function shows the rankings
 
 }
 
-void menu(){								// function shows the menu
+void menu(){				// shows the game menu
 	char choice;
 	printf("\033[2J");
 	printf("\033[1;1H");
 	printf("Input 'p' to play\nInput 'r' to check the rankings\nInput 'c' to close the game\n");
 	scan(&choice);
 	switch(choice){
-		case 'p':
+		case 'p':		// to play a game
 			play();
 		break;
-		case 'r':
+		case 'r':		// to see the rankings (only works if youve played at least once)
 			rank();
 		break;
-		case 'c':
+		case 'c':		// to close the exe
 			printf("Game closed\n");
 		break;
 		default:
@@ -343,7 +343,7 @@ void menu(){								// function shows the menu
 	}
 }
 
-int main(){
+int main(){		// main function
 	menu();
 	return 0;
 }
