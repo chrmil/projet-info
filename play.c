@@ -271,7 +271,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 	}	//fin de boucle = fin du tour
 	map[p->position.x][p->position.y].player=0;
 	if(win==0){
-		printf("\nYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\n");
+		printf("\n\033[01;31mYou died before finding what you were looking for. You find yourself back at the entrance of the dungeon.\033[00m\n");
 		printf("\nInput anything to end your turn\n");
 		scan(&c);
 		//viewTiles(map);
