@@ -20,7 +20,7 @@ A turn consists of:
    - if the tile is an artifact, the player will collect or leave it depending on their selected class.   
    - if the tile is a treasure chest, the player will collect it and move on.   
    - if the tile is a totem, the player will have to enter two numbers corresponding to the line and column of the totem's new location before dying.   
-   - if the tile is a portal, the player will have to enter two numbers corresponding to the line and column of their new location before moving on.  
+   - if the tile is a portal, the player will have to enter two numbers corresponding to the line and column of their new location before skipping the movement and repeating the actions listed above at their new location. 
 
 - moving on or going back to the spawn:  
    - moving on means selecting an adjacent hidden tile with zqsd controls for the player's character new position.  
