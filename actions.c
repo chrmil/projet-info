@@ -279,8 +279,8 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 	tile->state=1;//on retourne la tuile
 	p->exploration++; //on augmente le compteur de tuiles découvertes
 	p->tiles[i]=tile->position; //on enregistre la position de la tuile
-	fflush(stdout);
-	sleep(2);
+	printf("\nInput anything to continue\n");
+	scan(&c);
 	displayMap(map,*p); //on affiche la map
 	if (tile->type>0 && tile->type<5){
 		printf("\033[2J");
