@@ -9,8 +9,23 @@ int scan(char* input){							// scanf function but deletes the end
 char sortTab(Character tab[], char size){				// sorted tab verification
 	char i;
 	for (i=0;i<size-1;i++){
-		if (tab[i].win<tab[i+1].win){
+		if (tab[i].win < tab[i+1].win){			// if win count isn't sorted
 			return 0;
+		}
+		else if (tab[i].win == tab[i+1].win){
+			if (tab[i].treasure < tab[i+1].treasure){	// if treasures found count isn't sorted
+				return 0;
+			}
+			else if (tab[i].treasure == tab[i+1].treasure){
+				if (tab[i].monsters < tab[i+1].monsters){	// if defeated monsters count isn't sorted
+					return 0;
+				}
+				else if (tab[i].monsters == tab[i+1].monsters){
+					if (tab[i].exploration < tab[i+1].exploration){	// if revealed tiles count isn't sorted
+						return 0;
+					}
+				}
+			}
 		}
 	}
 	return 1;
@@ -33,22 +48,22 @@ void merge(Character tab[], char begin, char middle, char end, char size){	// me
 		tab2[i]=tab[end-i+middle+1];
 	}
 	for (i=begin; i<end+1; i++){
-		if(tab2[k].win>tab2[j].win){
+		if(tab2[k].win>tab2[j].win){			// sorts by win count
 			tab[i]=tab2[k];
 			k++;
 		}
 		else if(tab2[k].win==tab2[j].win){
-			if(tab2[k].treasure>tab2[j].treasure){
+			if(tab2[k].treasure>tab2[j].treasure){		// sorts by number of treasures found
 				tab[i]=tab2[k];
 				k++;
 			}
 			else if(tab2[k].treasure==tab2[j].treasure){
-				if(tab2[k].monsters>tab2[j].monsters){
+				if(tab2[k].monsters>tab2[j].monsters){		// sorts by monsters defeated
 					tab[i]=tab2[k];
 					k++;
 				}
 				else if(tab2[k].monsters==tab2[j].monsters){
-					if(tab2[k].exploration>=tab2[j].exploration){
+					if(tab2[k].exploration>=tab2[j].exploration){	// sorts by tiles revealed
 						tab[i]=tab2[k];
 						k++;
 					}
@@ -86,7 +101,7 @@ void mergeSortRec(Character tab[], char begin, char end, char size){	// mergesor
 }
 
 void mergeSort(Character tab[], char size){				// mergesort function call
-	if (sortTab(tab, size)){
+	if (sortTab(tab, size)){					// stops the function if the rankings are correctly sorted
 		return;
 	}
 	mergeSortRec(tab, 0, size-1, size);
@@ -252,16 +267,16 @@ void start(){																// function asks for the initial player infos
 	playGame(plrnb, s);
 }
 
-void play(){								// unfinished function
-	char choice;							// if there is no saved file
+void play(){
+	char choice;
 	printf("Input 'n' to start a new game\nInput 'm' to go back to the menu\n");
 	scan(&choice);
 	switch(choice){
 		case 'n':
-			start();
+			start();		// starts a game
 		break;
 		case 'm':
-			menu();
+			menu();			// back to the menu
 		break;
 		default:
 			printf("Incorrect input\n");
