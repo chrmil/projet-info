@@ -18,25 +18,24 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 	char m;
 	x=p->position.x;
 	y=p->position.y;
-	if (stuck(p,map)){ //si joueur stuck
+	if (stuck(p,map)){				// si joueur bloqué
 		p->position.y = p->spawn.y;		// retour au spawn = fin du tour
 		p->position.x = p->spawn.x;
 	}
-	else{ //sinon
+	else{
 		do{
-			printf("Now choose your way\n\t  Up\n\t  [z]\nLeft [q]        [d] Right\n\t  [s]\n\t Down\n"); //demande tant que réponse incorrecte
+			printf("Now choose your way\n\t  Up\n\t  [z]\nLeft [q]        [d] Right\n\t  [s]\n\t Down\n");	// demande tant que réponse incorrecte
 			check = scan(&m);
-		}while(m !='z' && m !='q' && m !='s' && m !='d' || check != 1); //vérifie valeur retournée par le scan
-		switch(m){ // Action à faire selon la direction
+		}while(m !='z' && m !='q' && m !='s' && m !='d' || check != 1);		// vérifie valeur retournée par le scan
+		switch(m){				// Action à faire selon la direction choisie
 			case 'z': // up		
-				if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){ //vérifie que déplacement possible
-					p->position.x = (p->position.x) - 1; //déplacement du joueur
-					
-					switch (revealTile(&map[x-1][y],p,map,i)){ //action -> on retourne la tuile
-						case 1:
-							map[x-1][y].state = 1; //on continue
+				if(x-1 > 0 && y < 6 && y > 0 && map[x-1][y].state == 0){	//vérifie que déplacement est possible
+					p->position.x = (p->position.x) - 1;		// déplacement du joueur
+					switch (revealTile(&map[x-1][y],p,map,i)){	// action -> on retourne la tuile
+						case 1:					// on continue
+							map[x-1][y].state = 1;
 						break;
-						case 0 : //on retourne au spawn = fin du tour
+						case 0 :				// on retourne au spawn = fin du tour
 							map[x-1][y].state = 0;
 							p->position.y = p->spawn.y;
 							p->position.x = p->spawn.x;
