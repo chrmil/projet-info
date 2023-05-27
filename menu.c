@@ -205,8 +205,7 @@ void finish(char plrnb, Character* s){		// end of game
 	printf("%c\n", back);
 	switch(back){
 		case 'r':			// replays and generates another map
-			printf("\nRestarting game...\n");
-			sleep(1);
+			printf("\nRestarting game\n");
 			playGame(plrnb, s);
 		break;
 		default:			// back to the menu
