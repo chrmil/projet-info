@@ -302,6 +302,8 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 			return totemFunction(tile, map); 
 		break;
 		case 6://coffre découvert
+			printf("\033[2J");
+			printf("\033[1;1H");
 			tile->state=1;//On retourne la tuile.
 			printf("\nYou discover a treasure chest 💰. You loot it and move on.\n");
 			tile->looted=1;
