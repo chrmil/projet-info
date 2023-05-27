@@ -2,9 +2,9 @@
 //gestion de la map (pas affichage)			
 #include "library.h"
 
-int countTiles(int a, int* compteur){	//gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
+int countTiles(int a, int* compteur){	// gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
   switch(a){
-	case 1:			// monstres (16)
+	case 1:			// monsters (16)
 	case 2:
 	case 3:
 	case 4:
