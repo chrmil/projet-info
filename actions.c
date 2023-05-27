@@ -102,7 +102,7 @@ int fightMonster(Character* p, Tile* monster){
 	}
 }
 
-int legendaryWeapon(Character* p, Tile* treasure){
+int legendaryWeapon(Character* p, Tile* treasure){ // si le joueur découvre une arme légendaire
 	if ( treasure->type<7 || treasure->type>=11){
 		printf("\nError (legendary weapon)\n");
 		exit(6); //si tuile  vide ou pas une arme antique
