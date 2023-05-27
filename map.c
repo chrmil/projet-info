@@ -153,8 +153,8 @@ void viewTiles(Tile map[][ARRAY]){
 
 void displayMap(Tile map[][ARRAY],Character p){ 
 	int i, k;
-//	printf("⬛⬛\n⬛⬛");   // si révélées 
-//	printf("🔲🔲\n🔲🔲"); // si non révélée
+	printf("⬛⬛\n⬛⬛");   // si révélées 
+	printf("🔲🔲\n🔲🔲"); // si non révélée
 	for (i=0; i<7; i++){
 		printf("\n");
 		for(k=0;k<7;k++){
