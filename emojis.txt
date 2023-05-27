@@ -1,4 +1,5 @@
  MONSTRES : 🪶 harpie// 👾 troll // 🐉  basilic // 🧟 zombie 
  AVENTURIERS :  🏹  ranger // 🥷 voleur // 🧙  magiciens // 🛡️ guerrier /
-    🏆 trophée victoire // 🛸  portail //  🔼  totem //⚔️  épées // 🗡️  dague // 📜 grimoire // 💰 coffre
-    //case révélée ⬛ // 🔲  case inconnue // 🟥 case rouge // 🟨 case jaune //  🟩 case verte //  🟦 case bleue // 🦯  baton 
+ Armes légendaires & Coffre: ⚔️  épées // 🗡️  dague // 📜 grimoire // 🦯  baton  // 💰 coffre 
+ Objets & Trophée :  🏆 trophée victoire // 🛸  portail //  🔼  totem 
+ Cases : case révélée ⬛ // 🔲  case inconnue // 🟥 case rouge // 🟨 case jaune //  🟩 case verte //  🟦 case bleue 
