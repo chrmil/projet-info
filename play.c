@@ -2,7 +2,7 @@
 
 #include "library.h"
 
-int stuck(Character* p, Tile map[][ARRAY]){
+int stuck(Character* p, Tile map[][ARRAY]){		// checks if the character can move or not (returns 1 if stuck, 0 otherwise)
 	int a=0, x, y;
 	x=p->position.x;
 	y=p->position.y;
