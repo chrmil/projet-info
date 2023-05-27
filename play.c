@@ -123,20 +123,20 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 	}
 }
 
-void firstMove(Character* p, Tile map[][ARRAY],int i){ //déplacement initiale (en début de tour)
+void firstMove(Character* p, Tile map[][ARRAY],int i){		// déplacement initial (en début de tour)
 	int x, y, check = 0;
 	char m;
 	x=p->position.x; 
 	y=p->position.y;
-	if(x==p->spawn.x && y==p->spawn.y){//vérifie que le joueur est au spawn
-		switch(p->color){ //selon couleur du joueur (point de spawn)
+	if(x==p->spawn.x && y==p->spawn.y){	// vérifie que le joueur est au spawn
+		switch(p->color){		// selon couleur du joueur (point de spawn)
 			case RED: 
-				p->position.y = (p->position.y) + 1; //déplacement du joueur
-				switch (revealTile(&map[x][y+1],p,map,i)){ //action
-					case 1:
-						map[x][y+1].state = 1; //on continue
+				p->position.y = (p->position.y) + 1;	// déplacement du joueur
+				switch (revealTile(&map[x][y+1],p,map,i)){	// action
+					case 1:				// on continue
+						map[x][y+1].state = 1;
 					break;
-					case 0 : //on retourne au spawn = fin du tour
+					case 0 :			// on retourne au spawn = fin du tour
 						map[x][y+1].state = 0;
 						p->position.y = p->spawn.y;
 						p->position.x = p->spawn.x;
@@ -147,12 +147,12 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){ //déplacement initiale (
 				}
 			break;
 			case BLUE:
-				p->position.x = (p->position.x) + 1;  //déplacement du joueur
-				switch (revealTile(&map[x+1][y],p,map,i)){ //action
-					case 1:
-						map[x+1][y].state = 1;//on continue
+				p->position.x = (p->position.x) + 1;	// déplacement du joueur
+				switch (revealTile(&map[x+1][y],p,map,i)){	// action
+					case 1:				// on continue
+						map[x+1][y].state = 1;
 					break;
-					case 0 : //on retourne au spawn = fin du tour
+					case 0 :			// on retourne au spawn = fin du tour
 						map[x+1][y].state = 0;
 						p->position.y = p->spawn.y;
 						p->position.x = p->spawn.x;
@@ -163,12 +163,12 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){ //déplacement initiale (
 				}
 			break;
 			case GREEN:
-				p->position.x = (p->position.x) - 1; //déplacement du joueur
-				switch (revealTile(&map[x-1][y],p,map,i)){ //action
-					case 1:
-						map[x-1][y].state = 1; //on continue
+				p->position.x = (p->position.x) - 1;	// déplacement du joueur
+				switch (revealTile(&map[x-1][y],p,map,i)){	// action
+					case 1:				// on continue
+						map[x-1][y].state = 1;
 					break;
-					case 0 :  //on retourne au spawn = fin du tour
+					case 0 :			// on retourne au spawn = fin du tour
 						map[x-1][y].state = 0;
 						p->position.y = p->spawn.y;
 						p->position.x = p->spawn.x;
@@ -179,12 +179,12 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){ //déplacement initiale (
 				}
 			break;
 			case YELLOW:
-				p->position.y = (p->position.y) - 1; //déplacement du joueur
-				switch (revealTile(&map[x][y-1],p,map,i)){ //action
-					case 1:
-						map[x][y-1].state = 1; //on continue
+				p->position.y = (p->position.y) - 1;	// déplacement du joueur
+				switch (revealTile(&map[x][y-1],p,map,i)){	// action
+					case 1:				// on continue
+						map[x][y-1].state = 1;
 					break;
-					case 0 :  //on retourne au spawn = fin du tour
+					case 0 :			// on retourne au spawn = fin du tour
 						map[x][y-1].state = 0;
 						p->position.y = p->spawn.y;
 						p->position.x = p->spawn.x;
@@ -201,9 +201,9 @@ void firstMove(Character* p, Tile map[][ARRAY],int i){ //déplacement initiale (
 	}
 }
 
-int victory(Character* p,int i){ //vérifie si joueur a gagné => 1 si oui, 0 sinon
-	viewCharacter(*p,i); //affiche les stats du joueur
-	if (p->chest>0 && p->artifact==1){ //vérifie les conditions de victoire
+int victory(Character* p,int i){	// vérifie si joueur a gagné => 1 si oui, 0 sinon
+	viewCharacter(*p,i);		// affiche les stats du joueur
+	if (p->chest>0 && p->artifact==1){	//vérifie les conditions de victoire
 		printf("\nYou have successfully found the artifact you were looking for and some loot.\n You have completed your task and leave the dungeon victorious.\n Congratulations ! You have won!\n");	
 		p->win++;
 		return 1;
@@ -213,7 +213,7 @@ int victory(Character* p,int i){ //vérifie si joueur a gagné => 1 si oui, 0 si
 	}
 }
 
-int spawn(Character p){//retourne 1 si joueur au spawn, 0 sinon
+int spawn(Character p){		// retourne 1 si joueur au spawn, 0 sinon
 	if (p.position.x==p.spawn.x && p.position.y==p.spawn.y){
 		return 1;
 	}
@@ -222,16 +222,16 @@ int spawn(Character p){//retourne 1 si joueur au spawn, 0 sinon
 	}
 }
 
-int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
+int playerTurn(Tile map[][ARRAY], Character* p, int i){		// tour d'un joueur
 	char c;
 	if(map==NULL){
 		exit(30);
 	}
 	printf("\033[2J");
 	printf("\033[1;1H");
-	map[p->position.x][p->position.y].player=1; //met à jour la position du joueur sur la map
-	displayMap(map, *p); //affiche la map
-	switch(p->color){ //couleur de l'affichage
+	map[p->position.x][p->position.y].player=1;		// met à jour la position du joueur sur la map
+	displayMap(map, *p);	// affiche la map
+	switch(p->color){	// couleur de l'affichage
 		case 0:
 			printf("\033[01;31m");
 		break;
