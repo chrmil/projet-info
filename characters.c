@@ -27,7 +27,6 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 	if(color==NULL){
 		exit(10);
 	}
-	printf("Ccharacters is already taken\n");
 	for(i=0; i<nbp; i++){	
 		players[i].artifact=0;
 		players[i].chest=0;
