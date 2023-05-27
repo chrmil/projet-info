@@ -72,6 +72,7 @@ void merge(Character tab[], char begin, char middle, char end, char size){	// me
 			j--;
 		}
 	}
+	free(tab2);
 }
 
 void mergeSortRec(Character tab[], char begin, char end, char size){	// mergesort function
