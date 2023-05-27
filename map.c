@@ -1,5 +1,5 @@
+//gestion de la map
 
-//gestion de la map (pas affichage)			
 #include "library.h"
 
 int countTiles(int a, int* compteur){	// gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
