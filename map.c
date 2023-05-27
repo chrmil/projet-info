@@ -129,7 +129,6 @@ void generateTiles(Tile map[][ARRAY]){
 			map[i][k].position.y=k;
 			//compte le nb de cases d'un type sur le plateau; vérifie qu'il y en ait le bon nb ;
 			while(countTiles(a,compteur)==0) {
-				printf("No is already taken\n");			// Boucle infinie après redo
 				a=rand()%11+1;
 				map[i][k].type=a;
 			}
