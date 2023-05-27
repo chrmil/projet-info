@@ -70,7 +70,7 @@ int countTiles(int a, int* compteur){	//gère le compteur et renvoie 0 si le nom
 
 
 
-void generateTiles(Tile map[][ARRAY]){
+void generateTiles(Tile map[][ARRAY]){ //génération du plateau de jeu
 	srand( time( NULL ) );
 	if (map==NULL){
 		exit(1);
@@ -82,7 +82,7 @@ void generateTiles(Tile map[][ARRAY]){
 		exit(1);
 	} 
 	for (i=0; i<7; i++){
-		map[0][i].state=1;	//contour du plateau, cases vides=cases révélées
+		map[0][i].state=1;	// création des contours du plateau, cases vides=cases révélées
 		map[0][i].type=VOID;
 		map[0][i].position.x=0;
 		map[0][i].position.y=i;
@@ -112,20 +112,20 @@ void generateTiles(Tile map[][ARRAY]){
 		map[i][6].position.y=6;
 		map[i][6].looted=0;
 		map[i][6].player=0;
-	}
+	} //création des spawns
 	map[0][4].type=SPAWN;	//BLEU
 	map[2][0].type=SPAWN;	//ROUGE
 	map[4][6].type=SPAWN;	//JAUNE
 	map[6][2].type=SPAWN;	//VERT
 	int a;
-	for (i=1; i<6; i++){
+	for (i=1; i<6; i++){ //création du plateau joueable
 		for(k=1;k<6;k++){
-			map[i][k].state=0;	//cases face cachée
+			map[i][k].state=0;	//cases initialememt face cachée
 			a=rand()%11+1;
-			map[i][k].type=a;	//type de la case
-			map[i][k].looted=0;
-			map[i][k].player=0;
-			map[i][k].position.x=i;
+			map[i][k].type=a;	//type de la case déterminés aléatoirement
+			map[i][k].looted=0; 	//les cases ne sont pas déjà pillées
+			map[i][k].player=0;	//pas de joueurs sur le plateau
+			map[i][k].position.x=i; //position de la case stockée
 			map[i][k].position.y=k;
 			//compte le nb de cases d'un type sur le plateau; vérifie qu'il y en ait le bon nb ;
 			while(countTiles(a,compteur)==0) {
@@ -134,18 +134,18 @@ void generateTiles(Tile map[][ARRAY]){
 			}
 		}
 	}
-	free(compteur);
+	free(compteur); //supprime le compteur, libère de l'espace
 	printf("\n");
 }
 
-void displayMap(Tile map[][ARRAY],Character p){ 
+void displayMap(Tile map[][ARRAY],Character p){  //affichage de la map
 	int i, k;
 //	printf("⬛⬛⬛⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛");   // si révélées 
 //	printf("🔲🔲🔲🔲\n🔲🔲🔲🔲\n🔲🔲🔲🔲"); // si non révélée
-	for (i=0; i<7; i++){
-		printf("\n");
-		for(k=0;k<7;k++){
-			if(map[i][k].type==SPAWN){
+	for (i=0; i<7; i++){ //boucle for : gère le n° de ligne
+		printf("\n"); //une case = un carré de  4*4 symboles 
+		for(k=0;k<7;k++){ //boucle for : gère le n° de colonne; ligne 1/4 de la case
+			if(map[i][k].type==SPAWN){ //si case = spawn
 				if(i==2 && k==0){//rouge
 					printf("🟥🟥🟥🟥 ");
 				}
@@ -159,18 +159,18 @@ void displayMap(Tile map[][ARRAY],Character p){
 					printf("🟨🟨🟨🟨 ");
 				}
 			}
-			else{
-				if(map[i][k].state){
+			else{ //sinon
+				if(map[i][k].state){ //si case révélée
 					printf("⬛⬛⬛⬛ ");
 				}
-				else{
+				else{ //si case cachée
 					printf("🔲🔲🔲🔲 ");
 				}
 			}
 		}
-    		printf("\n");
-		for(k=0;k<7;k++){
-			if(map[i][k].type==SPAWN){
+    		printf("\n"); 
+		for(k=0;k<7;k++){ //boucle for : gère le n° de colonne; ligne 2/4 de la case
+			if(map[i][k].type==SPAWN){ //si case = spawn
 				if(i==2 && k==0){//rouge
 					printf("🟥🟥🟥🟥 ");
 				}
@@ -185,19 +185,19 @@ void displayMap(Tile map[][ARRAY],Character p){
 				}
 			}
 			else{
-				if(map[i][k].state){
+				if(map[i][k].state){ //si case révélée
 					printf("⬛⬛⬛⬛ ");
 				}
-				else{
+				else{ //si case cachée
 					printf("🔲🔲🔲🔲 ");
 				}
 			}
 		}
 		printf("\n");	
-		for(k=0;k<7;k++){
-			if(map[i][k].state){	
-				if(map[i][k].player== 1){
-          				if (map[i][k].type==SPAWN){
+		for(k=0;k<7;k++){ //boucle for : gère le n° de colonne; ligne 3/4 de la case
+			if(map[i][k].state){	//si case révélée
+				if(map[i][k].player== 1){ //si joueur présent
+          				if (map[i][k].type==SPAWN){ //si case=spawn
 		    					if(i==2 && k==0){//rouge
 								printf("🟥");
 							}
@@ -210,7 +210,7 @@ void displayMap(Tile map[][ARRAY],Character p){
 							if(i==4 && k==6){//jaune
 								printf("🟨");
 							}
-            				switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos
+            				switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos en fonction de leurs classes
   						case 0 : // warrior
   							printf("🛡️ ");
   						break;
@@ -229,8 +229,8 @@ void displayMap(Tile map[][ARRAY],Character p){
   						break;
   					} 
           			}
-          			else{	
-            				switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos
+          			else{	//si case!=spawn
+            				switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos en fonction de leurs classes
   						case 0 : // warrior
   							printf("⬛🛡️ ");
   						break;
@@ -248,45 +248,45 @@ void displayMap(Tile map[][ARRAY],Character p){
   							exit(40);
   						break;
   					} 
-         			}
-					switch(map[i][k].type){
+         			 //joueur affiché, on affiche le reste de la case
+					switch(map[i][k].type){ //en fonction du type
 						case 0:
 							printf("⬛⬛ ");	
 						break;
-						case 1:	
+						case 1:	 //basilic
 							printf("🐉⬛ ");
 						break;
-						case 2:
+						case 2: //Troll
 							printf("👾⬛ ");
 						break;
-						case 3:
+						case 3: //zombie
 							printf("🧟⬛ ");
 						break;
-						case 4:
+						case 4: //harpie
 							printf("🪶⬛ ");
 						break;
-						case 5:
+						case 5: //totem
 							printf("🔼⬛ ");
 						break;
-						case 6:
+						case 6: //trésor
 							printf("💰⬛ ");
 						break;
-						case 7:
+						case 7: //arme = épée
 							printf("⚔️⬛ ");
 						break;
-						case 8:
+						case 8: //arme = baton
 							printf("🦯⬛ ");
 						break;
-						case 9:
+						case 9: //arme = grimoire
 							printf("📜⬛ ");
 						break;
-						case 10:
+						case 10: //arme = dague
 							printf("🗡️⬛ ");
 						break;
-						case 11:
+						case 11: //portail
 							printf("🛸⬛ ");
 						break;
-            					case 12 :
+            					case 12 : //spawn
              						 if(i==2 && k==0){//rouge
 								printf("🟥🟥 ");
 							}
@@ -305,11 +305,11 @@ void displayMap(Tile map[][ARRAY],Character p){
 							exit(1);
 						break;
 					}
-				}
-				else if(map[i][k].looted== 1){
+				} 
+				else if(map[i][k].looted== 1){//si pas de joueur mais case pillée
 					printf("⬛⬛⬛⬛ ");
-				}
-				else{
+				} 
+				else{//si case révélée, non vide et pas de joueur
 					switch(map[i][k].type){
 						case 0:
 							printf("⬛⬛⬛⬛ ");
@@ -367,9 +367,9 @@ void displayMap(Tile map[][ARRAY],Character p){
 						break;
 					}
 				}
-			}
-			else{
-				if(map[i][k].type==SPAWN){
+			} 
+			else{ //si case cachée
+				if(map[i][k].type==SPAWN){ //si spawn
 					if(i==2 && k==0){//rouge
 						printf("🟥🟥🟥🟥 ");
 					}
@@ -383,14 +383,14 @@ void displayMap(Tile map[][ARRAY],Character p){
 						printf("🟨🟨🟨🟨 ");
 					}
 				}
-				else{
+				else{ //sinon
 					printf("🔲🔲🔲🔲 ");
 				}
 			}
 		}
 		printf("\n");
-		for(k=0;k<7;k++){
-			if(map[i][k].type==SPAWN){
+		for(k=0;k<7;k++){   //boucle for : gère le n° de colonne; ligne 4/4 de la case
+			if(map[i][k].type==SPAWN){ //si spawn
 				if(i==2 && k==0){//rouge
 					printf("🟥🟥🟥🟥 ");
 				}
@@ -405,10 +405,10 @@ void displayMap(Tile map[][ARRAY],Character p){
 				}
 			}
 			else{
-				if(map[i][k].state){
+				if(map[i][k].state){//si case révélée
 					printf("⬛⬛⬛⬛ ");
 				}
-				else{
+				else{//si case cachée
 					printf("🔲🔲🔲🔲 ");
 				}
 			}
