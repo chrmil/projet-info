@@ -276,7 +276,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 		exit(24); //si tuile déjà explorée ou vide
 	}
 	if (tile->position.x!=p->position.x || tile->position.y!=p->position.y){
-		printf("Error (position)\n%d %d %d ",tile->state, tile->type);
+		printf("Error (position)\n%d %d ",tile->state, tile->type);
 		printf("\n%d %d; %d %d\n",tile->position.x, tile->position.y,p->position.x ,p->position.y);
 	}
 	chooseWeapon(p); //On choisit une arme
