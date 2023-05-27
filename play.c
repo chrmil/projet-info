@@ -45,7 +45,7 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 						break ;
 					}
 				}
-				else{	// redemande si le déplacement est impossible
+				else{						// redemande si le déplacement est impossible
 					printf("\nYou can't go on this way Please try again \n --------------------------- \n");
 					move(p, map,i);
 				}
@@ -67,7 +67,7 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 						break ;
 					}
 				}
-				else{
+				else{						// redemande si le déplacement est impossible
 					printf("\nYou can't go on this way Please try again \n --------------------------- \n");
 					move(p, map,i);
 				}
@@ -89,19 +89,19 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 						break ;
 					}
 				}	
-				else{
+				else{						// redemande si le déplacement est impossible
 					printf("\nYou can't go outside the map \n Please try again \n --------------------------- \n");		// Relance la procédure de déplacement si le joueur tente un déplacement impossible
 					move(p,map,i); 
 				}	
 			break;
 			case 's': //down
-				if(x+1 < 6 && y < 6 && y > 0 && map[x+1][y].state == 0){ // vérifier si la case où on veut aller n'est pas déjà revélée et qu'on ne sort pas de la map
-					p->position.x = (p->position.x) + 1; //déplacement du joueur
-					switch (revealTile(&map[x+1][y],p,map,i)){  //action -> on retourne la tuile
-						case 1:
-							map[x+1][y].state = 1; //on continue
+				if(x+1 < 6 && y < 6 && y > 0 && map[x+1][y].state == 0){	// vérifie si le déplacement est possible
+					p->position.x = (p->position.x) + 1;		// déplacement du joueur
+					switch (revealTile(&map[x+1][y],p,map,i)){	// action -> on retourne la tuile
+						case 1:					// on continue
+							map[x+1][y].state = 1;
 						break;
-						case 0 :   //on retourne au spawn = fin du tour
+						case 0 :				// on retourne au spawn = fin du tour
 							map[x+1][y].state = 0;
 							p->position.y = p->spawn.y;
 							p->position.x = p->spawn.x;
@@ -111,7 +111,7 @@ void move(Character* p, Tile map[][ARRAY],int i){	// Procédure pour les déplac
 						break ;
 					}
 				}
-				else{
+				else{						// redemande si le déplacement est impossible
 					printf("\nYou can't go on this way Please try again \n --------------------------- \n");
 					move(p, map,i);
 				}
