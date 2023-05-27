@@ -4,7 +4,7 @@
 
 int countTiles(int a, int* compteur){	//gère le compteur et renvoie 0 si le nombre max de cases d'un certain type est déjà atteint et 1 sinon
   switch(a){
-	case 1:			//monstres
+	case 1:			// monstres (16)
 	case 2:
 	case 3:
 	case 4:
@@ -14,21 +14,21 @@ int countTiles(int a, int* compteur){	//gère le compteur et renvoie 0 si le nom
 		compteur[0]++;
 		return 1;
 	break;
-	case 5:
+	case 5:			// totem (2)
 		if (compteur[1]<2){
 			compteur[1]++;
 			return 1;
 		}
 		return 0;
 	break;
-	case 6:
+	case 6:			// treasure (2)
 		if (compteur[2]<2){
 			compteur[2]++;
 			return 1;
 		}
 		return 0;
 	break;
-	case 7:
+	case 7:			// artifact (1 each)
 		if (compteur[3]==0){
 			compteur[3]++;
 			return 1;
@@ -56,7 +56,7 @@ int countTiles(int a, int* compteur){	//gère le compteur et renvoie 0 si le nom
 		}
 		return 0;
 	break;
-	case 11:
+	case 11:		// portal (1)
 		if (compteur[7]==0){
 			compteur[7]++;
 			return 1;
