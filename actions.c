@@ -43,6 +43,8 @@ int fightMonster(Character* p, Tile* monster){
 		printf("You don't have a weapon ready.\n");	//on vérifie que le joueur a sélectioné une arme
 		chooseWeapon(p);
 	}
+	monster->state=1;//On retourne la tuile
+	displayMap(map, *p);
 	printf("\nA foe attacks you.");
 	switch (monster->type){
 		case 1:		//en fonction du monstre rencontré, vérifie si le joueur a choisi l'arme appropriée : si oui, renvoie 1, continue; sinon, renvoie 0, respawn.
@@ -109,6 +111,7 @@ int legendaryWeapon(Character* p, Tile* treasure){
 		exit(6); //si tuile déjà explorée ou vide ou pas une arme antique
 	}
 	treasure->state=1;//On retourne la tuile
+	displayMap(map, *p);
 	printf("\nYou discover an artifact.");
 	switch(treasure->type){
 		case 7: //épée découverte
@@ -179,6 +182,8 @@ int totemFunction(Tile* totem, Tile map[][ARRAY]){
 	int a=0;
 	int b=0;
 	int line, column;
+	totem->state=1;//On retourne la tuile
+	displayMap(map, *p);
 	printf("\nYou find a magical totem glowing ominously 🔼. As you feel yourself dying, you are presented with a choice:\n");
 	int error=0;
 	do{
@@ -223,6 +228,7 @@ int portalFunction(Tile* portal, Tile map[][ARRAY], Character* p, int i){
 		exit(14); //si tuile déjà explorée ou vide ou pas un portail
 	}
 	portal->state=1;//On retourne la tuile
+	displayMap(map, *p);
 	char x;
 	char y;
 	int line, column;
@@ -303,6 +309,7 @@ int revealTile(Tile* tile, Character* p, Tile map[][ARRAY], int i){ //renvoie 0 
 			printf("\033[2J");
 			printf("\033[1;1H");
 			tile->state=1;//On retourne la tuile.
+			displayMap(map, *p);
 			printf("\nYou discover a treasure chest 💰. You loot it and move on.\n");
 			tile->looted=1;
 			p->chest++;
