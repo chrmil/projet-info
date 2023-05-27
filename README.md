@@ -1,6 +1,6 @@
 # projet-info : Memory-RPG
 This game is a mix of a memory and an rpg which allows two to four people to play.
-Each player is a different explorer who learned about the existence of a lot of gold and a few legendary items inside a labyrinth. All of them are interested in the gold, but each of them wants a different item, it is their goal to find both the artifact and the gold. The labyrinth is a dangerous place though. It's too dark to see from afar, and the treasures are guarded by spirits and monsters. Also the walls keep shutting behind the explorers, making them unable to go backwards.
+Each player is a different explorer who learned about the existence of a lot of gold and a few legendary items inside a labyrinth. All of them are interested in the gold, but each of them wants a different item, it is their goal to find both the artifact and the gold. The labyrinth is a dangerous place though. It's too dark to see from afar, and the treasures are guarded by spirits and monsters. Also the walls keep shutting behind the explorers, making them unable to go backwards.     
 Use 'make' to compile and then './exec.exe' to execute the game.  
 The menu opens.  
 Input 'p' to play, 'r' to check the rankings, 'c' to close the game.   
