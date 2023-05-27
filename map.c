@@ -153,31 +153,31 @@ void viewTiles(Tile map[][ARRAY]){
 
 void displayMap(Tile map[][ARRAY],Character p){ 
 	int i, k;
-	printf("⬛⬛\n⬛⬛");   // si révélées 
-	printf("🔲🔲\n🔲🔲"); // si non révélée
+//	printf("⬛⬛⬛⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛");   // si révélées 
+//	printf("🔲🔲🔲🔲\n🔲🔲🔲🔲\n🔲🔲🔲🔲"); // si non révélée
 	for (i=0; i<7; i++){
 		printf("\n");
 		for(k=0;k<7;k++){
 			if(map[i][k].type==SPAWN){
 				if(i==2 && k==0){//rouge
-					printf("🟥🟥 ");
+					printf("🟥🟥🟥🟥 ");
 				}
 				if(i==6 && k==2){//vert
-					printf("🟩🟩 ");
+					printf("🟩🟩🟩🟩 ");
 				}
 				if(i==0 && k==4){//bleu
-					printf("🟦🟦 ");
+					printf("🟦🟦🟦🟦 ");
 				}
 				if(i==4 && k==6){//jaune
-					printf("🟨🟨 ");
+					printf("🟨🟨🟨🟨 ");
 				}
 			}
 			else{
 				if(map[i][k].state){
-					printf("⬛⬛ ");
+					printf("⬛⬛⬛⬛ ");
 				}
 				else{
-					printf("🔲🔲 ");
+					printf("🔲🔲🔲🔲 ");
 				}
 			}
 		}
@@ -186,16 +186,16 @@ void displayMap(Tile map[][ARRAY],Character p){
 			if(map[i][k].state){	
 				if(map[i][k].player== 1){
 					switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos
-						case 1 : // warrior
+						case 0 : // warrior
 							printf("🛡️");
 						break;
-						case 2: //ranger
+						case 1: //ranger
 							printf("🏹");
 						break;
-						case 3 : // mage
+						case 2 : // mage
 							printf("🧙");
 						break;
-						case 4 :   // thief
+						case 3 :   // thief
 							printf("🥷");
 						break;
 						default : 
@@ -259,58 +259,58 @@ void displayMap(Tile map[][ARRAY],Character p){
 					}
 				}
 				else if(map[i][k].looted== 1){
-					printf("⬛⬛ ");
+					printf("⬛⬛⬛⬛ ");
 				}
 				else{
 					switch(map[i][k].type){
 						case 0:
-							printf("⬛⬛ ");
+							printf("⬛⬛⬛⬛ ");
 						break;
 						case 1:	
-							printf("⬛🐉 ");
+							printf("⬛⬛🐉⬛ ");
 						break;
 						case 2:
-							printf("⬛👾 ");
+							printf("⬛⬛👾⬛ ");
 						break;
 						case 3:
-							printf("⬛🧟 ");
+							printf("⬛⬛🧟⬛ ");
 						break;
 						case 4:
-							printf("⬛🪶 ");
+							printf("⬛⬛🪶⬛ ");
 						break;
 						case 5:
-							printf("⬛🔼 ");
+							printf("⬛⬛🔼⬛ ");
 						break;
 						case 6:
-							printf("⬛💰 ");
+							printf("⬛⬛💰⬛ ");
 						break;
 						case 7:
-							printf("⬛⚔️ ");
+							printf("⬛⬛⚔️⬛ ");
 						break;
 						case 8:
-							printf("⬛🦯 ");
+							printf("⬛⬛🦯⬛ ");
 						break;
 						case 9:
-							printf("⬛📜 ");
+							printf("⬛⬛📜⬛ ");
 						break;
 						case 10:
-							printf("⬛🗡️ ");
+							printf("⬛⬛🗡️⬛ ");
 						break;
 						case 11:
-							printf("⬛🛸 ");
+							printf("⬛⬛🛸⬛ ");
 						break;
 						case 12:
 							if(i==2 && k==0){//rouge
-								printf("🟥 ");
+								printf("🟥🟥🟥🟥 ");
 							}
 							if(i==6 && k==2){//vert
-								printf("🟩 ");
+								printf("🟩🟩🟩🟩 ");
 							}
 							if(i==0 && k==4){//bleu
-								printf("🟦 ");
+								printf("🟦🟦🟦🟦 ");
 							}
 							if(i==4 && k==6){//jaune
-								printf("🟨 ");
+								printf("🟨🟨🟨🟨 ");
 							}
 						break;
 						default: 
@@ -322,22 +322,48 @@ void displayMap(Tile map[][ARRAY],Character p){
 			else{
 				if(map[i][k].type==SPAWN){
 					if(i==2 && k==0){//rouge
-						printf("🟥🟥 ");
+						printf("🟥🟥🟥🟥 ");
 					}
 					if(i==6 && k==2){//vert
-						printf("🟩🟩 ");
+						printf("🟩🟩🟩🟩 ");
 					}
 					if(i==0 && k==4){//bleu
-						printf("🟦🟦 ");
+						printf("🟦🟦🟦🟦 ");
 					}
 					if(i==4 && k==6){//jaune
-						printf("🟨🟨 ");
+						printf("🟨🟨🟨🟨 ");
 					}
 				}
 				else{
-					printf("🔲🔲 ");
+					printf("🔲🔲🔲🔲 ");
 				}
 			}
 		}
+		printf("\n");
+		for(k=0;k<7;k++){
+			if(map[i][k].type==SPAWN){
+				if(i==2 && k==0){//rouge
+					printf("🟥🟥🟥🟥 ");
+				}
+				if(i==6 && k==2){//vert
+					printf("🟩🟩🟩🟩 ");
+				}
+				if(i==0 && k==4){//bleu
+					printf("🟦🟦🟦🟦 ");
+				}
+				if(i==4 && k==6){//jaune
+					printf("🟨🟨🟨🟨 ");
+				}
+			}
+			else{
+				if(map[i][k].state){
+					printf("⬛⬛⬛⬛ ");
+				}
+				else{
+					printf("🔲🔲🔲🔲 ");
+				}
+			}
+		}
+		printf("\n");
 	}
 }
