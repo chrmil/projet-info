@@ -312,7 +312,6 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 
 
 void playGame(char nbp, Character* players){//gestion d'une partie
-	printf("Yes is already taken\n");		// test
 	char c;
 	time_t begin = time( NULL );
 	Tile map[ARRAY][ARRAY];//genération de la map
