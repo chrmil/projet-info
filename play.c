@@ -233,9 +233,21 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 	printf("\033[2J");
 	printf("\033[1;1H");
 	map[p->position.x][p->position.y].player=1;
-	//displayMap(map, *p);
-	viewTiles(map);
-	printf("\nPlayer n°%d: %s is currently playing\n", i+1, p->name);
+	displayMap(map, *p);
+	switch(p->color){
+		case 0:
+			printf("\033[01;31m");
+		break;
+		case 1:
+			printf("\033[01;34m");
+		break;
+		case 2:
+			printf("\033[01;32m");
+		break;
+		case 3:
+			printf("\033[01;33m");
+		break;
+	printf("\nPlayer n°%d: %s is currently playing\033[00m\n", i+1, p->name);
 	int x=p->position.x;
 	int y=p->position.y;
 	int k=0;
