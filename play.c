@@ -2,8 +2,6 @@
 
 #include "library.h"
 
-
-
 int stuck(Character* p, Tile map[][ARRAY]){
 	int a=0, x, y;
 	x=p->position.x;
