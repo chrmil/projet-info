@@ -212,16 +212,16 @@ void displayMap(Tile map[][ARRAY],Character p){  //affichage de la map
 						}
 						switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos en fonction de leurs classes
 							case 0 : // warrior
-								printf("🛡️ ");
+								printf("🛡️");
 							break;
 							case 1: //ranger
-								printf("🏹 ");
+								printf("🏹");
 							break;
 							case 2 : // mage
-								printf("🧙 ");
+								printf("🧙");
 							break;
 							case 3 :   // thief
-								printf("🥷 ");
+								printf("🥷");
 							break;
 							default : 
 								printf("Error 41");
@@ -232,7 +232,7 @@ void displayMap(Tile map[][ARRAY],Character p){  //affichage de la map
           				else{	//si case!=spawn
 						switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos en fonction de leurs classes
 							case 0 : // warrior
-								printf("⬛🛡️ ");
+								printf("⬛🛡️");
 							break;
 							case 1: //ranger
 								printf("⬛🏹");
@@ -241,7 +241,7 @@ void displayMap(Tile map[][ARRAY],Character p){  //affichage de la map
 								printf("⬛🧙");
 							break;
 							case 3 :   // thief
-								printf("⬛🥷 ");
+								printf("⬛🥷");
 							break;
 							default : 
 								printf("Error 40");
