@@ -140,10 +140,35 @@ void generateTiles(Tile map[][ARRAY]){
 
 void displayMap(Tile map[][ARRAY],Character p){ 
 	int i, k;
-	// printf("⬛⬛⬛⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛");   // si révélées 
-	// printf("🔲🔲🔲🔲\n🔲🔲🔲🔲\n🔲🔲🔲🔲"); // si non révélée
+//	printf("⬛⬛⬛⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛");   // si révélées 
+//	printf("🔲🔲🔲🔲\n🔲🔲🔲🔲\n🔲🔲🔲🔲"); // si non révélée
 	for (i=0; i<7; i++){
 		printf("\n");
+		for(k=0;k<7;k++){
+			if(map[i][k].type==SPAWN){
+				if(i==2 && k==0){//rouge
+					printf("🟥🟥🟥🟥 ");
+				}
+				if(i==6 && k==2){//vert
+					printf("🟩🟩🟩🟩 ");
+				}
+				if(i==0 && k==4){//bleu
+					printf("🟦🟦🟦🟦 ");
+				}
+				if(i==4 && k==6){//jaune
+					printf("🟨🟨🟨🟨 ");
+				}
+			}
+			else{
+				if(map[i][k].state){
+					printf("⬛⬛⬛⬛ ");
+				}
+				else{
+					printf("🔲🔲🔲🔲 ");
+				}
+			}
+		}
+    		printf("\n");
 		for(k=0;k<7;k++){
 			if(map[i][k].type==SPAWN){
 				if(i==2 && k==0){//rouge
@@ -172,23 +197,58 @@ void displayMap(Tile map[][ARRAY],Character p){
 		for(k=0;k<7;k++){
 			if(map[i][k].state){	
 				if(map[i][k].player== 1){
-					switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos
-						case 0 : // warrior
-							printf("⬛🛡️");
-						break;
-						case 1: //ranger
-							printf("⬛🏹");
-						break;
-						case 2 : // mage
-							printf("⬛🧙");
-						break;
-						case 3 :   // thief
-							printf("⬛🥷");
-						break;
-						default : 
-							exit(40);
-						break;
-					} 
+          				if (map[i][k].type==SPAWN){
+		    					if(i==2 && k==0){//rouge
+								printf("🟥");
+							}
+							if(i==6 && k==2){//vert
+								printf("🟩");
+							}
+							if(i==0 && k==4){//bleu
+								printf("🟦");
+							}
+							if(i==4 && k==6){//jaune
+								printf("🟨");
+							}
+            				switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos
+  						case 0 : // warrior
+  							printf("🛡️ ");
+  						break;
+  						case 1: //ranger
+  							printf("🏹 ");
+  						break;
+  						case 2 : // mage
+  							printf("🧙 ");
+  						break;
+  						case 3 :   // thief
+  							printf("🥷 ");
+  						break;
+  						default : 
+                     					printf("Error 41");
+  							exit(40);
+  						break;
+  					} 
+          			}
+          			else{	
+            				switch(p.class){	// 🧙	 🛡️	🥷	🏹  avatars des persos
+  						case 0 : // warrior
+  							printf("⬛🛡️ ");
+  						break;
+  						case 1: //ranger
+  							printf("⬛🏹");
+  						break;
+  						case 2 : // mage
+  							printf("⬛🧙");
+  						break;
+  						case 3 :   // thief
+  							printf("⬛🥷 ");
+  						break;
+  						default : 
+                     					printf("Error 40");
+  							exit(40);
+  						break;
+  					} 
+         			}
 					switch(map[i][k].type){
 						case 0:
 							printf("⬛⬛ ");	
@@ -226,7 +286,22 @@ void displayMap(Tile map[][ARRAY],Character p){
 						case 11:
 							printf("🛸⬛ ");
 						break;
+            					case 12 :
+             						 if(i==2 && k==0){//rouge
+								printf("🟥🟥 ");
+							}
+							if(i==6 && k==2){//vert
+								printf("🟩🟩 ");
+							}
+							if(i==0 && k==4){//bleu
+								printf("🟦🟦 ");
+							}
+							if(i==4 && k==6){//jaune
+								printf("🟨🟨 ");
+							}
+           				 	break;
 						default: 
+                   					printf("Error 1\n");
 							exit(1);
 						break;
 					}
@@ -287,6 +362,7 @@ void displayMap(Tile map[][ARRAY],Character p){
 							}
 						break;
 						default: 
+              						printf("Error 2");
 							exit(1);
 						break;
 					}
