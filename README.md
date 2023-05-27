@@ -1,5 +1,5 @@
 # projet-info : Memory-RPG
-Use 'make' and then './exec.exe'.  
+Use 'make' to compile and then './exec.exe' to execute the game.  
 The menu opens.  
 Input 'p' to play, 'r' to check the rankings, 'c' to close the game.   
 The rankings are sorted by wins, then by treasures found, then by monsters killed and finally by tiles revealed.
@@ -15,6 +15,7 @@ A turn consists of:
 - moving on or going back to the spawn;  
 This repeats until the turn ends.  
 The game ends when one player discovers both their class' artifact and at least one chest in the same turn.  
+At the end of the game, two inputs are asked for some reason.
 Once the game ends, restart with the same parameters with 'r' or return to the menu.   
  
 
