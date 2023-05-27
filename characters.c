@@ -240,20 +240,16 @@ Character* createCharacters(Character* players, int nbp){ //création de nbp per
 
 void viewCharacter(Character player,int i){
 	switch(player.color){
-		case 0: 
-		/*	printf("\033[0;1m"); en gras  */ 
+		case 0:
 			printf("\033[01;31m");		// rouge
 		break;
-		case 1: 
-		/* 	printf("\033[0;4m"); en surligné */
+		case 1:
 			printf("\033[01;34m");		// bleu
 		break;
-		case 2: 
-		/*	printf("\033[0;2m"); en plus sombre (gris?) */
+		case 2:
 			printf("\033[01;32m");		// vert
 		break;
-		case 3: 
-		/*	printf("\033[0;3m"); en italiques */
+		case 3:
 			printf("\033[01;33m");		// jaune
 		break;
 		}
