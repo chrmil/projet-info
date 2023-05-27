@@ -267,7 +267,7 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 		map[p->position.x][p->position.y].player=1;
 		x=p->position.x;
 		y=p->position.y;
-		//displayMap(map, *p);
+		displayMap(map, *p);
 		move(p,map,k);//déplacement+revealTiles -> retour au spawn inclus dans la fonction
 		win=victory(p,i);//vérifie si conditions de victoire résolues
 		k++;
@@ -306,9 +306,10 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 		for (k=0;k<7;k++){
 			for (n=0;n<7;n++){
 				map[n][k].state=1;
+				map[n][k].looted = 0;
 			}
 		}
-		//displayMap(map, *p);
+		displayMap(map, *p);
 	}
 	if(p->tiles==NULL){
 		exit(10);
