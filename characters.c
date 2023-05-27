@@ -2,7 +2,7 @@
 
 #include "library.h"
 
-Character* createCharacters(Character* players, int nbp){ //création de nbp persos
+void createCharacters(Character* players, int nbp){ //création de nbp persos
 	if(players==NULL){
 		exit(10);
 	}
