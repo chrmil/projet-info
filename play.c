@@ -214,8 +214,6 @@ int victory(Character* p,int i){
 	}
 }
 
-
-
 int spawn(Character p){//1 si joueur au spawn, 0 sinon
 	if (p.position.x==p.spawn.x && p.position.y==p.spawn.y){
 		return 1;
@@ -318,7 +316,6 @@ int playerTurn(Tile map[][ARRAY], Character* p, int i){	//tour d'un joueur
 	return win;
 }
 
-
 void playGame(char nbp, Character* players){//gestion d'une partie
 	char c;
 	time_t begin = time( NULL );
@@ -355,4 +352,3 @@ void playGame(char nbp, Character* players){//gestion d'une partie
 	printf("\nInput anything to end the game\n");
 	finish(nbp, players);
 }
-
